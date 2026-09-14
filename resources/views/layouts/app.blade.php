@@ -348,6 +348,7 @@
                 .catch(() => {
                     this.typing = false;
                     this.messages.push({ id: this.nextId(), from: 'bot', text: 'Gagal terhubung ke server.', saran: [] });
+                });
             },
         };
     }
