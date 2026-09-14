@@ -85,19 +85,25 @@
     <table class="w-full min-w-[760px] text-left text-xs">
         <thead class="bg-slate-50/80 text-[10px] font-bold uppercase tracking-wide text-slate-500">
             <tr>
-                <th class="px-4 py-3">Komp</th><th class="px-4 py-3">T2 Tera</th><th class="px-4 py-3">T2 Act</th>
-                <th class="px-4 py-3">Selisih</th><th class="px-4 py-3">Dudukan</th><th class="px-4 py-3">Volume</th>
-                <th class="px-4 py-3">Ijk Baut</th><th class="px-4 py-3">Hasil a–g</th>
+                <th class="px-4 py-3">Kompartemen</th>
+                <th class="px-4 py-3">a. T2 Tera</th>
+                <th class="px-4 py-3">b. T2 Act</th>
+                <th class="px-4 py-3">c. Selisih</th>
+                <th class="px-4 py-3">d. Dudukan</th>
+                <th class="px-4 py-3">e. Volume</th>
+                <th class="px-4 py-3">f. Ijk Baut &amp; Segel</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
             @foreach($checklist->tera as $t)
             <tr>
-                <td class="px-4 py-2.5 font-bold text-slate-700">Komp. {{ $t['komp'] }}</td>
-                <td class="px-4 py-2.5">{{ $t['tinggiTera'] }}</td><td class="px-4 py-2.5">{{ $t['tinggiAct'] }}</td>
-                <td class="px-4 py-2.5">{{ $t['selisih'] }}</td><td class="px-4 py-2.5">{{ $t['duduk'] }}</td>
-                <td class="px-4 py-2.5">{{ $t['volume'] }}</td><td class="px-4 py-2.5">{{ $t['ijkBaut'] }}</td>
-                <td class="px-4 py-2.5 text-slate-500">{{ $t['a'] }}/{{ $t['b'] }}/{{ $t['c'] }}/{{ $t['d'] }}/{{ $t['e'] }}/{{ $t['f'] }}/{{ $t['g'] }}</td>
+                <td class="px-4 py-2.5 font-bold text-slate-700">Kompartemen {{ $t['komp'] }}</td>
+                <td class="px-4 py-2.5 font-semibold text-slate-800">{{ $t['tinggiTera'] ?: ($t['a'] ?? '-') }}</td>
+                <td class="px-4 py-2.5 font-semibold text-slate-800">{{ $t['tinggiAct'] ?: ($t['b'] ?? '-') }}</td>
+                <td class="px-4 py-2.5 font-semibold text-slate-800">{{ $t['selisih'] ?: ($t['c'] ?? '-') }}</td>
+                <td class="px-4 py-2.5">{{ $t['duduk'] ?: ($t['d'] ?? '-') }}</td>
+                <td class="px-4 py-2.5">{{ $t['volume'] ?: ($t['e'] ?? '-') }}</td>
+                <td class="px-4 py-2.5">{{ $t['ijkBaut'] ?: ($t['f'] ?? '-') }}</td>
             </tr>
             @endforeach
         </tbody>
