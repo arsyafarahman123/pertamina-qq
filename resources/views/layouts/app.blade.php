@@ -190,19 +190,19 @@
 
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                 {{-- Jam Realtime Versi Desktop --}}
-                <div class="hidden text-right sm:block" x-data="liveNavbarClock()" x-init="start()">
-                    <p class="text-sm font-bold text-slate-800 tracking-tight" x-text="tanggalText">{{ now()->locale('id')->translatedFormat('l, d F Y') }}</p>
+                <div class="hidden text-right sm:block">
+                    <p id="navbar-live-date" class="text-sm font-bold text-slate-800 tracking-tight">{{ now()->locale('id')->translatedFormat('l, d F Y') }}</p>
                     <div class="flex items-center justify-end gap-1.5 text-xs font-semibold text-slate-500">
                         <span class="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="font-mono text-slate-800 font-bold tracking-wider" x-text="jamText">{{ now()->timezone('Asia/Jakarta')->format('H:i:s') }}</span>
+                        <span id="navbar-live-time" class="font-mono text-slate-800 font-bold tracking-wider">{{ now()->timezone('Asia/Jakarta')->format('H:i:s') }}</span>
                         <span class="text-[10px] font-black text-brand-blue uppercase">WIB</span>
                     </div>
                 </div>
 
                 {{-- Jam Realtime Versi Mobile (Kecil, Rapi & Ringan) --}}
-                <div class="flex items-center gap-1 rounded-lg bg-slate-100/90 border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-700 sm:hidden" x-data="liveNavbarClock()" x-init="start()">
+                <div class="flex items-center gap-1 rounded-lg bg-slate-100/90 border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-700 sm:hidden">
                     <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="font-mono text-slate-900 font-bold" x-text="jamText">{{ now()->timezone('Asia/Jakarta')->format('H:i:s') }}</span>
+                    <span id="navbar-live-time-mobile" class="font-mono text-slate-900 font-bold">{{ now()->timezone('Asia/Jakarta')->format('H:i:s') }}</span>
                 </div>
 
                 <div class="flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-200 bg-white py-1 pl-1 pr-2 sm:pr-3 shadow-sm">
@@ -353,47 +353,67 @@
         };
     }
 
-    function liveNavbarClock() {
-        return {
-            tanggalText: '',
-            jamText: '',
-            start() {
-                const hariMap = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                const bulanMap = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    (function initLiveClock() {
+        const hariMap = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        const bulanMap = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-                const tick = () => {
-                    const now = new Date();
-                    try {
-                        const dtfDate = new Intl.DateTimeFormat('id-ID', {
-                            timeZone: 'Asia/Jakarta',
-                            weekday: 'long',
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        });
-                        const dtfTime = new Intl.DateTimeFormat('id-ID', {
-                            timeZone: 'Asia/Jakarta',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit',
-                            hour12: false
-                        });
-                        this.tanggalText = dtfDate.format(now);
-                        this.jamText = dtfTime.format(now).replace(/\./g, ':');
-                    } catch (e) {
-                        const d = new Date();
-                        this.tanggalText = `${hariMap[d.getDay()]}, ${d.getDate()} ${bulanMap[d.getMonth()]} ${d.getFullYear()}`;
-                        const hh = String(d.getHours()).padStart(2, '0');
-                        const mm = String(d.getMinutes()).padStart(2, '0');
-                        const ss = String(d.getSeconds()).padStart(2, '0');
-                        this.jamText = `${hh}:${mm}:${ss}`;
-                    }
-                };
-                tick();
-                setInterval(tick, 1000);
+        function updateClock() {
+            try {
+                const now = new Date();
+                // Dapatkan waktu zona Asia/Jakarta (WIB)
+                const dtfDate = new Intl.DateTimeFormat('id-ID', {
+                    timeZone: 'Asia/Jakarta',
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+                const dtfTime = new Intl.DateTimeFormat('id-ID', {
+                    timeZone: 'Asia/Jakarta',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                });
+
+                const dateStr = dtfDate.format(now);
+                const timeStr = dtfTime.format(now).replace(/\./g, ':');
+
+                const elDate = document.getElementById('navbar-live-date');
+                const elTime = document.getElementById('navbar-live-time');
+                const elTimeMobile = document.getElementById('navbar-live-time-mobile');
+
+                if (elDate && dateStr) elDate.textContent = dateStr;
+                if (elTime && timeStr) elTime.textContent = timeStr;
+                if (elTimeMobile && timeStr) elTimeMobile.textContent = timeStr;
+            } catch (e) {
+                const d = new Date();
+                const dateStr = `${hariMap[d.getDay()]}, ${d.getDate()} ${bulanMap[d.getMonth()]} ${d.getFullYear()}`;
+                const hh = String(d.getHours()).padStart(2, '0');
+                const mm = String(d.getMinutes()).padStart(2, '0');
+                const ss = String(d.getSeconds()).padStart(2, '0');
+                const timeStr = `${hh}:${mm}:${ss}`;
+
+                const elDate = document.getElementById('navbar-live-date');
+                const elTime = document.getElementById('navbar-live-time');
+                const elTimeMobile = document.getElementById('navbar-live-time-mobile');
+
+                if (elDate) elDate.textContent = dateStr;
+                if (elTime) elTime.textContent = timeStr;
+                if (elTimeMobile) elTimeMobile.textContent = timeStr;
             }
-        };
-    }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                updateClock();
+                setInterval(updateClock, 1000);
+            });
+        } else {
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+    })();
 </script>
 @yield('scripts')
 <script>lucide.createIcons();</script>
