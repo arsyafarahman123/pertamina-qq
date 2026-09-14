@@ -86,11 +86,12 @@
     </div>
 </div>
 
-{{-- AREA CETAK FORM (UKURAN PRESISI A4 1 HALAMAN PAS) --}}
-<div id="area-cetak" class="mx-auto w-[794px] max-w-full bg-white px-7 py-5 shadow-2xl rounded-sm text-[10px] leading-tight box-border">
+{{-- WRAPPER AREA CETAK (RESPONSIF MOBILE DENGAN SCROLL HALUS) --}}
+<div class="w-full overflow-x-auto pb-8 flex justify-center">
+    <div id="area-cetak" class="w-[794px] shrink-0 bg-white px-7 py-5 shadow-2xl rounded-sm text-[10px] leading-tight box-border">
 
-    {{-- 1. HEADER RESMI DENGAN LOGO PERTAMINA --}}
-    <div class="flex items-center justify-between border-b-2 border-black pb-2 mb-2.5">
+        {{-- 1. HEADER RESMI DENGAN LOGO PERTAMINA --}}
+        <div class="flex items-center justify-between border-b-2 border-black pb-2 mb-2.5">
         <div class="flex items-center gap-2.5">
             {{-- Inline SVG Logo Pertamina (Crisp & High-Res) --}}
             <svg class="h-8 w-11 shrink-0" viewBox="-888 -667 651 495" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -503,6 +504,7 @@
             <p class="font-bold whitespace-nowrap">( .................................................. )</p>
         </div>
     </div>
+</div>
 </div>
 
 <script>

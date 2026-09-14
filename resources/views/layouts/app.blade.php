@@ -178,17 +178,18 @@
     <!-- ===================== Main ===================== -->
     <div class="flex min-w-0 flex-1 flex-col">
         <header class="sticky top-0 z-20 flex h-16 items-center justify-between gap-4 border-b border-slate-200 bg-white/80 px-4 backdrop-blur lg:px-8">
-            <div class="flex items-center gap-3">
+            <div class="flex min-w-0 items-center gap-2 sm:gap-3">
                 <button @click="sidebarOpen = true" class="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 lg:hidden">
-                    <i data-lucide="menu" class="h-6 w-6"></i>
+                    <i data-lucide="menu" class="h-5 w-5"></i>
                 </button>
-                <div>
-                    <p class="text-[11px] font-semibold uppercase tracking-wide text-brand-blue">Pertamina Patra Niaga · Fuel QC &amp; Checklist Armada</p>
-                    <h1 class="text-lg font-bold leading-tight text-slate-900">@yield('title', 'Dashboard')</h1>
+                <div class="min-w-0">
+                    <p class="truncate text-[9.5px] sm:text-[11px] font-semibold uppercase tracking-wide text-brand-blue">Pertamina Patra Niaga · QC &amp; Checklist</p>
+                    <h1 class="truncate text-base sm:text-lg font-bold leading-tight text-slate-900">@yield('title', 'Dashboard')</h1>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                {{-- Jam Realtime Versi Desktop --}}
                 <div class="hidden text-right sm:block" x-data="liveNavbarClock()" x-init="start()">
                     <p class="text-sm font-bold text-slate-800 tracking-tight" x-text="tanggalText">{{ now()->locale('id')->translatedFormat('l, d F Y') }}</p>
                     <div class="flex items-center justify-end gap-1.5 text-xs font-semibold text-slate-500">
@@ -197,8 +198,15 @@
                         <span class="text-[10px] font-black text-brand-blue uppercase">WIB</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white py-1 pl-1 pr-3 shadow-sm">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-red to-brand-blue text-xs font-bold text-white shadow-sm">
+
+                {{-- Jam Realtime Versi Mobile (Kecil, Rapi & Ringan) --}}
+                <div class="flex items-center gap-1 rounded-lg bg-slate-100/90 border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-700 sm:hidden" x-data="liveNavbarClock()" x-init="start()">
+                    <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-mono text-slate-900 font-bold" x-text="jamText">{{ now()->timezone('Asia/Jakarta')->format('H:i:s') }}</span>
+                </div>
+
+                <div class="flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-200 bg-white py-1 pl-1 pr-2 sm:pr-3 shadow-sm">
+                    <div class="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-red to-brand-blue text-xs font-bold text-white shadow-sm">
                         {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
                     </div>
                     <div class="hidden leading-tight sm:block">
