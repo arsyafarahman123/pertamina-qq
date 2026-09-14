@@ -60,6 +60,84 @@ class RiwayatController extends Controller
         return view('riwayat.index', compact('riwayat', 'daftarJenisUji', 'ringkasan'));
     }
 
+    /**
+     * Unduh hasil uji sesuai filter saat ini sebagai file Excel.
+     */
+    public function exportExcel(Request $request)
+    {
+        $query = HasilUji::with(['jenisUji', 'user']);
+
+        if ($request->filled('jenis_uji_id')) {
+            $query->where('jenis_uji_id', $request->jenis_uji_id);
+        }
+
+        if ($request->filled('cari')) {
+            $cari = $request->cari;
+            $query->where(function ($q) use ($cari) {
+                $q->where('nama_sampel', 'like', "%{$cari}%")
+                  ->orWhere('nomor_kkw', 'like', "%{$cari}%");
+            });
+        }
+
+        if ($request->filled('dari_tanggal')) {
+            $query->whereDate('waktu_uji', '>=', $request->dari_tanggal);
+        }
+
+        if ($request->filled('sampai_tanggal')) {
+            $query->whereDate('waktu_uji', '<=', $request->sampai_tanggal);
+        }
+
+        $riwayat = $query->latest('waktu_uji')->get();
+
+        foreach ($riwayat as $item) {
+            $evaluasi = SpecEngine::evaluate($item->data_hasil, $item->nama_sampel);
+            $item->verdict = $evaluasi['verdict'];
+            $item->evaluasi = $evaluasi;
+        }
+
+        $totalData = $riwayat->count();
+        $namaFile = 'Rekap-Hasil-Uji-BBM-FT-MAOS-'.now()->format('Ymd-His').'.xls';
+
+        $html = view('riwayat.export-excel', [
+            'riwayat' => $riwayat,
+            'totalData' => $totalData,
+            'isSemua' => false,
+        ])->render();
+
+        return response($html, 200, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="'.$namaFile.'"',
+        ]);
+    }
+
+    /**
+     * Unduh KESELURUHAN data hasil uji (semua tanggal, semua jenis uji) sebagai Excel.
+     */
+    public function exportExcelAll()
+    {
+        $riwayat = HasilUji::with(['jenisUji', 'user'])->latest('waktu_uji')->get();
+
+        foreach ($riwayat as $item) {
+            $evaluasi = SpecEngine::evaluate($item->data_hasil, $item->nama_sampel);
+            $item->verdict = $evaluasi['verdict'];
+            $item->evaluasi = $evaluasi;
+        }
+
+        $totalData = $riwayat->count();
+        $namaFile = 'Rekap-Lengkap-Keseluruhan-Hasil-Uji-BBM-FT-MAOS-'.now()->format('Ymd-His').'.xls';
+
+        $html = view('riwayat.export-excel', [
+            'riwayat' => $riwayat,
+            'totalData' => $totalData,
+            'isSemua' => true,
+        ])->render();
+
+        return response($html, 200, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="'.$namaFile.'"',
+        ]);
+    }
+
     public function show(HasilUji $hasilUji)
     {
         $hasilUji->load(['jenisUji.langkahSop', 'user']);

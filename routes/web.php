@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/pengujian-bbm/submit', [\App\Http\Controllers\UjiBbmController::class, 'submit'])->name('ujibbm.submit');
 
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+    Route::get('/riwayat/export-excel', [RiwayatController::class, 'exportExcel'])->name('riwayat.export-excel');
+    Route::get('/riwayat/export-excel-semua', [RiwayatController::class, 'exportExcelAll'])->name('riwayat.export-excel-all');
     Route::get('/riwayat/{hasilUji}', [RiwayatController::class, 'show'])->name('riwayat.show');
     Route::get('/riwayat/{hasilUji}/cetak', [RiwayatController::class, 'cetak'])->name('riwayat.cetak');
     Route::get('/riwayat/{hasilUji}/foto-bukti', [RiwayatController::class, 'fotoBukti'])->name('riwayat.foto-bukti');

@@ -96,13 +96,33 @@
 
 <!-- ===== Tabel hasil uji ===== -->
 <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
-    <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-        <p class="text-sm font-semibold text-slate-700">
-            Ditemukan <span class="rounded-md bg-brand-blue/10 px-2 py-0.5 font-bold text-brand-blue">{{ $riwayat->total() }}</span> hasil uji
-        </p>
-        @if ($riwayat->total() > 0)
-            <p class="hidden text-xs text-slate-400 sm:block">Menampilkan {{ $riwayat->firstItem() }}–{{ $riwayat->lastItem() }} dari {{ $riwayat->total() }} data</p>
-        @endif
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+        <div>
+            <p class="text-sm font-semibold text-slate-700">
+                Ditemukan <span class="rounded-md bg-brand-blue/10 px-2 py-0.5 font-bold text-brand-blue">{{ $riwayat->total() }}</span> hasil uji
+            </p>
+            @if ($riwayat->total() > 0)
+                <p class="text-xs text-slate-400 mt-0.5">Menampilkan {{ $riwayat->firstItem() }}–{{ $riwayat->lastItem() }} dari {{ $riwayat->total() }} data</p>
+            @endif
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+            {{-- Tombol Export Excel Keseluruhan Data --}}
+            <a href="{{ route('riwayat.export-excel-semua') }}"
+               class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-700 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-800 hover:shadow">
+                <i data-lucide="file-spreadsheet" class="h-4 w-4"></i>
+                <span>Unduh Excel Keseluruhan Data</span>
+            </a>
+
+            @if (request()->anyFilled(['cari', 'jenis_uji_id', 'dari_tanggal', 'sampai_tanggal']))
+                {{-- Tombol Export Excel Sesuai Filter Aktif --}}
+                <a href="{{ route('riwayat.export-excel', request()->query()) }}"
+                   class="inline-flex items-center gap-1.5 rounded-xl bg-slate-800 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-slate-900 hover:shadow">
+                    <i data-lucide="filter" class="h-4 w-4"></i>
+                    <span>Unduh Excel (Sesuai Filter)</span>
+                </a>
+            @endif
+        </div>
     </div>
 
     <div class="overflow-x-auto">
