@@ -7,7 +7,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `migration` VARCHAR(255) NOT NULL,
+  `migration` VARCHAR(191) NOT NULL,
   `batch` BIGINT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -29,17 +29,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for `password_reset_tokens`
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
-  `email` VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,
-  `token` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(191) PRIMARY KEY,
+  `token` VARCHAR(191) NOT NULL,
   `created_at` DATETIME NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Table structure for `sessions`
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
-  `id` VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,
+  `id` VARCHAR(191) PRIMARY KEY,
   `user_id` BIGINT NULL,
-  `ip_address` VARCHAR(255) NULL,
+  `ip_address` VARCHAR(191) NULL,
   `user_agent` TEXT NULL,
   `payload` TEXT NOT NULL,
   `last_activity` BIGINT NOT NULL
@@ -49,11 +49,11 @@ CREATE TABLE `sessions` (
 DROP TABLE IF EXISTS `jenis_ujis`;
 CREATE TABLE `jenis_ujis` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `kode` VARCHAR(255) NOT NULL,
-  `nama` VARCHAR(255) NOT NULL,
-  `slug` VARCHAR(255) NOT NULL,
+  `kode` VARCHAR(191) NOT NULL,
+  `nama` VARCHAR(191) NOT NULL,
+  `slug` VARCHAR(191) NOT NULL,
   `deskripsi` TEXT NULL,
-  `icon` VARCHAR(255) NULL,
+  `icon` VARCHAR(191) NULL,
   `aktif` BIGINT NOT NULL,
   `urutan` BIGINT NOT NULL,
   `created_at` DATETIME NULL,
@@ -78,10 +78,10 @@ CREATE TABLE `langkah_sops` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `jenis_uji_id` BIGINT NOT NULL,
   `urutan` BIGINT NOT NULL,
-  `judul_singkat` VARCHAR(255) NOT NULL,
+  `judul_singkat` VARCHAR(191) NOT NULL,
   `instruksi` TEXT NOT NULL,
-  `parameter_setting` VARCHAR(255) NULL,
-  `indikator_selesai` VARCHAR(255) NULL,
+  `parameter_setting` VARCHAR(191) NULL,
+  `indikator_selesai` VARCHAR(191) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -133,14 +133,14 @@ CREATE TABLE `hasil_ujis` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `jenis_uji_id` BIGINT NOT NULL,
   `user_id` BIGINT NOT NULL,
-  `nama_sampel` VARCHAR(255) NOT NULL,
-  `nomor_kkw` VARCHAR(255) NULL,
+  `nama_sampel` VARCHAR(191) NOT NULL,
+  `nomor_kkw` VARCHAR(191) NULL,
   `data_hasil` TEXT NOT NULL,
   `catatan` TEXT NULL,
   `waktu_uji` DATETIME NOT NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
-  `foto_bukti` VARCHAR(255) NULL
+  `foto_bukti` VARCHAR(191) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `hasil_ujis` (`id`, `jenis_uji_id`, `user_id`, `nama_sampel`, `nomor_kkw`, `data_hasil`, `catatan`, `waktu_uji`, `created_at`, `updated_at`, `foto_bukti`) VALUES
@@ -148,12 +148,13 @@ INSERT INTO `hasil_ujis` (`id`, `jenis_uji_id`, `user_id`, `nama_sampel`, `nomor
 (8, 10, 2, 'Pertalite', '222', '{"RON":"90","SULFUR":"0.05","DESTILASI_10":"4","DESTILASI_50":"99","DESTILASI_90":"3","DESTILASI_FBP":"2","DESTILASI_RESIDU":"2","DENSITY":"715","_uji_bbm":true,"_kategori":"gasoline","_jenis_key":"pertalite","_nama_lengkap":"Pertalite","_verdict":"PASS","_parameters":[{"parameter":"RON","value":90,"unit":"RON","min":90,"max":"-","status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"SULFUR","value":0.05,"unit":"% m\\/m","min":"-","max":0.05,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_10","value":4,"unit":"\\u00b0C","min":"-","max":74,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_50","value":99,"unit":"\\u00b0C","min":77,"max":125,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_90","value":3,"unit":"\\u00b0C","min":"-","max":180,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_FBP","value":2,"unit":"\\u00b0C","min":"-","max":215,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_RESIDU","value":2,"unit":"% vol","min":"-","max":2,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DENSITY","value":715,"unit":"kg\\/m\\u00b3","min":715,"max":770,"status":"PASS","message":"Memenuhi spesifikasi"}]}', 'Uji Kesesuaian Spesifikasi BBM (Gasoline) — diproses otomatis via menu Pengujian BBM Terpadu.', '2026-09-07 11:35:47', '2026-09-07 11:35:47', '2026-09-07 11:35:47', NULL),
 (9, 10, 2, 'Pertalite', NULL, '{"RON":"56","SULFUR":"65","DESTILASI_10":"5","DESTILASI_50":"4","DESTILASI_90":"5","DESTILASI_FBP":"3","DESTILASI_RESIDU":"3","DENSITY":"5","_uji_bbm":true,"_kategori":"gasoline","_jenis_key":"pertalite","_nama_lengkap":"Pertalite","_verdict":"FAIL","_parameters":[{"parameter":"RON","value":56,"unit":"RON","min":90,"max":"-","status":"FAIL","message":"Di bawah batas minimum (90)"},{"parameter":"SULFUR","value":65,"unit":"% m\\/m","min":"-","max":0.05,"status":"FAIL","message":"Di atas batas maksimum (0.05)"},{"parameter":"DESTILASI_10","value":5,"unit":"\\u00b0C","min":"-","max":74,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_50","value":4,"unit":"\\u00b0C","min":77,"max":125,"status":"FAIL","message":"Di bawah batas minimum (77)"},{"parameter":"DESTILASI_90","value":5,"unit":"\\u00b0C","min":"-","max":180,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_FBP","value":3,"unit":"\\u00b0C","min":"-","max":215,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_RESIDU","value":3,"unit":"% vol","min":"-","max":2,"status":"FAIL","message":"Di atas batas maksimum (2)"},{"parameter":"DENSITY","value":5,"unit":"kg\\/m\\u00b3","min":715,"max":770,"status":"FAIL","message":"Di bawah batas minimum (715)"}]}', 'Uji Kesesuaian Spesifikasi BBM (Gasoline) — diproses otomatis via menu Pengujian BBM Terpadu.', '2026-09-07 11:58:11', '2026-09-07 11:58:11', '2026-09-07 11:58:11', NULL),
 (10, 10, 1, 'Pertamax', 'kk4', '{"RON":"92","SULFUR":"0.04","DESTILASI_10":"4","DESTILASI_50":"75","DESTILASI_90":"130","DESTILASI_FBP":"2","DESTILASI_RESIDU":"1","DENSITY":"720","_uji_bbm":true,"_kategori":"gasoline","_jenis_key":"pertamax","_nama_lengkap":"Pertamax","_verdict":"PASS","_parameters":[{"parameter":"RON","value":92,"unit":"RON","min":92,"max":"-","status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"SULFUR","value":0.04,"unit":"% m\\/m","min":"-","max":0.04,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_10","value":4,"unit":"\\u00b0C","min":"-","max":70,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_50","value":75,"unit":"\\u00b0C","min":75,"max":125,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_90","value":130,"unit":"\\u00b0C","min":130,"max":180,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_FBP","value":2,"unit":"\\u00b0C","min":"-","max":215,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_RESIDU","value":1,"unit":"% vol","min":"-","max":2,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DENSITY","value":720,"unit":"kg\\/m\\u00b3","min":715,"max":770,"status":"PASS","message":"Memenuhi spesifikasi"}]}', 'Uji Kesesuaian Spesifikasi BBM (Gasoline) — diproses otomatis via menu Pengujian BBM Terpadu.', '2026-09-08 08:42:20', '2026-09-08 08:42:20', '2026-09-08 08:42:20', 'bukti-uji/GqMV291Mc90uyAUH7RhjtR7GP5hLoOVvHl2CJHXv.jpg'),
-(11, 10, 1, 'Dexlite', 'KKW67', '{"FLASHPOINT":"52","COLORIMETER":"2","VISKOSITAS":"3","WATER_CONTENT":"4","TAN":"0.5","DESTILASI_10":"1","DESTILASI_50":"1","DESTILASI_90":"1","DESTILASI_FBP":"24","DESTILASI_RESIDU":"1","DENSITY":"816","SULFUR":"0.11","_uji_bbm":true,"_kategori":"gasoil","_jenis_key":"dexlite_b40","_nama_lengkap":"Dexlite (B40)","_verdict":"PASS","_parameters":[{"parameter":"FLASHPOINT","value":52,"unit":"\\u00b0C","min":52,"max":"-","status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"COLORIMETER","value":2,"unit":"No. ASTM","min":"-","max":3,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"VISKOSITAS","value":3,"unit":"mm\\u00b2\\/s","min":2,"max":5,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"WATER_CONTENT","value":4,"unit":"mg\\/kg","min":"-","max":380,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"TAN","value":0.5,"unit":"mg KOH\\/g","min":"-","max":0.6,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_90","value":1,"unit":"\\u00b0C","min":"-","max":370,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DENSITY","value":816,"unit":"kg\\/m\\u00b3","min":815,"max":880,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"SULFUR","value":0.11,"unit":"% m\\/m","min":"-","max":0.12,"status":"PASS","message":"Memenuhi spesifikasi"}]}', 'Uji Kesesuaian Spesifikasi BBM (Gasoil) — diproses otomatis via menu Pengujian BBM Terpadu.', '2026-09-09 14:05:51', '2026-09-09 14:05:51', '2026-09-09 14:05:51', 'bukti-uji/v0a7P26fWJvVGxqKMs4iGy9lH9ZwlCQsPEninqKX.png');
+(11, 10, 1, 'Dexlite', 'KKW67', '{"FLASHPOINT":"52","COLORIMETER":"2","VISKOSITAS":"3","WATER_CONTENT":"4","TAN":"0.5","DESTILASI_10":"1","DESTILASI_50":"1","DESTILASI_90":"1","DESTILASI_FBP":"24","DESTILASI_RESIDU":"1","DENSITY":"816","SULFUR":"0.11","_uji_bbm":true,"_kategori":"gasoil","_jenis_key":"dexlite_b40","_nama_lengkap":"Dexlite (B40)","_verdict":"PASS","_parameters":[{"parameter":"FLASHPOINT","value":52,"unit":"\\u00b0C","min":52,"max":"-","status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"COLORIMETER","value":2,"unit":"No. ASTM","min":"-","max":3,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"VISKOSITAS","value":3,"unit":"mm\\u00b2\\/s","min":2,"max":5,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"WATER_CONTENT","value":4,"unit":"mg\\/kg","min":"-","max":380,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"TAN","value":0.5,"unit":"mg KOH\\/g","min":"-","max":0.6,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_90","value":1,"unit":"\\u00b0C","min":"-","max":370,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DENSITY","value":816,"unit":"kg\\/m\\u00b3","min":815,"max":880,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"SULFUR","value":0.11,"unit":"% m\\/m","min":"-","max":0.12,"status":"PASS","message":"Memenuhi spesifikasi"}]}', 'Uji Kesesuaian Spesifikasi BBM (Gasoil) — diproses otomatis via menu Pengujian BBM Terpadu.', '2026-09-09 14:05:51', '2026-09-09 14:05:51', '2026-09-09 14:05:51', 'bukti-uji/v0a7P26fWJvVGxqKMs4iGy9lH9ZwlCQsPEninqKX.png'),
+(12, 10, 1, 'Pertalite', NULL, '{"RON":"4","SULFUR":"9","DESTILASI_10":"o","DESTILASI_50":"[","DESTILASI_90":"[","DESTILASI_FBP":"0","DESTILASI_RESIDU":"0","DENSITY":"0","_uji_bbm":true,"_kategori":"gasoline","_jenis_key":"pertalite","_nama_lengkap":"Pertalite","_verdict":"FAIL","_parameters":[{"parameter":"RON","value":4,"unit":"RON","min":90,"max":"-","status":"FAIL","message":"Di bawah batas minimum (90)"},{"parameter":"SULFUR","value":9,"unit":"% m\\/m","min":"-","max":0.05,"status":"FAIL","message":"Di atas batas maksimum (0.05)"},{"parameter":"DESTILASI_10","value":0,"unit":"\\u00b0C","min":"-","max":74,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_50","value":0,"unit":"\\u00b0C","min":77,"max":125,"status":"FAIL","message":"Di bawah batas minimum (77)"},{"parameter":"DESTILASI_90","value":0,"unit":"\\u00b0C","min":"-","max":180,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_FBP","value":0,"unit":"\\u00b0C","min":"-","max":215,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DESTILASI_RESIDU","value":0,"unit":"% vol","min":"-","max":2,"status":"PASS","message":"Memenuhi spesifikasi"},{"parameter":"DENSITY","value":0,"unit":"kg\\/m\\u00b3","min":715,"max":770,"status":"FAIL","message":"Di bawah batas minimum (715)"}]}', 'Uji Kesesuaian Spesifikasi BBM (Gasoline) — diproses otomatis via menu Pengujian BBM Terpadu.', '2026-09-14 12:50:24', '2026-09-14 12:50:24', '2026-09-14 12:50:24', NULL);
 
 -- Table structure for `cache`
 DROP TABLE IF EXISTS `cache`;
 CREATE TABLE `cache` (
-  `key` VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,
+  `key` VARCHAR(191) PRIMARY KEY,
   `value` TEXT NOT NULL,
   `expiration` BIGINT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -161,8 +162,8 @@ CREATE TABLE `cache` (
 -- Table structure for `cache_locks`
 DROP TABLE IF EXISTS `cache_locks`;
 CREATE TABLE `cache_locks` (
-  `key` VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,
-  `owner` VARCHAR(255) NOT NULL,
+  `key` VARCHAR(191) PRIMARY KEY,
+  `owner` VARCHAR(191) NOT NULL,
   `expiration` BIGINT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -170,17 +171,17 @@ CREATE TABLE `cache_locks` (
 DROP TABLE IF EXISTS `checklist_mt_maos`;
 CREATE TABLE `checklist_mt_maos` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `nomor_polisi` VARCHAR(255) NOT NULL,
-  `pemilik` VARCHAR(255) NULL,
-  `tanggal_exp` VARCHAR(255) NULL,
+  `nomor_polisi` VARCHAR(191) NOT NULL,
+  `pemilik` VARCHAR(191) NULL,
+  `tanggal_exp` VARCHAR(191) NULL,
   `tanggal_periksa` DATE NOT NULL,
   `tera` TEXT NOT NULL,
   `results` TEXT NOT NULL,
   `notes` TEXT NOT NULL,
   `ket_tambahan` TEXT NULL,
-  `status` VARCHAR(255) NOT NULL,
+  `status` VARCHAR(191) NOT NULL,
   `user_id` BIGINT NULL,
-  `created_by` VARCHAR(255) NULL,
+  `created_by` VARCHAR(191) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -192,16 +193,16 @@ INSERT INTO `checklist_mt_maos` (`id`, `nomor_polisi`, `pemilik`, `tanggal_exp`,
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(191) NOT NULL,
+  `email` VARCHAR(191) NOT NULL,
   `email_verified_at` DATETIME NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `remember_token` VARCHAR(255) NULL,
+  `password` VARCHAR(191) NOT NULL,
+  `remember_token` VARCHAR(191) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
-  `role` VARCHAR(255) NOT NULL,
-  `jabatan` VARCHAR(255) NULL,
-  `spbu_name` VARCHAR(255) NULL
+  `role` VARCHAR(191) NOT NULL,
+  `jabatan` VARCHAR(191) NULL,
+  `spbu_name` VARCHAR(191) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `jabatan`, `spbu_name`) VALUES
@@ -215,17 +216,17 @@ DROP TABLE IF EXISTS `retain_sampel_mts`;
 CREATE TABLE `retain_sampel_mts` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `tanggal` DATE NOT NULL,
-  `jam_label` VARCHAR(255) NOT NULL,
-  `produk` VARCHAR(255) NOT NULL,
-  `mt_nopol` VARCHAR(255) NULL,
-  `tangki_timbun` VARCHAR(255) NULL,
+  `jam_label` VARCHAR(191) NOT NULL,
+  `produk` VARCHAR(191) NOT NULL,
+  `mt_nopol` VARCHAR(191) NULL,
+  `tangki_timbun` VARCHAR(191) NULL,
   `density_obs` DOUBLE NOT NULL,
   `temperatur` DOUBLE NOT NULL,
   `density_15` DOUBLE NOT NULL,
   `user_id` BIGINT NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
-  `foto_path` VARCHAR(255) NULL
+  `foto_path` VARCHAR(191) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `retain_sampel_mts` (`id`, `tanggal`, `jam_label`, `produk`, `mt_nopol`, `tangki_timbun`, `density_obs`, `temperatur`, `density_15`, `user_id`, `created_at`, `updated_at`, `foto_path`) VALUES
@@ -322,8 +323,8 @@ DROP TABLE IF EXISTS `retain_sampel_fotos`;
 CREATE TABLE `retain_sampel_fotos` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `tanggal` DATE NOT NULL,
-  `jam_label` VARCHAR(255) NOT NULL,
-  `path` VARCHAR(255) NOT NULL,
+  `jam_label` VARCHAR(191) NOT NULL,
+  `path` VARCHAR(191) NOT NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

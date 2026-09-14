@@ -22,11 +22,12 @@ for table in tables:
     col_defs = []
     for col in cols:
         col_id, name, col_type, notnull, dflt_val, pk = col
-        m_type = col_type.upper()
-        if 'INT' in m_type:
+        m_type = col_type.upper() if col_type else ''
+        is_int = 'INT' in m_type
+        if is_int:
             m_type = 'BIGINT UNSIGNED' if pk else 'BIGINT'
         elif 'VARCHAR' in m_type or 'TEXT' in m_type or not m_type:
-            m_type = 'VARCHAR(255)' if 'VARCHAR' in m_type else 'TEXT'
+            m_type = 'VARCHAR(191)' if (pk or 'VARCHAR' in m_type) else 'TEXT'
         elif 'DATETIME' in m_type:
             m_type = 'DATETIME'
         elif 'DATE' in m_type:
@@ -34,9 +35,11 @@ for table in tables:
         elif 'FLOAT' in m_type or 'DOUBLE' in m_type or 'NUMERIC' in m_type:
             m_type = 'DOUBLE'
         
-        nullable = "NOT NULL" if notnull else "NULL"
-        if pk:
+        nullable = "NOT NULL" if (notnull or pk) else "NULL"
+        if pk and is_int:
             col_defs.append(f"`{name}` {m_type} AUTO_INCREMENT PRIMARY KEY")
+        elif pk:
+            col_defs.append(f"`{name}` {m_type} PRIMARY KEY")
         else:
             col_defs.append(f"`{name}` {m_type} {nullable}")
             
