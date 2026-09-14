@@ -86,7 +86,8 @@ try {
 
 // ---- STEP 2: Migration ----
 try {
-    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    \Illuminate\Support\Facades\Schema::defaultStringLength(191);
+    \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
     $output = \Illuminate\Support\Facades\Artisan::output();
 
     echo '<div class="step step-ok"><h3>✅ Database Migration</h3>';
