@@ -46,7 +46,7 @@
             <i data-lucide="file-text" class="h-4 w-4"></i>
             Cetak Sertifikat Mutu
         </a>
-        @if (auth()->user()->isAdmin())
+        @if (!auth()->user()->isSpbu())
             <a href="{{ route('riwayat.edit', $hasilUji) }}" class="inline-flex items-center gap-1.5 rounded-lg bg-brand-blue/10 px-3 py-1.5 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue/20">
                 <i data-lucide="pencil" class="h-4 w-4"></i>
                 Edit

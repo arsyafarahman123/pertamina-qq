@@ -33,7 +33,18 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    /** SPBU/Transportir — akun view-only, hanya melihat checklist mobil tangki miliknya sendiri. */
+    public function isPetugas(): bool
+    {
+        return $this->role === 'petugas';
+    }
+
+    /** Bisa input & ubah data (Admin Lab QQ & Petugas Lapangan). */
+    public function canManage(): bool
+    {
+        return in_array($this->role, ['admin', 'petugas'], true);
+    }
+
+    /** SPBU/Transportir — akun view-only, hanya melihat checklist mobil tangki. */
     public function isSpbu(): bool
     {
         return $this->role === 'spbu';

@@ -185,7 +185,7 @@
                                    class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100">
                                     <i data-lucide="printer" class="h-4 w-4"></i>
                                 </a>
-                                @if (auth()->user()->isAdmin())
+                                @if (!auth()->user()->isSpbu())
                                     <a href="{{ route('riwayat.edit', $item) }}" title="Edit hasil uji"
                                        class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100">
                                         <i data-lucide="pencil" class="h-4 w-4"></i>
