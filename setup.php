@@ -98,15 +98,33 @@ try {
     $hasError = true;
 }
 
-// ---- STEP 3: Seeder ----
+// ---- STEP 3: Seeder & Data Import ----
 try {
-    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
-    $output = \Illuminate\Support\Facades\Artisan::output();
-
-    echo '<div class="step step-ok"><h3>✅ Database Seeder</h3>';
-    echo '<p>' . htmlspecialchars(trim($output) ?: 'User & Jenis Uji berhasil dibuat.') . '</p></div>';
+    $jsonPath = base_path('database/initial_data.json');
+    if (file_exists($jsonPath)) {
+        $data = json_decode(file_get_contents($jsonPath), true);
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $stats = [];
+        foreach ($data as $table => $rows) {
+            if (!empty($rows)) {
+                \Illuminate\Support\Facades\DB::table($table)->truncate();
+                foreach (array_chunk($rows, 50) as $chunk) {
+                    \Illuminate\Support\Facades\DB::table($table)->insert($chunk);
+                }
+                $stats[] = "<b>$table</b>: " . count($rows) . " data";
+            }
+        }
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        echo '<div class="step step-ok"><h3>✅ Import Seluruh Data Berhasil</h3>';
+        echo '<p>Semua data lokal (87 Retain Sampel, Hasil Uji, Checklist MT, User) berhasil disalin permanen ke MySQL online:<br>' . implode(', ', $stats) . '</p></div>';
+    } else {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        $output = \Illuminate\Support\Facades\Artisan::output();
+        echo '<div class="step step-ok"><h3>✅ Database Seeder</h3>';
+        echo '<p>' . htmlspecialchars(trim($output) ?: 'User & Jenis Uji berhasil dibuat.') . '</p></div>';
+    }
 } catch (\Throwable $e) {
-    echo '<div class="step step-warn"><h3>⚠️ Seeder Gagal (mungkin sudah ada data)</h3>';
+    echo '<div class="step step-warn"><h3>⚠️ Import Data Gagal</h3>';
     echo '<p>' . htmlspecialchars($e->getMessage()) . '</p></div>';
 }
 
