@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Masuk — Fuel Maos · Pertamina Patra Niaga</title>
+    <title>Portal Masuk — Fuel Maos · PT Pertamina Patra Niaga</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/pertamina-mark.svg') }}">
 
     <!-- Google Fonts & Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -27,7 +27,7 @@
                             blueDark: '#003D78',
                             blueHover: '#005596',
                             green: '#ACC42A',
-                            dark: '#05162B',
+                            dark: '#07172B',
                         },
                     },
                 },
@@ -39,11 +39,23 @@
         [x-cloak] { display: none !important; }
         body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
 
-        .panel-left-bg {
-            background:
-                radial-gradient(900px 500px at 15% 15%, rgba(0, 108, 184, 0.28) 0%, transparent 60%),
-                radial-gradient(700px 500px at 85% 85%, rgba(237, 27, 47, 0.15) 0%, transparent 60%),
-                linear-gradient(160deg, #05162B 0%, #002B54 50%, #030F1D 100%);
+        .enterprise-pattern {
+            background-color: #06182c;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(0, 108, 184, 0.22) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(172, 196, 42, 0.12) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(237, 27, 47, 0.08) 0px, transparent 50%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
         }
     </style>
 
@@ -63,103 +75,151 @@
 <div class="flex min-h-screen w-full flex-col lg:flex-row">
 
     <!-- ================================================================= -->
-    <!-- PANEL KIRI: VISUAL PERTAMINA LABORATORY                           -->
+    <!-- PANEL KIRI: CORPORATE IDENTITY & SYSTEM OVERVIEW (ENTERPRISE)     -->
     <!-- ================================================================= -->
-    <div class="panel-left-bg relative flex w-full flex-col justify-between p-8 text-white sm:p-12 lg:w-1/2 lg:p-14 xl:p-16">
+    <div class="enterprise-pattern relative flex w-full flex-col justify-between p-6 sm:p-10 lg:w-[54%] lg:p-12 xl:p-14 text-white">
         
-        <!-- Header Identitas Resmi -->
-        <div class="relative z-10 flex items-center justify-between gap-4">
+        <!-- Header Identitas Resmi Pertamina -->
+        <div class="relative z-10 flex items-center justify-between border-b border-white/10 pb-6">
             <div class="flex items-center gap-3.5">
-                <div class="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-white p-2.5 shadow-lg ring-1 ring-white/20">
-                    <img src="{{ asset('images/pertamina-mark.svg') }}" alt="Pertamina" class="h-9 w-9 object-contain">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white p-2 shadow-lg shadow-black/30">
+                    <img src="{{ asset('images/pertamina-mark.svg') }}" alt="Pertamina" class="h-8 w-8 object-contain">
                 </div>
                 <div>
-                    <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300">PT Pertamina Patra Niaga</p>
-                    <h2 class="font-display text-lg font-extrabold tracking-tight text-white">Fuel Terminal Maos</h2>
-                    <p class="text-xs text-blue-200/80">Quality &amp; Quantity (QQ) Control</p>
+                    <div class="flex items-center gap-2">
+                        <p class="text-[10.5px] font-bold uppercase tracking-[0.2em] text-slate-300">PT PERTAMINA PATRA NIAGA</p>
+                        <span class="rounded bg-brand-blue/30 px-1.5 py-0.5 text-[9px] font-bold text-blue-200 ring-1 ring-brand-blue/50">REGIONAL JBT</span>
+                    </div>
+                    <h2 class="font-display text-lg sm:text-xl font-extrabold tracking-tight text-white">
+                        Fuel Terminal Maos
+                    </h2>
+                    <p class="text-xs text-blue-200/90 font-medium">Quality &amp; Quantity (QQ) Control Management System</p>
                 </div>
             </div>
 
-            <!-- Pertamina 3-Color Ribbon Mini -->
-            <div class="hidden sm:flex h-1.5 w-16 overflow-hidden rounded-full shadow-sm">
+            <!-- Pertamina Official 3-Color Stripe -->
+            <div class="hidden sm:flex h-2 w-20 overflow-hidden rounded-full shadow-inner bg-slate-800">
                 <div class="h-full w-1/3 bg-brand-red"></div>
                 <div class="h-full w-1/3 bg-brand-blue"></div>
                 <div class="h-full w-1/3 bg-brand-green"></div>
             </div>
         </div>
 
-        <!-- Bagian Tengah: Visual 3D Pertamina Laboratory Emblem & Deskripsi -->
-        <div class="relative z-10 my-8 flex flex-col items-center text-center lg:my-0">
+        <!-- Konten Tengah: Overview Modul Operasional Nyata (Bukan AI Sci-Fi) -->
+        <div class="relative z-10 my-8 space-y-6 lg:my-auto">
             
-            <!-- Gambar 3D Pertamina Laboratory Badge yang Elegan -->
-            <div class="group relative mb-6">
-                <!-- Soft ambient aura -->
-                <div class="absolute -inset-2 rounded-3xl bg-brand-blue/30 blur-xl transition duration-500 group-hover:bg-brand-blue/40"></div>
-                
-                <div class="relative h-60 w-60 sm:h-64 sm:w-64 overflow-hidden rounded-3xl border border-white/20 bg-slate-900/60 p-2 shadow-2xl backdrop-blur-md">
-                    <img src="{{ asset('images/pertamina-lab-badge.jpg') }}" 
-                         alt="Pertamina Fuel Quality Control Laboratory" 
-                         class="h-full w-full rounded-2xl object-cover transition duration-300 group-hover:scale-105">
+            <!-- Headline & Narasi Enterprise -->
+            <div>
+                <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300 backdrop-blur-sm">
+                    <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Sistem Operasional Laboratorium &amp; Penyaluran BBM
                 </div>
+                <h1 class="mt-3 font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-white lg:text-4xl">
+                    Standardisasi Mutu &amp; Pengawasan Kuantitas Terpadu
+                </h1>
+                <p class="mt-2.5 max-w-xl text-xs sm:text-sm leading-relaxed text-slate-300">
+                    Platform digital terintegrasi untuk pengujian spesifikasi laboratorium produk BBM, checklist inspeksi kelaikan armada Mobil Tangki, dan rekapitulasi retain sampel penyerahan harian.
+                </p>
             </div>
 
-            <!-- Teks Judul & Keterangan -->
-            <h1 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-                Fuel Maos
-            </h1>
-            <p class="mt-2.5 max-w-md text-xs sm:text-sm leading-relaxed text-blue-100/85">
-                Satu sistem terpadu QC BBM: uji spesifikasi &amp; sertifikat mutu, checklist armada Mobil Tangki, dan rekap Retain Sampel Penyaluran MT dengan Density'15 otomatis.
-            </p>
+            <!-- 3 Pilar Fitur Operasional Enterprise -->
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                
+                <!-- Card 1: QC Mutu BBM -->
+                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md transition hover:border-white/20 hover:bg-white/[0.07]">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-blue/20 text-brand-blue ring-1 ring-brand-blue/40 mb-3">
+                        <i data-lucide="flask-conical" class="h-5 w-5 text-blue-400"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white">Uji Mutu BBM</h3>
+                    <p class="mt-1 text-[11px] leading-relaxed text-slate-300">
+                        Evaluasi otomatis Density 15°C, Flash Point, Distilasi, &amp; Cetane Index sesuai spesifikasi resmi.
+                    </p>
+                </div>
 
-            <!-- 4 Poin Keunggulan Simpel & Rapi -->
-            <div class="mt-6 flex flex-wrap justify-center gap-2">
-                <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur-sm">
-                    <i data-lucide="check" class="h-3.5 w-3.5 text-brand-green"></i> Evaluasi Spesifikasi Otomatis
+                <!-- Card 2: Checklist Mobil Tangki -->
+                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md transition hover:border-white/20 hover:bg-white/[0.07]">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-red/20 text-brand-red ring-1 ring-brand-red/40 mb-3">
+                        <i data-lucide="truck" class="h-5 w-5 text-red-400"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white">Checklist MT</h3>
+                    <p class="mt-1 text-[11px] leading-relaxed text-slate-300">
+                        Inspeksi 16 poin kompartemen, segel, bottom loader, dan grounding armada pra-penyaluran.
+                    </p>
+                </div>
+
+                <!-- Card 3: Retain Sampel MT -->
+                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md transition hover:border-white/20 hover:bg-white/[0.07]">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-green/20 text-brand-green ring-1 ring-brand-green/40 mb-3">
+                        <i data-lucide="archive" class="h-5 w-5 text-lime-400"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white">Retain Sampel</h3>
+                    <p class="mt-1 text-[11px] leading-relaxed text-slate-300">
+                        Log retensi sampel 48 jam dengan konversi ASTM-IP Petroleum Measurement Table 53B.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Standar & Regulasi Kepatuhan -->
+            <div class="flex flex-wrap items-center gap-2 pt-2 text-xs">
+                <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1">Standar Kepatuhan:</span>
+                <span class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-200">
+                    <i data-lucide="check-circle-2" class="h-3.5 w-3.5 text-brand-green"></i> ASTM D1298 &amp; D86
                 </span>
-                <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur-sm">
-                    <i data-lucide="check" class="h-3.5 w-3.5 text-brand-green"></i> Berita Acara &amp; Sertifikat Mutu
+                <span class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-200">
+                    <i data-lucide="check-circle-2" class="h-3.5 w-3.5 text-brand-green"></i> SK Dirjen Migas
                 </span>
-                <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur-sm">
-                    <i data-lucide="check" class="h-3.5 w-3.5 text-brand-green"></i> Checklist Armada Mobil Tangki
-                </span>
-                <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur-sm">
-                    <i data-lucide="check" class="h-3.5 w-3.5 text-brand-green"></i> Rekap Retain Sampel MT &amp; Density'15 Otomatis
+                <span class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-200">
+                    <i data-lucide="check-circle-2" class="h-3.5 w-3.5 text-brand-green"></i> SNI ISO/IEC 17025
                 </span>
             </div>
+
         </div>
 
         <!-- Footer Panel Kiri -->
-        <div class="relative z-10 flex items-center justify-between text-xs text-blue-200/60">
-            <p>&copy; {{ date('Y') }} PT Pertamina Patra Niaga</p>
-            <span class="text-[11px] text-slate-400">Sistem Internal Terbatas</span>
+        <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between border-t border-white/10 pt-4 text-xs text-slate-400 gap-2">
+            <p>&copy; {{ date('Y') }} PT Pertamina Patra Niaga &bull; Fuel Terminal Maos</p>
+            <div class="flex items-center gap-2 text-[11px]">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                <span>Server Operasional Aktif</span>
+            </div>
         </div>
     </div>
 
 
     <!-- ================================================================= -->
-    <!-- PANEL KANAN: FORM LOGIN ELEGAN DALAM CARD                         -->
+    <!-- PANEL KANAN: FORM LOGIN ELEGAN & PROFESIONAL                      -->
     <!-- ================================================================= -->
-    <div class="flex w-full flex-1 items-center justify-center bg-slate-100/80 p-6 sm:p-10 lg:w-1/2 lg:p-12 xl:p-16">
+    <div class="flex w-full flex-1 items-center justify-center bg-slate-50 p-6 sm:p-10 lg:w-[46%] lg:p-12 xl:p-16">
         
-        <!-- Elevated Card Container yang Tegas & Rapi -->
-        <div class="w-full max-w-[420px] overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-7 sm:p-9 shadow-xl shadow-slate-200/60">
+        <!-- Elevated Card Container yang Bersih & Tegas -->
+        <div class="w-full max-w-[440px] rounded-2xl border border-slate-200/80 bg-white p-7 sm:p-9 shadow-xl shadow-slate-200/50">
 
-            <!-- Pertamina 3-Color Top Accent -->
-            <div class="h-1.5 w-full bg-gradient-to-r from-brand-red via-brand-blue to-brand-green rounded-full mb-6"></div>
+            <!-- Pertamina 3-Color Top Ribbon Accent -->
+            <div class="flex h-1.5 w-full overflow-hidden rounded-full mb-6">
+                <div class="h-full w-1/3 bg-brand-red"></div>
+                <div class="h-full w-1/3 bg-brand-blue"></div>
+                <div class="h-full w-1/3 bg-brand-green"></div>
+            </div>
 
             <!-- Header Card -->
             <div class="mb-6">
-                <h2 class="font-display text-2xl font-bold text-slate-900">
-                    Masuk ke Sistem
-                </h2>
-                <p class="mt-1 text-xs sm:text-sm text-slate-500">
-                    Gunakan akun resmi untuk mengakses Uji Mutu BBM, Checklist MT Maos, dan Retain Sampel MT.
+                <div class="flex items-center justify-between">
+                    <h2 class="font-display text-2xl font-bold text-slate-900">
+                        Masuk ke Portal
+                    </h2>
+                    <span class="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-brand-blue border border-blue-100">
+                        Fuel Maos
+                    </span>
+                </div>
+                <p class="mt-1.5 text-xs sm:text-sm text-slate-500">
+                    Masukkan kredensial akun Anda untuk mengakses sistem Quality &amp; Quantity Control.
                 </p>
             </div>
 
             <!-- Alert Error -->
             @if ($errors->any())
-                <div class="mb-5 flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                <div class="mb-5 flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-xs text-red-700">
                     <i data-lucide="alert-circle" class="mt-0.5 h-4 w-4 shrink-0 text-brand-red"></i>
                     <span>{{ $errors->first() }}</span>
                 </div>
@@ -171,7 +231,9 @@
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-700">Email</label>
+                    <label for="email" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Email Perusahaan / Akun
+                    </label>
                     <div class="relative">
                         <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                             <i data-lucide="mail" class="h-4 w-4"></i>
@@ -185,7 +247,11 @@
 
                 <!-- Kata Sandi -->
                 <div>
-                    <label for="password" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-700">Kata Sandi</label>
+                    <div class="mb-1.5 flex items-center justify-between">
+                        <label for="password" class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                            Kata Sandi
+                        </label>
+                    </div>
                     <div class="relative">
                         <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                             <i data-lucide="lock" class="h-4 w-4"></i>
@@ -204,18 +270,20 @@
                     </div>
                 </div>
 
-                <!-- Remember Me -->
+                <!-- Remember Me & Status -->
                 <div class="flex items-center justify-between pt-0.5">
                     <label class="flex cursor-pointer items-center gap-2 text-xs text-slate-600 select-none">
                         <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue/30 accent-brand-blue">
-                        <span>Ingat saya</span>
+                        <span>Ingat sesi saya</span>
                     </label>
-                    <span class="text-[11px] text-slate-400">Sesi Terproteksi</span>
+                    <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                        <i data-lucide="shield" class="h-3 w-3 text-brand-blue"></i> TLS Terproteksi
+                    </span>
                 </div>
 
                 <!-- Tombol Submit -->
                 <button type="submit"
-                        class="mt-1.5 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue py-3 px-4 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition duration-150 hover:bg-brand-blueHover hover:shadow-lg hover:shadow-brand-blue/30 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2">
+                        class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue py-3 px-4 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition duration-150 hover:bg-brand-blueHover hover:shadow-lg hover:shadow-brand-blue/30 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2">
                     <span>Masuk ke Fuel Maos</span>
                     <i data-lucide="arrow-right" class="h-4 w-4"></i>
                 </button>
@@ -223,41 +291,56 @@
 
             <!-- Akses Cepat Akun Demo (3 Sample Peran) -->
             <div class="mt-6 border-t border-slate-100 pt-5">
-                <p class="mb-2.5 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    Akses Cepat Pengujian (3 Sample Peran)
-                </p>
+                <div class="flex items-center justify-between mb-2.5">
+                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Akses Cepat Pengujian Peran
+                    </p>
+                    <span class="text-[10px] text-slate-400">Klik untuk isi otomatis</span>
+                </div>
+                
                 <div class="grid grid-cols-3 gap-2">
+                    <!-- Admin Lab -->
                     <button type="button"
                             @click="fillDemo('admin@labqq.test', 'password123', 'admin')"
-                            :class="activeDemo === 'admin' ? 'border-brand-blue bg-blue-50 text-brand-blue font-semibold ring-1 ring-brand-blue' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'"
-                            class="flex flex-col items-center justify-center rounded-xl border py-2 px-1.5 text-center transition">
-                        <i data-lucide="shield-check" class="h-4 w-4 text-brand-blue mb-1"></i>
+                            :class="activeDemo === 'admin' ? 'border-brand-blue bg-blue-50/80 text-brand-blue font-semibold ring-2 ring-brand-blue/30 shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'"
+                            class="flex flex-col items-center justify-center rounded-xl border p-2 text-center transition group">
+                        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-brand-blue mb-1 group-hover:bg-brand-blue group-hover:text-white transition">
+                            <i data-lucide="shield-check" class="h-4 w-4"></i>
+                        </div>
                         <span class="text-[11px] font-bold leading-tight">Admin Lab</span>
                         <span class="text-[9.5px] text-slate-400 leading-tight">Supervisor</span>
                     </button>
+
+                    <!-- Petugas Lapangan -->
                     <button type="button"
                             @click="fillDemo('petugas@labqq.test', 'password123', 'petugas')"
-                            :class="activeDemo === 'petugas' ? 'border-brand-red bg-red-50 text-brand-red font-semibold ring-1 ring-brand-red' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'"
-                            class="flex flex-col items-center justify-center rounded-xl border py-2 px-1.5 text-center transition">
-                        <i data-lucide="truck" class="h-4 w-4 text-brand-red mb-1"></i>
-                        <span class="text-[11px] font-bold leading-tight">Petugas Lapangan</span>
-                        <span class="text-[9.5px] text-slate-400 leading-tight">QC &amp; Checklist MT</span>
+                            :class="activeDemo === 'petugas' ? 'border-brand-red bg-red-50/80 text-brand-red font-semibold ring-2 ring-brand-red/30 shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'"
+                            class="flex flex-col items-center justify-center rounded-xl border p-2 text-center transition group">
+                        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-red-100 text-brand-red mb-1 group-hover:bg-brand-red group-hover:text-white transition">
+                            <i data-lucide="truck" class="h-4 w-4"></i>
+                        </div>
+                        <span class="text-[11px] font-bold leading-tight">Petugas MT</span>
+                        <span class="text-[9.5px] text-slate-400 leading-tight">QC &amp; Lapangan</span>
                     </button>
+
+                    <!-- User Viewer -->
                     <button type="button"
                             @click="fillDemo('viewer@labqq.test', 'password123', 'viewer')"
-                            :class="activeDemo === 'viewer' ? 'border-emerald-600 bg-emerald-50 text-emerald-700 font-semibold ring-1 ring-emerald-600' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'"
-                            class="flex flex-col items-center justify-center rounded-xl border py-2 px-1.5 text-center transition">
-                        <i data-lucide="eye" class="h-4 w-4 text-emerald-600 mb-1"></i>
-                        <span class="text-[11px] font-bold leading-tight">User Viewer</span>
-                        <span class="text-[9.5px] text-slate-400 leading-tight">Hanya Lihat (SPBU)</span>
+                            :class="activeDemo === 'viewer' ? 'border-emerald-600 bg-emerald-50/80 text-emerald-700 font-semibold ring-2 ring-emerald-600/30 shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'"
+                            class="flex flex-col items-center justify-center rounded-xl border p-2 text-center transition group">
+                        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 mb-1 group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <i data-lucide="eye" class="h-4 w-4"></i>
+                        </div>
+                        <span class="text-[11px] font-bold leading-tight">Viewer</span>
+                        <span class="text-[9.5px] text-slate-400 leading-tight">Monitoring SPBU</span>
                     </button>
                 </div>
             </div>
 
             <!-- Footer Keamanan Singkat -->
-            <div class="mt-6 flex items-center justify-center gap-1.5 text-center text-[11px] text-slate-400">
-                <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-600"></i>
-                <span>Enkripsi TLS &bull; Standar ASTM &amp; SNI Mutu BBM</span>
+            <div class="mt-6 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400 border-t border-slate-100 pt-4">
+                <i data-lucide="lock" class="h-3.5 w-3.5 text-slate-400"></i>
+                <span>Sistem Khusus Operasional Internal PT Pertamina Patra Niaga</span>
             </div>
 
         </div>
