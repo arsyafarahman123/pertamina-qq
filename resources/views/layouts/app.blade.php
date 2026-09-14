@@ -189,12 +189,16 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="hidden text-right sm:block">
-                    <p class="text-sm font-semibold text-slate-700">{{ now()->translatedFormat('l, d F Y') }}</p>
-                    <p class="text-xs text-slate-400">{{ now()->translatedFormat('H:i') }} WIB</p>
+                <div class="hidden text-right sm:block" x-data="liveNavbarClock()" x-init="start()">
+                    <p class="text-sm font-bold text-slate-800 tracking-tight" x-text="tanggalText">{{ now()->locale('id')->translatedFormat('l, d F Y') }}</p>
+                    <div class="flex items-center justify-end gap-1.5 text-xs font-semibold text-slate-500">
+                        <span class="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="font-mono text-slate-800 font-bold tracking-wider" x-text="jamText">{{ now()->timezone('Asia/Jakarta')->format('H:i:s') }}</span>
+                        <span class="text-[10px] font-black text-brand-blue uppercase">WIB</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white py-1 pl-1 pr-3">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-red to-brand-blue text-xs font-bold text-white">
+                <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white py-1 pl-1 pr-3 shadow-sm">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-red to-brand-blue text-xs font-bold text-white shadow-sm">
                         {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
                     </div>
                     <div class="hidden leading-tight sm:block">
@@ -336,8 +340,49 @@
                 .catch(() => {
                     this.typing = false;
                     this.messages.push({ id: this.nextId(), from: 'bot', text: 'Gagal terhubung ke server.', saran: [] });
-                });
             },
+        };
+    }
+
+    function liveNavbarClock() {
+        return {
+            tanggalText: '',
+            jamText: '',
+            start() {
+                const hariMap = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                const bulanMap = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+                const tick = () => {
+                    const now = new Date();
+                    try {
+                        const dtfDate = new Intl.DateTimeFormat('id-ID', {
+                            timeZone: 'Asia/Jakarta',
+                            weekday: 'long',
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+                        const dtfTime = new Intl.DateTimeFormat('id-ID', {
+                            timeZone: 'Asia/Jakarta',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                            hour12: false
+                        });
+                        this.tanggalText = dtfDate.format(now);
+                        this.jamText = dtfTime.format(now).replace(/\./g, ':');
+                    } catch (e) {
+                        const d = new Date();
+                        this.tanggalText = `${hariMap[d.getDay()]}, ${d.getDate()} ${bulanMap[d.getMonth()]} ${d.getFullYear()}`;
+                        const hh = String(d.getHours()).padStart(2, '0');
+                        const mm = String(d.getMinutes()).padStart(2, '0');
+                        const ss = String(d.getSeconds()).padStart(2, '0');
+                        this.jamText = `${hh}:${mm}:${ss}`;
+                    }
+                };
+                tick();
+                setInterval(tick, 1000);
+            }
         };
     }
 </script>
