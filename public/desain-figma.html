@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma UI Design Suite — Fuel Maos Pertamina Patra Niaga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #181818; color: #fff; }
+        .figma-canvas {
+            background-color: #242424;
+            background-image: radial-gradient(#3a3a3a 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+        }
+        .artboard-card {
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transition: all .2s ease;
+        }
+        .artboard-card:hover {
+            box-shadow: 0 35px 70px -15px rgba(0, 108, 184, 0.25), 0 0 0 1.5px #006CB8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- FIGMA TOP TOOLBAR -->
+    <header class="h-13 bg-[#202020] border-b border-[#333] flex items-center justify-between px-4 py-2 text-xs font-semibold select-none z-30">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 text-white font-bold tracking-tight">
+                <svg class="h-6 w-6" viewBox="0 0 38 57" fill="none">
+                    <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+                    <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+                    <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" fill="#FF7262"/>
+                    <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" fill="#F24E1E"/>
+                    <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" fill="#A259FF"/>
+                </svg>
+                <span class="text-sm font-extrabold text-white">Fuel Maos — Master UI Design System</span>
+            </div>
+            <span class="text-slate-600">|</span>
+            <span class="text-slate-400 font-medium">PT Pertamina Patra Niaga · FT Maos</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-[11px] text-slate-400 bg-[#2c2c2c] px-3 py-1.5 rounded-lg border border-[#444] font-mono">
+                6 Artboards · 100% Vector & Specs
+            </span>
+            <a href="/dashboard" class="bg-gradient-to-r from-[#006CB8] to-[#003D78] hover:from-blue-600 hover:to-blue-800 text-white px-3.5 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 shadow">
+                <i data-lucide="play" class="h-3.5 w-3.5 fill-current"></i> Jalankan Aplikasi
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN WORKSPACE -->
+    <div class="flex-1 flex overflow-hidden">
+        
+        <!-- LEFT SIDEBAR: LAYER TREE & DESIGN TOKENS -->
+        <aside class="w-72 bg-[#1e1e1e] border-r border-[#303030] p-4 text-xs hidden lg:block overflow-y-auto">
+            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-3">All Screen Artboards</p>
+            <div class="space-y-1 text-slate-300 font-medium">
+                <a href="#artboard-login" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#2a2a2a] transition text-slate-200">
+                    <i data-lucide="lock" class="h-3.5 w-3.5 text-blue-400"></i> 1. Portal Masuk (Login)
+                </a>
+                <a href="#artboard-dashboard" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#2a2a2a] transition text-slate-200">
+                    <i data-lucide="layout-dashboard" class="h-3.5 w-3.5 text-emerald-400"></i> 2. Dashboard QC Monitoring
+                </a>
+                <a href="#artboard-retain" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#2a2a2a] transition text-slate-200">
+                    <i data-lucide="flask-conical" class="h-3.5 w-3.5 text-amber-400"></i> 3. Retain Sampel MT (ASTM 53)
+                </a>
+                <a href="#artboard-ujibbm" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#2a2a2a] transition text-slate-200">
+                    <i data-lucide="fuel" class="h-3.5 w-3.5 text-rose-400"></i> 4. Uji Kesesuaian Spesifikasi
+                </a>
+                <a href="#artboard-checklist" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#2a2a2a] transition text-slate-200">
+                    <i data-lucide="truck" class="h-3.5 w-3.5 text-yellow-400"></i> 5. Checklist MT Maos (Master A4)
+                </a>
+                <a href="#artboard-riwayat" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#2a2a2a] transition text-slate-200">
+                    <i data-lucide="history" class="h-3.5 w-3.5 text-purple-400"></i> 6. Riwayat &amp; Sertifikat Uji
+                </a>
+            </div>
+
+            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-8 mb-3">Pertamina Design Tokens</p>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between bg-[#262626] p-2.5 rounded-xl border border-[#383838]">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-5 w-5 rounded-lg bg-[#ED1B2F] shadow-sm"></span>
+                        <span class="text-[11px] font-bold font-mono">#ED1B2F</span>
+                    </div>
+                    <span class="text-[10.5px] text-slate-400 font-semibold">Brand Red</span>
+                </div>
+                <div class="flex items-center justify-between bg-[#262626] p-2.5 rounded-xl border border-[#383838]">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-5 w-5 rounded-lg bg-[#006CB8] shadow-sm"></span>
+                        <span class="text-[11px] font-bold font-mono">#006CB8</span>
+                    </div>
+                    <span class="text-[10.5px] text-slate-400 font-semibold">Brand Blue</span>
+                </div>
+                <div class="flex items-center justify-between bg-[#262626] p-2.5 rounded-xl border border-[#383838]">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-5 w-5 rounded-lg bg-[#ACC42A] shadow-sm"></span>
+                        <span class="text-[11px] font-bold font-mono">#ACC42A</span>
+                    </div>
+                    <span class="text-[10.5px] text-slate-400 font-semibold">Brand Green</span>
+                </div>
+                <div class="flex items-center justify-between bg-[#262626] p-2.5 rounded-xl border border-[#383838]">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-5 w-5 rounded-lg bg-[#FFD400] shadow-sm"></span>
+                        <span class="text-[11px] font-bold font-mono text-black">#FFD400</span>
+                    </div>
+                    <span class="text-[10.5px] text-slate-400 font-semibold">Table Yellow</span>
+                </div>
+                <div class="flex items-center justify-between bg-[#262626] p-2.5 rounded-xl border border-[#383838]">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-5 w-5 rounded-lg bg-[#071B33] shadow-sm border border-slate-600"></span>
+                        <span class="text-[11px] font-bold font-mono">#071B33</span>
+                    </div>
+                    <span class="text-[10.5px] text-slate-400 font-semibold">Dark Navy</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER CANVAS: FULL SCREENS -->
+        <main class="flex-1 figma-canvas overflow-auto p-6 sm:p-12 space-y-16">
+
+            <!-- 1. ARTBOARD: PORTAL MASUK (LOGIN) -->
+            <div id="artboard-login" class="max-w-5xl mx-auto scroll-mt-6">
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+                        <b># Frame 1: Portal Masuk (Login Screen)</b> · 1440x900
+                    </span>
+                    <a href="/login" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1 font-semibold">
+                        Buka Live Web <i data-lucide="arrow-up-right" class="h-3 w-3"></i>
+                    </a>
+                </div>
+                <div class="artboard-card rounded-3xl overflow-hidden bg-white text-slate-900 border border-[#3a3a3a]">
+                    <iframe src="/login" class="w-full h-[620px] border-0"></iframe>
+                </div>
+            </div>
+
+            <!-- 2. ARTBOARD: MAIN DASHBOARD QC MONITORING -->
+            <div id="artboard-dashboard" class="max-w-5xl mx-auto scroll-mt-6">
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                        <b># Frame 2: Dashboard QC Lab &amp; SOP Digital</b> · 1440x900
+                    </span>
+                    <a href="/dashboard" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1 font-semibold">
+                        Buka Live Web <i data-lucide="arrow-up-right" class="h-3 w-3"></i>
+                    </a>
+                </div>
+                <div class="artboard-card rounded-3xl overflow-hidden bg-white text-slate-900 border border-[#3a3a3a]">
+                    <iframe src="/dashboard" class="w-full h-[680px] border-0"></iframe>
+                </div>
+            </div>
+
+            <!-- 3. ARTBOARD: RETAIN SAMPEL PENYALURAN MT -->
+            <div id="artboard-retain" class="max-w-5xl mx-auto scroll-mt-6">
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+                        <b># Frame 3: Input Retain Sampel MT (ASTM Table 53/54)</b> · 1440x900
+                    </span>
+                    <a href="/retain-sampel/baru" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1 font-semibold">
+                        Buka Live Web <i data-lucide="arrow-up-right" class="h-3 w-3"></i>
+                    </a>
+                </div>
+                <div class="artboard-card rounded-3xl overflow-hidden bg-white text-slate-900 border border-[#3a3a3a]">
+                    <iframe src="/retain-sampel/baru" class="w-full h-[700px] border-0"></iframe>
+                </div>
+            </div>
+
+            <!-- 4. ARTBOARD: PENGUJIAN KESESUAIAN SPESIFIKASI BBM -->
+            <div id="artboard-ujibbm" class="max-w-5xl mx-auto scroll-mt-6">
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+                        <b># Frame 4: Pengujian Kesesuaian Spesifikasi BBM (ASTM Specs)</b> · 1440x900
+                    </span>
+                    <a href="/pengujian-bbm" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1 font-semibold">
+                        Buka Live Web <i data-lucide="arrow-up-right" class="h-3 w-3"></i>
+                    </a>
+                </div>
+                <div class="artboard-card rounded-3xl overflow-hidden bg-white text-slate-900 border border-[#3a3a3a]">
+                    <iframe src="/pengujian-bbm" class="w-full h-[700px] border-0"></iframe>
+                </div>
+            </div>
+
+            <!-- 5. ARTBOARD: FORM PEMERIKSAAN MOBIL TANGKI (MASTER A4) -->
+            <div id="artboard-checklist" class="max-w-5xl mx-auto scroll-mt-6">
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-yellow-500"></span>
+                        <b># Frame 5: Form Pemeriksaan Mobil Tangki - Fuel Terminal Maos</b> · A4 Sheet
+                    </span>
+                    <a href="/checklist-mt-maos/1/cetak" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1 font-semibold">
+                        Buka Live Web <i data-lucide="arrow-up-right" class="h-3 w-3"></i>
+                    </a>
+                </div>
+                <div class="artboard-card rounded-3xl overflow-hidden bg-white text-slate-900 border border-[#3a3a3a]">
+                    <iframe src="/checklist-mt-maos/1/cetak" class="w-full h-[800px] border-0"></iframe>
+                </div>
+            </div>
+
+            <!-- 6. ARTBOARD: RIWAYAT PENGUJIAN & SERTIFIKAT -->
+            <div id="artboard-riwayat" class="max-w-5xl mx-auto scroll-mt-6">
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="h-2 w-2 rounded-full bg-purple-500"></span>
+                        <b># Frame 6: Riwayat &amp; Sertifikat Hasil Uji Laboratorium</b> · 1440x900
+                    </span>
+                    <a href="/riwayat" target="_blank" class="text-blue-400 hover:underline flex items-center gap-1 font-semibold">
+                        Buka Live Web <i data-lucide="arrow-up-right" class="h-3 w-3"></i>
+                    </a>
+                </div>
+                <div class="artboard-card rounded-3xl overflow-hidden bg-white text-slate-900 border border-[#3a3a3a]">
+                    <iframe src="/riwayat" class="w-full h-[680px] border-0"></iframe>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
