@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
     Route::get('/riwayat/{hasilUji}', [RiwayatController::class, 'show'])->name('riwayat.show');
     Route::get('/riwayat/{hasilUji}/cetak', [RiwayatController::class, 'cetak'])->name('riwayat.cetak');
+    Route::get('/riwayat/{hasilUji}/foto-bukti', [RiwayatController::class, 'fotoBukti'])->name('riwayat.foto-bukti');
 
     // ---- Asisten Fuel Maos (chatbot) ----
     Route::get('/asisten', [FuelMaosController::class, 'halaman'])->name('fuelmaos.halaman');

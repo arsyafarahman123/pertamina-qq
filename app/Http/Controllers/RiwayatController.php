@@ -78,6 +78,18 @@ class RiwayatController extends Controller
         return view('riwayat.cetak', compact('hasilUji', 'evaluasi'));
     }
 
+    /**
+     * Serve foto bukti langsung dari storage/app/public (tanpa symlink).
+     * InfinityFree dan banyak shared hosting tidak mendukung symlink.
+     */
+    public function fotoBukti(HasilUji $hasilUji)
+    {
+        abort_unless($hasilUji->foto_bukti, 404);
+        abort_unless(Storage::disk('public')->exists($hasilUji->foto_bukti), 404);
+
+        return Storage::disk('public')->response($hasilUji->foto_bukti);
+    }
+
     public function edit(HasilUji $hasilUji)
     {
         $hasilUji->load('jenisUji');

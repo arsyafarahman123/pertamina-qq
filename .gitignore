@@ -4,8 +4,8 @@
 /storage/*.key
 /vendor
 .env
+!.env.production
 .env.backup
-.env.production
 .env.local
 .env.*.local
 

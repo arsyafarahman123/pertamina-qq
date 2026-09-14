@@ -31,10 +31,14 @@ class HasilUji extends Model
 
     /**
      * URL publik untuk foto bukti pengujian (nullable).
+     *
+     * Lewat route terkontrol (bukan asset('storage/...')) supaya tidak
+     * bergantung pada symlink `public/storage` — di InfinityFree/shared
+     * hosting, symlink sering tidak bisa dibuat.
      */
     public function fotoBuktiUrl(): ?string
     {
-        return $this->foto_bukti ? asset('storage/' . $this->foto_bukti) : null;
+        return $this->foto_bukti ? route('riwayat.foto-bukti', $this) : null;
     }
 
     /**
