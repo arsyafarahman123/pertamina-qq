@@ -16,10 +16,6 @@ class ChecklistMtMaosController extends Controller
 
         $query = ChecklistMtMaos::query()->latest('tanggal_periksa');
 
-        if ($user->isSpbu()) {
-            $query->where('pemilik', 'like', '%' . $user->spbu_name . '%');
-        }
-
         if ($search = $request->query('q')) {
             $query->where(function ($q) use ($search) {
                 $q->where('nomor_polisi', 'like', "%{$search}%")

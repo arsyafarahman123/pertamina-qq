@@ -141,11 +141,7 @@ class DashboardController extends Controller
             'total_semua' => RetainSampelMt::count(),
         ];
 
-        $checklistQuery = ChecklistMtMaos::query();
-        if (Auth::user() && Auth::user()->isSpbu()) {
-            $checklistQuery->where('pemilik', 'like', '%'.Auth::user()->spbu_name.'%');
-        }
-        $checklistSemua = $checklistQuery->get();
+        $checklistSemua = ChecklistMtMaos::all();
         $modulPenyaluran = [
             'total' => $checklistSemua->count(),
             'sesuai' => $checklistSemua->filter(fn ($c) => ! $c->isFlagged())->count(),
