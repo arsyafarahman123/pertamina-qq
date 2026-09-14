@@ -19,9 +19,10 @@
         * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            box-sizing: border-box;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             color: #000;
         }
         @media print {
@@ -41,11 +42,15 @@
         .btn-unduh:disabled { opacity: .6; cursor: wait; transform: none; }
         
         table.tbl-form {
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             width: 100%;
+            border-top: 1px solid #000;
+            border-left: 1px solid #000;
         }
-        table.tbl-form, table.tbl-form th, table.tbl-form td {
-            border: 1px solid #1e293b;
+        table.tbl-form th, table.tbl-form td {
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
         }
     </style>
 </head>
@@ -85,7 +90,7 @@
 <div id="area-cetak" class="mx-auto w-[794px] max-w-full bg-white px-7 py-5 shadow-2xl rounded-sm text-[10px] leading-tight box-border">
 
     {{-- 1. HEADER RESMI DENGAN LOGO PERTAMINA --}}
-    <div class="flex items-center justify-between border-b-2 border-black pb-2 mb-2">
+    <div class="flex items-center justify-between border-b-2 border-black pb-2 mb-2.5">
         <div class="flex items-center gap-2.5">
             {{-- Inline SVG Logo Pertamina (Crisp & High-Res) --}}
             <svg class="h-8 w-11 shrink-0" viewBox="-888 -667 651 495" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +124,7 @@
         <div class="flex items-center"><span class="w-28">Tanggal</span><span class="mr-2">:</span><span>{{ $checklist->tanggal_periksa->translatedFormat('d F Y') }}</span></div>
     </div>
 
-    {{-- 3. TABEL PEMERIKSAAN LENGKAP --}}
+    {{-- 3. TABEL PEMERIKSAAN LENGKAP TANPA ROWSPAN (BEBAS GLITCH HTML2CANVAS) --}}
     <table class="tbl-form w-full text-[9.5px]">
         <thead>
             <tr style="background:#FFD400;" class="text-black font-black uppercase text-center">
@@ -152,25 +157,22 @@
                         -
                     @endif
                 </td>
-                <td class="px-2 py-0.5 text-[9px]">Pelaksanaan pengecekan masa tera MT</td>
+                <td class="px-2 py-0.5 text-[8.5px]">Pelaksanaan pengecekan masa tera MT</td>
             </tr>
 
-            {{-- BARIS 2: 4 Kompartemen (a. Tinggi T2 Tera s/d f. Ijk Baut) --}}
+            {{-- BARIS 2: 4 Kompartemen (Satu TR Penuh, Bebas Gumpalan/Stray Lines) --}}
             @php
                 $teraList = $checklist->tera ?: \App\Models\ChecklistMtMaos::blankTera();
             @endphp
-            @foreach($teraList as $idx => $t)
-                <tr>
-                    @if($loop->first)
-                        <td rowspan="4" class="text-center font-bold align-middle bg-slate-50">2</td>
-                    @endif
-                    {{-- Kolom ITEM: Kompartemen box + sub-items a-f --}}
-                    <td class="p-0">
-                        <div class="flex items-stretch">
-                            <div class="w-14 shrink-0 flex items-center justify-center border-r border-slate-700 font-bold bg-slate-50 text-[9px] px-1 text-center">
+            <tr>
+                <td class="text-center font-bold py-1 align-middle bg-slate-50">2</td>
+                <td class="p-0">
+                    @foreach($teraList as $idx => $t)
+                        <div class="flex items-center {{ !$loop->last ? 'border-b border-black' : '' }} min-h-[35px]">
+                            <div class="w-14 shrink-0 font-bold bg-slate-100 text-[9px] text-center border-r border-black self-stretch flex items-center justify-center">
                                 Komp. {{ $t['komp'] ?? ($idx + 1) }}
                             </div>
-                            <div class="flex-1 grid grid-cols-2 text-[8.5px] leading-snug p-0.5 pl-1.5 gap-x-1">
+                            <div class="flex-1 grid grid-cols-2 text-[8.5px] leading-tight py-0.5 px-2 gap-x-2">
                                 <div>a. Tinggi T2 Tera</div>
                                 <div>b. Tinggi T2 Act</div>
                                 <div>c. Selisih T2</div>
@@ -179,27 +181,28 @@
                                 <div>f. Ijk Baut &amp; Segel</div>
                             </div>
                         </div>
-                    </td>
-                    <td class="text-center py-0.5">Mayor</td>
-                    <td class="text-center py-0.5">-</td>
-                    {{-- Kolom HASIL PEMERIKSAAN: Nilai a-f rapi --}}
-                    <td class="p-0.5">
-                        <div class="grid grid-cols-2 text-[8.5px] leading-snug gap-x-1 font-semibold text-slate-800">
-                            <div>a. {{ $t['tinggiTera'] !== '' && $t['tinggiTera'] !== null ? $t['tinggiTera'] : '-' }}</div>
-                            <div>b. {{ $t['tinggiAct'] !== '' && $t['tinggiAct'] !== null ? $t['tinggiAct'] : '-' }}</div>
-                            <div>c. {{ $t['selisih'] !== '' && $t['selisih'] !== null ? $t['selisih'] : '-' }}</div>
-                            <div>d. {{ $t['duduk'] !== '' && $t['duduk'] !== null ? $t['duduk'] : '-' }}</div>
-                            <div>e. {{ $t['volume'] !== '' && $t['volume'] !== null ? $t['volume'] : '-' }}</div>
-                            <div>f. {{ $t['ijkBaut'] !== '' && $t['ijkBaut'] !== null ? $t['ijkBaut'] : '-' }}</div>
+                    @endforeach
+                </td>
+                <td class="text-center py-1 font-semibold align-middle">Mayor</td>
+                <td class="text-center py-1 font-semibold align-middle">-</td>
+                <td class="p-0">
+                    @foreach($teraList as $idx => $t)
+                        <div class="{{ !$loop->last ? 'border-b border-black' : '' }} min-h-[35px] flex items-center px-2 py-0.5">
+                            <div class="w-full grid grid-cols-2 text-[8.5px] leading-tight gap-x-2 font-semibold text-slate-800">
+                                <div>a. {{ $t['tinggiTera'] !== '' && $t['tinggiTera'] !== null ? $t['tinggiTera'] : '-' }}</div>
+                                <div>b. {{ $t['tinggiAct'] !== '' && $t['tinggiAct'] !== null ? $t['tinggiAct'] : '-' }}</div>
+                                <div>c. {{ $t['selisih'] !== '' && $t['selisih'] !== null ? $t['selisih'] : '-' }}</div>
+                                <div>d. {{ $t['duduk'] !== '' && $t['duduk'] !== null ? $t['duduk'] : '-' }}</div>
+                                <div>e. {{ $t['volume'] !== '' && $t['volume'] !== null ? $t['volume'] : '-' }}</div>
+                                <div>f. {{ $t['ijkBaut'] !== '' && $t['ijkBaut'] !== null ? $t['ijkBaut'] : '-' }}</div>
+                            </div>
                         </div>
-                    </td>
-                    @if($loop->first)
-                        <td rowspan="4" class="px-2 py-1 align-middle leading-snug text-[8.5px]">
-                            Lakukan Pengecekan pada ketingian T2 tera dan Ijk Baut dan segel pada mobil Tangki
-                        </td>
-                    @endif
-                </tr>
-            @endforeach
+                    @endforeach
+                </td>
+                <td class="px-2 py-1 align-middle leading-snug text-[8.5px]">
+                    Lakukan Pengecekan pada ketingian T2 tera dan Ijk Baut dan segel pada mobil Tangki
+                </td>
+            </tr>
 
             {{-- BARIS 3: Manhole :- --}}
             <tr style="background:#cbd5e1;">
@@ -300,7 +303,7 @@
                 <td class="text-center py-0.5"></td>
                 <td class="text-center py-0.5"></td>
                 <td class="text-center py-0.5"></td>
-                <td class="px-2 py-0.5 font-bold text-[8.5px]">Menahan Handle & Bracket ( Mayor )</td>
+                <td class="px-2 py-0.5 font-bold text-[8.5px]">Menahan Handle &amp; Bracket ( Mayor )</td>
             </tr>
             @php
                 $bracketSub = [
@@ -515,7 +518,7 @@ function renderCanvas() {
         backgroundColor: '#ffffff',
         scrollX: 0,
         scrollY: 0,
-        windowWidth: document.documentElement.offsetWidth,
+        windowWidth: 1024,
         logging: false
     });
 }
