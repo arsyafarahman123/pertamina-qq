@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: pertamina-qq
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    envVars:
+      - key: APP_KEY
+        value: base64:4BIy9VPk9qdXb4Vk79OqYrkPY0ez21NLqtJbYoRmEWs=
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_NAME
+        value: "SOP Digital Lab QQ"
+      - key: DB_CONNECTION
+        value: sqlite
