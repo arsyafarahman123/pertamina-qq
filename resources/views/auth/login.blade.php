@@ -289,54 +289,6 @@
                 </button>
             </form>
 
-            <!-- Akses Cepat Akun Demo (3 Sample Peran) -->
-            <div class="mt-6 border-t border-slate-100 pt-5">
-                <div class="flex items-center justify-between mb-2.5">
-                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                        Akses Cepat Pengujian Peran
-                    </p>
-                    <span class="text-[10px] text-slate-400">Klik untuk isi otomatis</span>
-                </div>
-                
-                <div class="grid grid-cols-3 gap-2">
-                    <!-- Admin Lab -->
-                    <button type="button"
-                            @click="fillDemo('admin@labqq.test', 'password123', 'admin')"
-                            :class="activeDemo === 'admin' ? 'border-brand-blue bg-blue-50/80 text-brand-blue font-semibold ring-2 ring-brand-blue/30 shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'"
-                            class="flex flex-col items-center justify-center rounded-xl border p-2 text-center transition group">
-                        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-brand-blue mb-1 group-hover:bg-brand-blue group-hover:text-white transition">
-                            <i data-lucide="shield-check" class="h-4 w-4"></i>
-                        </div>
-                        <span class="text-[11px] font-bold leading-tight">Admin Lab</span>
-                        <span class="text-[9.5px] text-slate-400 leading-tight">Supervisor</span>
-                    </button>
-
-                    <!-- Petugas Lapangan -->
-                    <button type="button"
-                            @click="fillDemo('petugas@labqq.test', 'password123', 'petugas')"
-                            :class="activeDemo === 'petugas' ? 'border-brand-red bg-red-50/80 text-brand-red font-semibold ring-2 ring-brand-red/30 shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'"
-                            class="flex flex-col items-center justify-center rounded-xl border p-2 text-center transition group">
-                        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-red-100 text-brand-red mb-1 group-hover:bg-brand-red group-hover:text-white transition">
-                            <i data-lucide="truck" class="h-4 w-4"></i>
-                        </div>
-                        <span class="text-[11px] font-bold leading-tight">Petugas MT</span>
-                        <span class="text-[9.5px] text-slate-400 leading-tight">QC &amp; Lapangan</span>
-                    </button>
-
-                    <!-- User Viewer -->
-                    <button type="button"
-                            @click="fillDemo('viewer@labqq.test', 'password123', 'viewer')"
-                            :class="activeDemo === 'viewer' ? 'border-emerald-600 bg-emerald-50/80 text-emerald-700 font-semibold ring-2 ring-emerald-600/30 shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'"
-                            class="flex flex-col items-center justify-center rounded-xl border p-2 text-center transition group">
-                        <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 mb-1 group-hover:bg-emerald-600 group-hover:text-white transition">
-                            <i data-lucide="eye" class="h-4 w-4"></i>
-                        </div>
-                        <span class="text-[11px] font-bold leading-tight">Viewer</span>
-                        <span class="text-[9.5px] text-slate-400 leading-tight">Monitoring SPBU</span>
-                    </button>
-                </div>
-            </div>
-
             <!-- Footer Keamanan Singkat -->
             <div class="mt-6 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400 border-t border-slate-100 pt-4">
                 <i data-lucide="lock" class="h-3.5 w-3.5 text-slate-400"></i>

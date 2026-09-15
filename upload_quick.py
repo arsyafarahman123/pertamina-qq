@@ -16,6 +16,7 @@ files_to_upload = [
     'app/Models/ChecklistMtMaos.php',
     'checklists_seed.json',
     'database/seeders/ChecklistMtMaosSeeder.php',
+    'resources/views/auth/login.blade.php',
     'resources/views/checklist-mt-maos/cetak.blade.php',
     'resources/views/checklist-mt-maos/cetak-banyak.blade.php',
     'resources/views/checklist-mt-maos/form.blade.php',
