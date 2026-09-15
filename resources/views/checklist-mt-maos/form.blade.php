@@ -232,8 +232,10 @@ document.querySelectorAll('[data-toggle-group]').forEach(group => {
     });
 });
 
-// Auto-save form draft to localStorage
-function saveDraft() {
+// Auto-save form draft to localStorage with Debounce
+let autoSaveTimeout = null;
+
+function saveDraftNow() {
     try {
         const form = document.getElementById('checklist-form');
         if (!form) return;
@@ -243,7 +245,7 @@ function saveDraft() {
             if (key === '_token' || key === '_method') continue;
             dataObj[key] = val;
         }
-        dataObj._savedAt = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        dataObj._savedAt = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         localStorage.setItem(DRAFT_KEY, JSON.stringify(dataObj));
         
         const statusEl = document.getElementById('auto-save-status');
@@ -254,6 +256,11 @@ function saveDraft() {
     } catch (e) {
         console.warn('Gagal menyimpan draft ke localStorage:', e);
     }
+}
+
+function saveDraft() {
+    clearTimeout(autoSaveTimeout);
+    autoSaveTimeout = setTimeout(saveDraftNow, 200);
 }
 
 // Restore form draft from localStorage
@@ -268,14 +275,19 @@ function restoreDraft() {
         const form = document.getElementById('checklist-form');
         if (!form) return;
 
-        // Cek apakah ada field yang terisi di draft
+        // Cek dan isi setiap field dari draft
         for (let key in data) {
             if (key.startsWith('_')) continue;
             const val = data[key];
-            if (val && val !== '') {
-                hasRestoredValues = true;
-                const el = form.elements[key];
+            if (val !== undefined && val !== null && val !== '') {
+                let el = null;
+                try {
+                    el = form.querySelector(`[name="${CSS.escape(key)}"]`);
+                } catch(e) {
+                    el = form.elements[key];
+                }
                 if (el) {
+                    hasRestoredValues = true;
                     el.value = val;
                     // Jika hidden input toggle group, update tampilan tombol
                     const group = el.closest('[data-toggle-group]');
@@ -294,7 +306,7 @@ function restoreDraft() {
                 notice.classList.add('flex');
             }
             if (timeLabel && data._savedAt) {
-                timeLabel.textContent = 'Data terakhir disimpan otomatis pada ' + data._savedAt + '. Anda dapat melanjutkan pengisian.';
+                timeLabel.textContent = 'Data terakhir disimpan otomatis pada ' + data._savedAt + '. Anda dapat langsung melanjutkan pengisian tanpa takut hilang.';
             }
             if (window.lucide) lucide.createIcons();
         }
@@ -325,6 +337,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (e) {}
         });
     }
+
+    window.addEventListener('beforeunload', () => {
+        saveDraftNow();
+    });
 
     if (window.lucide) lucide.createIcons();
 });

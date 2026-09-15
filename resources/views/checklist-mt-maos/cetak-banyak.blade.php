@@ -396,14 +396,26 @@ async function unduhPdfSemua() {
             }
 
             const canvas = await html2canvas(el, {
-                scale: 2,
+                scale: 2.5,
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: '#ffffff',
                 scrollX: 0,
                 scrollY: 0,
-                windowWidth: 1024,
-                logging: false
+                x: 0,
+                y: 0,
+                width: el.offsetWidth,
+                height: el.offsetHeight,
+                windowWidth: 1200,
+                logging: false,
+                onclone: (clonedDoc) => {
+                    const clonedEl = clonedDoc.getElementById(el.id);
+                    if (clonedEl) {
+                        clonedEl.style.transform = 'none';
+                        clonedEl.style.margin = '0 auto';
+                        clonedEl.style.maxWidth = 'none';
+                    }
+                }
             });
 
             const imgRatio = canvas.width / canvas.height;

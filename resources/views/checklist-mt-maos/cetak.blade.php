@@ -373,14 +373,26 @@ function renderCanvas() {
     window.scrollTo(0, 0);
     const el = document.getElementById('area-cetak');
     return html2canvas(el, {
-        scale: 2,
+        scale: 2.5,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         scrollX: 0,
         scrollY: 0,
-        windowWidth: 1024,
-        logging: false
+        x: 0,
+        y: 0,
+        width: el.offsetWidth,
+        height: el.offsetHeight,
+        windowWidth: 1200,
+        logging: false,
+        onclone: (clonedDoc) => {
+            const clonedEl = clonedDoc.getElementById('area-cetak');
+            if (clonedEl) {
+                clonedEl.style.transform = 'none';
+                clonedEl.style.margin = '0 auto';
+                clonedEl.style.maxWidth = 'none';
+            }
+        }
     });
 }
 
@@ -415,7 +427,7 @@ async function unduhGambar(mimeType, ekstensi) {
 
     try {
         const canvas = await renderCanvas();
-        const quality = mimeType === 'image/jpeg' ? 0.95 : 1.0;
+        const quality = mimeType === 'image/jpeg' ? 0.98 : 1.0;
         const filename = namaFileDasar + ekstensi;
 
         // Gunakan canvas.toBlob untuk efisiensi memory & kompatibilitas tinggi di Mobile
@@ -470,7 +482,6 @@ async function unduhGambar(mimeType, ekstensi) {
 
             setTimeout(() => {
                 document.body.removeChild(link);
-                // Biarkan URL aktif jika dipakai di modal preview
             }, 1000);
 
             btn.disabled = false;
@@ -505,7 +516,7 @@ function unduhPdf() {
 
         const pageWidth = 210;
         const pageHeight = 297;
-        const margin = 5;
+        const margin = 4;
         const printableWidth = pageWidth - (margin * 2);
         const printableHeight = pageHeight - (margin * 2);
 
@@ -521,8 +532,8 @@ function unduhPdf() {
         const posX = margin + (printableWidth - imgWidth) / 2;
         const posY = margin + (printableHeight - imgHeight) / 2;
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        pdf.addImage(imgData, 'JPEG', posX, posY, imgWidth, imgHeight, undefined, 'FAST');
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        pdf.addImage(imgData, 'JPEG', posX, posY, imgWidth, imgHeight, undefined, 'SLOW');
         pdf.save(namaFileDasar + '.pdf');
     }).catch((err) => {
         console.error(err);
