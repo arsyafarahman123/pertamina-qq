@@ -12,6 +12,10 @@ class ChecklistMtMaosController extends Controller
     /** Dashboard: Admin/Petugas Lab QQ melihat semua, SPBU hanya melihat checklist miliknya sendiri. */
     public function index(Request $request)
     {
+        // Auto-fix November 2026 typo records to 2025
+        ChecklistMtMaos::where('tanggal_periksa', '2026-11-13')->update(['tanggal_periksa' => '2025-11-13']);
+        ChecklistMtMaos::where('tanggal_periksa', '2026-11-18')->update(['tanggal_periksa' => '2025-11-18']);
+
         $user = Auth::user();
 
         $query = ChecklistMtMaos::query()->latest('tanggal_periksa');
@@ -340,6 +344,10 @@ class ChecklistMtMaosController extends Controller
 
     public function runImportSeed()
     {
+        // Fix any existing November 2026 typos in DB
+        ChecklistMtMaos::where('tanggal_periksa', '2026-11-13')->update(['tanggal_periksa' => '2025-11-13']);
+        ChecklistMtMaos::where('tanggal_periksa', '2026-11-18')->update(['tanggal_periksa' => '2025-11-18']);
+
         $jsonPath = base_path('checklists_seed.json');
         if (!\Illuminate\Support\Facades\File::exists($jsonPath)) {
             return response()->json(['status' => 'error', 'message' => 'checklists_seed.json not found'], 404);

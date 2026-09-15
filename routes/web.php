@@ -86,3 +86,6 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::get('/checklist-mt-maos-import-seed-direct', [\App\Http\Controllers\ChecklistMtMaosController::class, 'runImportSeed']);
+
