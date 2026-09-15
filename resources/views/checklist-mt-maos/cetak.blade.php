@@ -210,11 +210,11 @@
                     </tr>
                     @php
                         $manholeSub = [
-                            ['no' => '1', 'key' => '3-0', 'item' => '1. Packing', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan tidak adanya rembesan dan kebocoran'],
-                            ['no' => '2', 'key' => '3-1', 'item' => '2. Las Titik Flange', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las titik dalam kondisi baik'],
-                            ['no' => '3', 'key' => '3-2', 'item' => '3. Las Titik Engsel', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las titik dalam kondisi baik'],
-                            ['no' => '4', 'key' => '3-3', 'item' => '4. Palang', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las palang dalam kondisi baik'],
-                            ['no' => '5', 'key' => '3-4', 'item' => '5. Kebersihan', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan kebersihan area manhole (tidak hitam)'],
+                            ['char' => 'a.', 'no' => '1', 'key' => '3-0', 'item' => 'Packing', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan tidak adanya rembesan dan kebocoran'],
+                            ['char' => 'b.', 'no' => '2', 'key' => '3-1', 'item' => 'Las Titik Flange', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las titik dalam kondisi baik'],
+                            ['char' => 'c.', 'no' => '3', 'key' => '3-2', 'item' => 'Las Titik Engsel', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las titik dalam kondisi baik'],
+                            ['char' => 'd.', 'no' => '4', 'key' => '3-3', 'item' => 'Palang', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las palang dalam kondisi baik'],
+                            ['char' => 'e.', 'no' => '5', 'key' => '3-4', 'item' => 'Kebersihan', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan kebersihan area manhole (tidak hitam)'],
                         ];
                     @endphp
                     @foreach($manholeSub as $m)
@@ -222,8 +222,8 @@
                             $res = $checklist->results[$m['key']] ?? ($checklist->results['3.' . $m['no']] ?? null);
                         @endphp
                         <tr>
-                            <td class="text-center text-slate-400 py-1"></td>
-                            <td class="px-2 py-1 pl-3">{{ $m['item'] }}</td>
+                            <td class="text-center font-bold text-slate-800 py-1">{{ $m['char'] }}</td>
+                            <td class="px-2 py-1">{{ $m['item'] }}</td>
                             <td class="text-center py-1">{{ $m['temuan'] }}</td>
                             <td class="text-center py-1">{{ $m['disp'] }}</td>
                             <td class="text-center py-1 font-bold">
@@ -231,7 +231,7 @@
                                 @elseif($res === 'bad') <span class="text-red-700">Temuan</span>
                                 @else <span class="text-slate-500 font-medium">-</span> @endif
                             </td>
-                            <td class="px-2 py-1 text-[8.5px]">{{ $m['ket'] }}</td>
+                            <td class="px-2 py-1 text-[8.5px] leading-snug">{{ $m['ket'] }}</td>
                         </tr>
                     @endforeach
 
@@ -247,7 +247,7 @@
                             @elseif($res4 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan angka T2 sesuai Tera</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan angka T2 sesuai Tera</td>
                     </tr>
 
                     {{-- BARIS 5: Tanda Sah Lemping Volume Nominal --}}
@@ -262,7 +262,7 @@
                             @elseif($res5 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan lemping sesuai dan kondisi segel</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan lemping sesuai dan kondisi segel</td>
                     </tr>
 
                     {{-- BARIS 6: Saluran Buangan Air --}}
@@ -277,7 +277,7 @@
                             @elseif($res6 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan tidak tersumbat aliran air</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan tidak tersumbat aliran air</td>
                     </tr>
 
                     {{-- BARIS 7: Pengecekan Kompartemen Dalam --}}
@@ -292,7 +292,7 @@
                             @elseif($res7 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan kebersihan dalam tangki</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan kebersihan dalam tangki</td>
                     </tr>
 
                     {{-- BARIS 8: Bracket : --}}
@@ -302,14 +302,14 @@
                         <td class="text-center py-1 bg-slate-200"></td>
                         <td class="text-center py-1 bg-slate-200"></td>
                         <td class="text-center py-1 bg-slate-200"></td>
-                        <td class="px-2 py-1 font-bold text-[8.5px] bg-slate-200">Menahan Handle &amp; Bracket ( Mayor )</td>
+                        <td class="px-2 py-1 font-bold text-[8.5px] bg-slate-200 leading-snug">Menahan Handle &amp; Bracket ( Mayor )</td>
                     </tr>
                     @php
                         $bracketSub = [
-                            ['no' => '1', 'key' => '8-0', 'item' => '1. Keefektifan bracket', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan bracket berfungsi dengan baik (digoyangkan)'],
-                            ['no' => '2', 'key' => '8-1', 'item' => '2. Las Titik Engsel', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan las titik dalam kondisi baik'],
-                            ['no' => '3', 'key' => '8-2', 'item' => '3. Pen', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan tidak ada ganjalan pada Pen'],
-                            ['no' => '4', 'key' => '8-3', 'item' => '4. Pengikat Pen', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan pengikat tidak mudah lepas'],
+                            ['char' => 'a.', 'no' => '1', 'key' => '8-0', 'item' => 'Keefektifan bracket', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan bracket berfungsi dengan baik (digoyangkan)'],
+                            ['char' => 'b.', 'no' => '2', 'key' => '8-1', 'item' => 'Las Titik Engsel', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan las titik dalam kondisi baik'],
+                            ['char' => 'c.', 'no' => '3', 'key' => '8-2', 'item' => 'Pen', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan tidak ada ganjalan pada Pen'],
+                            ['char' => 'd.', 'no' => '4', 'key' => '8-3', 'item' => 'Pengikat Pen', 'temuan' => 'Mayor', 'disp' => '-', 'ket' => 'Memastikan pengikat tidak mudah lepas'],
                         ];
                     @endphp
                     @foreach($bracketSub as $b)
@@ -317,8 +317,8 @@
                             $res = $checklist->results[$b['key']] ?? ($checklist->results['8.' . $b['no']] ?? null);
                         @endphp
                         <tr>
-                            <td class="text-center text-slate-400 py-1"></td>
-                            <td class="px-2 py-1 pl-3">{{ $b['item'] }}</td>
+                            <td class="text-center font-bold text-slate-800 py-1">{{ $b['char'] }}</td>
+                            <td class="px-2 py-1">{{ $b['item'] }}</td>
                             <td class="text-center py-1">{{ $b['temuan'] }}</td>
                             <td class="text-center py-1">{{ $b['disp'] }}</td>
                             <td class="text-center py-1 font-bold">
@@ -326,7 +326,7 @@
                                 @elseif($res === 'bad') <span class="text-red-700">Temuan</span>
                                 @else <span class="text-slate-500 font-medium">-</span> @endif
                             </td>
-                            <td class="px-2 py-1 text-[8.5px]">{{ $b['ket'] }}</td>
+                            <td class="px-2 py-1 text-[8.5px] leading-snug">{{ $b['ket'] }}</td>
                         </tr>
                     @endforeach
 
@@ -342,7 +342,7 @@
                             @elseif($res9 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan seal yang digunakan telah standard</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan seal yang digunakan telah standard</td>
                     </tr>
 
                     {{-- BARIS 10: Sight Glass : --}}
@@ -352,8 +352,8 @@
                     </tr>
                     @php
                         $sightSub = [
-                            ['no' => '1', 'key' => '10-0', 'item' => '1. Kebersihan', 'temuan' => 'Minor', 'disp' => '2 Week', 'ket' => 'Memastikan fungsi dari sight glass'],
-                            ['no' => '2', 'key' => '10-1', 'item' => '2. Las titik', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las titik dalam kondisi baik'],
+                            ['char' => 'a.', 'no' => '1', 'key' => '10-0', 'item' => 'Kebersihan', 'temuan' => 'Minor', 'disp' => '2 Week', 'ket' => 'Memastikan fungsi dari sight glass'],
+                            ['char' => 'b.', 'no' => '2', 'key' => '10-1', 'item' => 'Las titik', 'temuan' => 'Minor', 'disp' => '3 Day', 'ket' => 'Memastikan las titik dalam kondisi baik'],
                         ];
                     @endphp
                     @foreach($sightSub as $s)
@@ -361,8 +361,8 @@
                             $res = $checklist->results[$s['key']] ?? ($checklist->results['10.' . $s['no']] ?? null);
                         @endphp
                         <tr>
-                            <td class="text-center text-slate-400 py-1"></td>
-                            <td class="px-2 py-1 pl-3">{{ $s['item'] }}</td>
+                            <td class="text-center font-bold text-slate-800 py-1">{{ $s['char'] }}</td>
+                            <td class="px-2 py-1">{{ $s['item'] }}</td>
                             <td class="text-center py-1">{{ $s['temuan'] }}</td>
                             <td class="text-center py-1">{{ $s['disp'] }}</td>
                             <td class="text-center py-1 font-bold">
@@ -370,7 +370,7 @@
                                 @elseif($res === 'bad') <span class="text-red-700">Temuan</span>
                                 @else <span class="text-slate-500 font-medium">-</span> @endif
                             </td>
-                            <td class="px-2 py-1 text-[8.5px]">{{ $s['ket'] }}</td>
+                            <td class="px-2 py-1 text-[8.5px] leading-snug">{{ $s['ket'] }}</td>
                         </tr>
                     @endforeach
 
@@ -386,7 +386,7 @@
                             @elseif($res11 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan indikator produk tersedia</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan indikator produk tersedia</td>
                     </tr>
 
                     {{-- BARIS 12: Copy Sertifikat Tera Terpasang --}}
@@ -401,7 +401,7 @@
                             @elseif($res12 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan copy sertifikat tera terpasang pada box</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan copy sertifikat tera terpasang pada box</td>
                     </tr>
 
                     {{-- BARIS 13: Kebersihan area bottom loading --}}
@@ -416,7 +416,7 @@
                             @elseif($res13 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan kebersihan area bottom Loading</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan kebersihan area bottom Loading</td>
                     </tr>
 
                     {{-- BARIS 14: Las Titik Foot Valve --}}
@@ -431,7 +431,7 @@
                             @elseif($res14 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan las titik dalam kondisi baik</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan las titik dalam kondisi baik</td>
                     </tr>
 
                     {{-- BARIS 15: Selang Bongkar --}}
@@ -446,7 +446,7 @@
                             @elseif($res15 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Tersedianya selang bongkar 3" &amp; 4"</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Tersedianya selang bongkar 3" &amp; 4"</td>
                     </tr>
 
                     {{-- BARIS 16: Drainase Rumah Selang --}}
@@ -461,7 +461,7 @@
                             @elseif($res16 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan drainase rumah selang berfungsi</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan drainase rumah selang berfungsi</td>
                     </tr>
 
                     {{-- BARIS 17: Tanda Jaminan Pengikat TUM & Chassis --}}
@@ -476,7 +476,7 @@
                             @elseif($res17 === 'bad') <span class="text-red-700">Temuan</span>
                             @else <span class="text-slate-500 font-medium">-</span> @endif
                         </td>
-                        <td class="px-2 py-1 text-[8.5px]">Memastikan keadaan segel jaminan di chasis</td>
+                        <td class="px-2 py-1 text-[8.5px] leading-snug">Memastikan keadaan segel jaminan di chasis</td>
                     </tr>
                 </tbody>
             </table>
