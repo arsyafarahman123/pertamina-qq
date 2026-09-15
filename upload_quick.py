@@ -21,6 +21,7 @@ files_to_upload = [
     'resources/views/checklist-mt-maos/form.blade.php',
     'resources/views/checklist-mt-maos/index.blade.php',
     'resources/views/checklist-mt-maos/show.blade.php',
+    'public/images/pertamina-mark.svg',
 ]
 
 def connect_ftp():
