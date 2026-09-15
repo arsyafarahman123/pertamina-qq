@@ -62,15 +62,7 @@
     <script src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body class="h-full bg-slate-100 text-slate-800 antialiased"
-      x-data="{
-          activeDemo: '',
-          fillDemo(email, password, role) {
-              document.getElementById('email').value = email;
-              document.getElementById('password').value = password;
-              this.activeDemo = role;
-          }
-      }">
+<body class="h-full bg-slate-100 text-slate-800 antialiased">
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row">
 
