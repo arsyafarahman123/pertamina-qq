@@ -33,15 +33,53 @@ class ChecklistMtMaos extends Model
         return $this->belongsTo(User::class);
     }
 
-    /** Jumlah item yang ditandai "temuan" (tidak sesuai). */
+    /** Jumlah item yang ditandai "temuan" (tidak sesuai / ada catatan tambahan pemeriksa). */
     public function flagCount(): int
     {
-        return collect($this->results ?? [])->filter(fn ($v) => $v === 'bad')->count();
+        $count = collect($this->results ?? [])->filter(fn ($v) => $v === 'bad')->count();
+        if (!empty(trim($this->ket_tambahan ?? ''))) {
+            $count += 1;
+        }
+        return $count;
     }
 
     public function isFlagged(): bool
     {
         return $this->flagCount() > 0;
+    }
+
+    /** Daftar ringkas semua temuan dan keterangannya untuk ditampilkan di dashboard/tabel. */
+    public function summaryTemuan(): array
+    {
+        $flat = \App\Support\ChecklistMtMaosItems::flat();
+        $list = [];
+
+        // 1. Masa Tera
+        if (($this->results['1'] ?? null) === 'bad' || !empty($this->notes['1'])) {
+            $note = trim($this->notes['1'] ?? '');
+            $list[] = 'Masa Tera' . ($note ? ": {$note}" : '');
+        }
+
+        // 2. Kompartemen
+        if (($this->results['2'] ?? null) === 'bad' || !empty($this->notes['2'])) {
+            $note = trim($this->notes['2'] ?? '');
+            $list[] = 'Kompartemen Tera' . ($note ? ": {$note}" : '');
+        }
+
+        // 3. Item 3-17
+        foreach ($flat as $row) {
+            if (($this->results[$row['key']] ?? null) === 'bad') {
+                $note = trim($this->notes[$row['key']] ?? '');
+                $list[] = $row['label'] . ($note ? ": {$note}" : '');
+            }
+        }
+
+        // 4. Keterangan Tambahan
+        if (!empty(trim($this->ket_tambahan ?? ''))) {
+            $list[] = 'Keterangan: ' . trim($this->ket_tambahan);
+        }
+
+        return $list;
     }
 
     /** Blok tera kosong untuk 4 kompartemen — dipakai saat render form baru. */

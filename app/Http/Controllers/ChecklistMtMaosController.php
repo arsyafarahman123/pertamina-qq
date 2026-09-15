@@ -108,13 +108,29 @@ class ChecklistMtMaosController extends Controller
         return redirect()->route('checklist-mt-maos.index')->with('sukses', 'Checklist #' . $checklist->id . ' berhasil dihapus.');
     }
 
-    /** Payload JSON untuk tombol "Export Excel" (SheetJS, satu checklist). */
+    /** Payload JSON untuk tombol "Export Excel" (satu checklist). */
     public function exportOne(ChecklistMtMaos $checklist)
     {
         $this->authorizeView($checklist);
 
+        $flat = ChecklistMtMaosItems::flat();
+        $grouped = ChecklistMtMaosItems::all();
+
         return response()->json([
-            'filename' => 'Checklist_MT_' . $checklist->nomor_polisi . '_' . $checklist->tanggal_periksa->format('Y-m-d'),
+            'filename' => 'Checklist_MT_' . preg_replace('/[^A-Za-z0-9]+/', '', $checklist->nomor_polisi ?: 'Checklist') . '_' . $checklist->tanggal_periksa->format('Y-m-d'),
+            'nomor_polisi' => $checklist->nomor_polisi,
+            'pemilik' => $checklist->pemilik ?: '-',
+            'tanggal' => $checklist->tanggal_periksa->translatedFormat('d F Y'),
+            'exp_tera' => $checklist->tanggal_exp ?: '-',
+            'created_by' => $checklist->created_by ?: '-',
+            'status_label' => $checklist->isFlagged() ? ($checklist->flagCount() . ' Temuan') : 'Sesuai Standar',
+            'is_flagged' => $checklist->isFlagged(),
+            'tera' => $checklist->tera ?: ChecklistMtMaos::blankTera(),
+            'results' => $checklist->results ?: [],
+            'notes' => $checklist->notes ?: [],
+            'ket_tambahan' => $checklist->ket_tambahan ?: '',
+            'items_flat' => $flat,
+            'items_grouped' => $grouped,
             'sheets' => [$this->toSheetRows($checklist)],
         ]);
     }
@@ -135,22 +151,65 @@ class ChecklistMtMaosController extends Controller
         if ($user->isSpbu()) {
             $query->where('pemilik', 'like', '%' . $user->spbu_name . '%');
         }
+
+        // Filter berdasarkan checklist yang dicentang / dipilih
+        if ($idsParam = $request->query('ids')) {
+            $ids = is_array($idsParam) ? $idsParam : explode(',', (string) $idsParam);
+            $ids = array_filter(array_map('intval', $ids));
+            if (!empty($ids)) {
+                $query->whereIn('id', $ids);
+            }
+        }
+
         $checklists = $query->get();
 
         $flat = ChecklistMtMaosItems::flat();
 
         $armada = $checklists->map(function (ChecklistMtMaos $c) use ($flat) {
             $temuan = [];
+
+            // 1. Cek Masa Sertifikat Tera
+            if (($c->results['1'] ?? null) === 'bad' || !empty($c->notes['1'])) {
+                $temuan[] = [
+                    'label' => 'Masa Sertifikat Tera' . ($c->tanggal_exp ? ' (Exp: ' . $c->tanggal_exp . ')' : ''),
+                    'kategori' => 'Mandatory',
+                    'disp' => '-',
+                    'catatan' => trim($c->notes['1'] ?? '') ?: ($c->tanggal_exp ? 'Exp: ' . $c->tanggal_exp : 'Pemeriksaan masa berlaku sertifikat tera'),
+                ];
+            }
+
+            // 2. Cek Kompartemen Tera (jika ada catatan khusus atau ditandai)
+            if (($c->results['2'] ?? null) === 'bad' || !empty($c->notes['2'])) {
+                $temuan[] = [
+                    'label' => 'Pengukuran Kompartemen Tangki & Tera',
+                    'kategori' => 'Mandatory',
+                    'disp' => '-',
+                    'catatan' => trim($c->notes['2'] ?? '') ?: 'Pengecekan fisik kompartemen dan segel tera',
+                ];
+            }
+
+            // 3. Item 3-17 (Kondisi Fisik & Perlengkapan)
             foreach ($flat as $row) {
                 $res = $c->results[$row['key']] ?? null;
+                $note = trim($c->notes[$row['key']] ?? '');
                 if ($res === 'bad') {
                     $temuan[] = [
                         'label' => $row['label'],
                         'kategori' => $row['temuan'] === 'Mayor' ? 'Mandatory' : 'Non Mandatory',
-                        'disp' => $row['disp'],
-                        'catatan' => trim($c->notes[$row['key']] ?? ''),
+                        'disp' => $row['disp'] ?: '-',
+                        'catatan' => $note ?: $row['ket'],
                     ];
                 }
+            }
+
+            // 4. Keterangan Tambahan jika ada
+            if (!empty($c->ket_tambahan)) {
+                $temuan[] = [
+                    'label' => 'Catatan Tambahan Pemeriksa',
+                    'kategori' => 'Catatan',
+                    'disp' => '-',
+                    'catatan' => trim($c->ket_tambahan),
+                ];
             }
 
             // Item 3.1 "Manhole - Packing" = pengecekan rembesan/kebocoran utama -> dipakai
@@ -162,6 +221,7 @@ class ChecklistMtMaosController extends Controller
                 'nomor_polisi' => $c->nomor_polisi,
                 'pemilik' => $c->pemilik ?: '-',
                 'tanggal' => $c->tanggal_periksa->translatedFormat('d F Y'),
+                'exp_tera' => $c->tanggal_exp ?: '-',
                 'temuan' => $temuan,
                 'kedap' => $kedap,
                 'ket_tambahan' => $c->ket_tambahan ?: '',
@@ -179,24 +239,61 @@ class ChecklistMtMaosController extends Controller
     private function toSheetRows(ChecklistMtMaos $checklist): array
     {
         $rows = [];
-        $rows[] = ['Nomor Polisi', $checklist->nomor_polisi, 'Pemilik', $checklist->pemilik, 'Tanggal', (string) $checklist->tanggal_periksa->format('Y-m-d'), 'Exp Tera', $checklist->tanggal_exp];
+        $rows[] = ['FORM PEMERIKSAAN MOBIL TANGKI — FUEL TERMINAL MAOS'];
+        $rows[] = ['Nomor Polisi', $checklist->nomor_polisi, 'Pemilik', $checklist->pemilik, 'Tanggal', (string) $checklist->tanggal_periksa->format('Y-m-d'), 'Exp Tera', $checklist->tanggal_exp ?: '-'];
         $rows[] = [];
-        $rows[] = ['No', 'Item', 'Temuan', 'Dispensasi', 'Hasil', 'Keterangan'];
+        $rows[] = ['No', 'Item Pemeriksaan', 'Kategori', 'Dispensasi', 'Hasil', 'Catatan / Keterangan'];
 
+        // Baris 1: Masa Tera
+        $res1 = $checklist->results['1'] ?? null;
+        $note1 = trim($checklist->notes['1'] ?? '');
+        $rows[] = [
+            '1', 'Masa Sertifikat Tera', 'Mayor', '-',
+            $res1 === 'ok' ? 'Sesuai' : ($res1 === 'bad' ? 'Temuan' : ($checklist->tanggal_exp ? 'Sesuai' : '-')),
+            ($checklist->tanggal_exp ? 'Exp: ' . $checklist->tanggal_exp : 'Pengecekan masa tera') . ($note1 ? ' | Catatan: ' . $note1 : ''),
+        ];
+
+        // Baris 2: Kompartemen 1-4
+        $teraList = $checklist->tera ?: ChecklistMtMaos::blankTera();
+        foreach ($teraList as $idx => $t) {
+            $kompNo = $t['komp'] ?? ($idx + 1);
+            $teraRingkas = sprintf(
+                'T2 Tera: %s, T2 Act: %s, Selisih: %s, Dudukan: %s, Volume: %s, Ijk/Segel: %s',
+                $t['tinggiTera'] ?: ($t['a'] ?? '-'),
+                $t['tinggiAct'] ?: ($t['b'] ?? '-'),
+                $t['selisih'] ?: ($t['c'] ?? '-'),
+                $t['duduk'] ?: ($t['d'] ?? '-'),
+                $t['volume'] ?: ($t['e'] ?? '-'),
+                $t['ijkBaut'] ?: ($t['f'] ?? '-')
+            );
+            $rows[] = [
+                '2.' . $kompNo,
+                'Kompartemen ' . $kompNo . ' (Pengukuran & Tera)',
+                'Mayor',
+                '-',
+                'Tercatat',
+                $teraRingkas,
+            ];
+        }
+
+        // Baris 3-17: Item Fisik
         foreach (ChecklistMtMaosItems::flat() as $row) {
             $res = $checklist->results[$row['key']] ?? null;
             $catatanTambahan = trim($checklist->notes[$row['key']] ?? '');
-            $keterangan = $row['ket'] . ($catatanTambahan ? ' | Catatan: ' . $catatanTambahan : '');
+            $keterangan = $row['ket'] . ($catatanTambahan ? ' | CATATAN KHUSUS: ' . $catatanTambahan : '');
 
             $rows[] = [
-                $row['no'], $row['label'], $row['temuan'], $row['disp'],
+                $row['no'],
+                $row['label'],
+                $row['temuan'],
+                $row['disp'],
                 $res === 'ok' ? 'Sesuai' : ($res === 'bad' ? 'Temuan' : '-'),
                 $keterangan,
             ];
         }
 
         $rows[] = [];
-        $rows[] = ['Keterangan Tambahan', $checklist->ket_tambahan];
+        $rows[] = ['Keterangan Tambahan', $checklist->ket_tambahan ?: '-'];
 
         return [
             'name' => \Illuminate\Support\Str::limit(preg_replace('/[\\\\\/\?\*\[\]:]/', '', $checklist->nomor_polisi ?: 'Checklist'), 28, ''),

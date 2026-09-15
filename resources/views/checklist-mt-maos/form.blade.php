@@ -4,14 +4,35 @@
 @section('content')
 <div x-data="checklistForm()">
 
-    <form method="POST" action="{{ $isEdit ? route('checklist-mt-maos.update', $checklist) : route('checklist-mt-maos.store') }}">
+    <!-- Banner Pemulihan Draft (Auto-Save Recovery) -->
+    <div id="draft-notice" class="mb-5 hidden items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50/90 px-5 py-3.5 text-amber-900 shadow-sm">
+        <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white shadow-sm">
+                <i data-lucide="history" class="h-5 w-5"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold">Draft Isian Dipulihkan Otomatis</p>
+                <p class="text-xs text-amber-700" id="draft-time-label">Data yang sebelumnya Anda ketik telah dipulihkan agar tidak hilang saat halaman di-refresh.</p>
+            </div>
+        </div>
+        <button type="button" onclick="resetDraftForm()" class="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-white px-3 py-1.5 text-xs font-bold text-amber-800 shadow-sm transition hover:bg-amber-100">
+            <i data-lucide="rotate-ccw" class="h-3.5 w-3.5"></i> Reset Form
+        </button>
+    </div>
+
+    <form id="checklist-form" method="POST" action="{{ $isEdit ? route('checklist-mt-maos.update', $checklist) : route('checklist-mt-maos.store') }}">
         @csrf
         @if($isEdit) @method('PUT') @endif
 
         <div class="mb-5 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
             <div class="bg-gradient-to-r from-brand-dark to-brand-blueDark px-6 py-5 text-center">
                 <p class="text-lg font-extrabold uppercase tracking-wide text-white">Form Pemeriksaan Mobil Tangki</p>
-                <p class="text-xs font-semibold uppercase tracking-widest text-brand-gold">Fuel Terminal Maos</p>
+                <div class="mt-1 flex items-center justify-center gap-2">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-brand-gold">Fuel Terminal Maos</p>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 backdrop-blur" id="auto-save-status">
+                        <i data-lucide="cloud-check" class="h-3 w-3"></i> Auto-Save Aktif
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -149,15 +170,21 @@
 
         <!-- ===== Aksi sticky ===== -->
         <div class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-6px_16px_rgba(15,23,42,0.06)] backdrop-blur lg:pl-[19rem]">
-            <div class="mx-auto flex max-w-7xl justify-end gap-2.5 px-0 lg:px-4">
-                <a href="{{ $isEdit ? route('checklist-mt-maos.show', $checklist) : route('checklist-mt-maos.index') }}"
-                   class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50">
-                    Batal
-                </a>
-                <button type="submit"
-                        class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark">
-                    <i data-lucide="save" class="h-4 w-4"></i> Simpan Checklist
-                </button>
+            <div class="mx-auto flex max-w-7xl items-center justify-between gap-2.5 px-0 lg:px-4">
+                <div class="flex items-center gap-2 text-xs text-slate-500">
+                    <span class="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="hidden sm:inline">Tersimpan otomatis di perangkat</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <a href="{{ $isEdit ? route('checklist-mt-maos.show', $checklist) : route('checklist-mt-maos.index') }}"
+                       class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50">
+                        Batal
+                    </a>
+                    <button type="submit"
+                            class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark">
+                        <i data-lucide="save" class="h-4 w-4"></i> Simpan Checklist
+                    </button>
+                </div>
             </div>
         </div>
     </form>
@@ -166,25 +193,140 @@
 <script>
 function checklistForm() { return {}; }
 
+const isEditMode = @json($isEdit);
+const checklistId = @json($checklist->id ?? 0);
+const DRAFT_KEY = isEditMode ? ('draft_checklist_mt_maos_edit_' + checklistId) : 'draft_checklist_mt_maos_create';
+
 // Toggle Sesuai/Temuan: tiap pasangan tombol berbagi satu hidden input results[key]
+function applyToggleState(group, val) {
+    const hidden = group.querySelector('input[type=hidden]');
+    hidden.value = val || '';
+    group.querySelectorAll('.tbtn').forEach(b => {
+        b.classList.remove('bg-emerald-500', 'border-emerald-500', 'text-white', 'bg-brand-red', 'border-brand-red');
+        b.classList.add('text-slate-400', 'border-slate-200');
+    });
+    if (val === 'ok') {
+        const btnOk = group.querySelector('.tbtn[data-val="ok"]');
+        if (btnOk) {
+            btnOk.classList.remove('text-slate-400', 'border-slate-200');
+            btnOk.classList.add('bg-emerald-500', 'border-emerald-500', 'text-white');
+        }
+    } else if (val === 'bad') {
+        const btnBad = group.querySelector('.tbtn[data-val="bad"]');
+        if (btnBad) {
+            btnBad.classList.remove('text-slate-400', 'border-slate-200');
+            btnBad.classList.add('bg-brand-red', 'border-brand-red', 'text-white');
+        }
+    }
+}
+
 document.querySelectorAll('[data-toggle-group]').forEach(group => {
     const hidden = group.querySelector('input[type=hidden]');
     group.querySelectorAll('.tbtn').forEach(btn => {
         btn.addEventListener('click', () => {
             const val = btn.dataset.val;
             const isSame = hidden.value === val;
-            hidden.value = isSame ? '' : val;
-            group.querySelectorAll('.tbtn').forEach(b => {
-                b.classList.remove('bg-emerald-500', 'border-emerald-500', 'text-white', 'bg-brand-red', 'border-brand-red');
-                b.classList.add('text-slate-400', 'border-slate-200');
-            });
-            if (!isSame) {
-                btn.classList.remove('text-slate-400', 'border-slate-200');
-                btn.classList.add(val === 'ok' ? 'bg-emerald-500' : 'bg-brand-red', val === 'ok' ? 'border-emerald-500' : 'border-brand-red', 'text-white');
-            }
+            applyToggleState(group, isSame ? '' : val);
+            saveDraft();
         });
     });
 });
-lucide.createIcons();
+
+// Auto-save form draft to localStorage
+function saveDraft() {
+    try {
+        const form = document.getElementById('checklist-form');
+        if (!form) return;
+        const formData = new FormData(form);
+        const dataObj = {};
+        for (let [key, val] of formData.entries()) {
+            if (key === '_token' || key === '_method') continue;
+            dataObj[key] = val;
+        }
+        dataObj._savedAt = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(dataObj));
+        
+        const statusEl = document.getElementById('auto-save-status');
+        if (statusEl) {
+            statusEl.innerHTML = '<i data-lucide="check" class="h-3 w-3"></i> Tersimpan ' + dataObj._savedAt;
+            if (window.lucide) lucide.createIcons();
+        }
+    } catch (e) {
+        console.warn('Gagal menyimpan draft ke localStorage:', e);
+    }
+}
+
+// Restore form draft from localStorage
+function restoreDraft() {
+    try {
+        const saved = localStorage.getItem(DRAFT_KEY);
+        if (!saved) return;
+        const data = JSON.parse(saved);
+        if (!data || typeof data !== 'object') return;
+
+        let hasRestoredValues = false;
+        const form = document.getElementById('checklist-form');
+        if (!form) return;
+
+        // Cek apakah ada field yang terisi di draft
+        for (let key in data) {
+            if (key.startsWith('_')) continue;
+            const val = data[key];
+            if (val && val !== '') {
+                hasRestoredValues = true;
+                const el = form.elements[key];
+                if (el) {
+                    el.value = val;
+                    // Jika hidden input toggle group, update tampilan tombol
+                    const group = el.closest('[data-toggle-group]');
+                    if (group) {
+                        applyToggleState(group, val);
+                    }
+                }
+            }
+        }
+
+        if (hasRestoredValues) {
+            const notice = document.getElementById('draft-notice');
+            const timeLabel = document.getElementById('draft-time-label');
+            if (notice) {
+                notice.classList.remove('hidden');
+                notice.classList.add('flex');
+            }
+            if (timeLabel && data._savedAt) {
+                timeLabel.textContent = 'Data terakhir disimpan otomatis pada ' + data._savedAt + '. Anda dapat melanjutkan pengisian.';
+            }
+            if (window.lucide) lucide.createIcons();
+        }
+    } catch (e) {
+        console.warn('Gagal memulihkan draft:', e);
+    }
+}
+
+function resetDraftForm() {
+    if (confirm('Apakah Anda yakin ingin mengosongkan draft ini dan mulai dari awal?')) {
+        localStorage.removeItem(DRAFT_KEY);
+        window.location.reload();
+    }
+}
+
+// Event listeners for real-time auto save
+document.addEventListener('DOMContentLoaded', () => {
+    restoreDraft();
+
+    const form = document.getElementById('checklist-form');
+    if (form) {
+        form.addEventListener('input', () => saveDraft());
+        form.addEventListener('change', () => saveDraft());
+        form.addEventListener('submit', () => {
+            // Bersihkan draft saat berhasil submit
+            try {
+                localStorage.removeItem(DRAFT_KEY);
+            } catch (e) {}
+        });
+    }
+
+    if (window.lucide) lucide.createIcons();
+});
 </script>
 @endsection

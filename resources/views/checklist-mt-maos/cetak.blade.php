@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         @page {
@@ -507,6 +508,34 @@
 </div>
 </div>
 
+<!-- Modal Pratinjau Gambar untuk Mobile (Long-Press Save / Bagikan) -->
+<div id="modal-preview-gambar" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 p-3 backdrop-blur-sm no-print">
+    <div class="relative max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-4 text-center shadow-2xl">
+        <div class="mb-3 flex items-center justify-between border-b pb-2">
+            <p class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="image" class="h-4 w-4 text-brand-blue"></i> Hasil Gambar Dokumen
+            </p>
+            <button onclick="tutupModalGambar()" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700">
+                <i data-lucide="x" class="h-5 w-5"></i>
+            </button>
+        </div>
+        <p class="mb-3 text-xs text-slate-600 bg-amber-50 border border-amber-200 rounded-xl p-2.5 leading-relaxed">
+            📱 <strong>Tips HP:</strong> Jika unduhan otomatis tidak muncul, <strong>tekan &amp; tahan (long press) gambar di bawah</strong> lalu pilih <strong>"Simpan Gambar"</strong> atau <strong>"Download Image"</strong> ke galeri Anda.
+        </p>
+        <div class="mb-4 overflow-hidden rounded-xl border border-slate-200 shadow-inner">
+            <img id="img-preview-target" src="" alt="Pratinjau Checklist MT" class="mx-auto w-full h-auto object-contain">
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-2">
+            <a id="btn-tab-baru" href="#" target="_blank" class="inline-flex items-center gap-1.5 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white shadow hover:bg-slate-900">
+                <i data-lucide="external-link" class="h-3.5 w-3.5"></i> Buka di Tab Baru
+            </a>
+            <button onclick="tutupModalGambar()" class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
 const namaFileDasar = @json($namaFileDasar);
 
@@ -514,7 +543,7 @@ function renderCanvas() {
     window.scrollTo(0, 0);
     const el = document.getElementById('area-cetak');
     return html2canvas(el, {
-        scale: 2.5,
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
@@ -525,7 +554,28 @@ function renderCanvas() {
     });
 }
 
-function unduhGambar(mimeType, ekstensi) {
+function bukaModalGambar(dataUrl) {
+    const modal = document.getElementById('modal-preview-gambar');
+    const img = document.getElementById('img-preview-target');
+    const btnTab = document.getElementById('btn-tab-baru');
+    if (modal && img) {
+        img.src = dataUrl;
+        if (btnTab) btnTab.href = dataUrl;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        if (window.lucide) lucide.createIcons();
+    }
+}
+
+function tutupModalGambar() {
+    const modal = document.getElementById('modal-preview-gambar');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+async function unduhGambar(mimeType, ekstensi) {
     const btnId = ekstensi === '.jpg' ? 'btn-jpg' : 'btn-png';
     const btn = document.getElementById(btnId);
     btn.disabled = true;
@@ -533,22 +583,78 @@ function unduhGambar(mimeType, ekstensi) {
     btn.innerHTML = '<i data-lucide="loader-2" class="h-3.5 w-3.5 animate-spin"></i> Memproses...';
     if (window.lucide) lucide.createIcons();
 
-    renderCanvas().then((canvas) => {
-        const quality = mimeType === 'image/jpeg' ? 0.98 : 1.0;
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL(mimeType, quality);
-        link.download = namaFileDasar + ekstensi;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }).catch((err) => {
+    try {
+        const canvas = await renderCanvas();
+        const quality = mimeType === 'image/jpeg' ? 0.95 : 1.0;
+        const filename = namaFileDasar + ekstensi;
+
+        // Gunakan canvas.toBlob untuk efisiensi memory & kompatibilitas tinggi di Mobile
+        canvas.toBlob(async (blob) => {
+            if (!blob) {
+                // Fallback jika toBlob tidak menghasilkan
+                const dataUrl = canvas.toDataURL(mimeType, quality);
+                bukaModalGambar(dataUrl);
+                btn.disabled = false;
+                btn.innerHTML = label;
+                if (window.lucide) lucide.createIcons();
+                return;
+            }
+
+            const file = new File([blob], filename, { type: mimeType });
+
+            // Coba Web Share API jika di perangkat HP / Mobile yang mendukung sharing file
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: filename,
+                        text: 'Hasil Form Pemeriksaan Mobil Tangki — FT Maos'
+                    });
+                    btn.disabled = false;
+                    btn.innerHTML = label;
+                    if (window.lucide) lucide.createIcons();
+                    return;
+                } catch (shareErr) {
+                    // Jika user cancel share, tetap lanjut ke download blob
+                    if (shareErr.name !== 'AbortError') {
+                        console.log('Web share fallback to download:', shareErr);
+                    }
+                }
+            }
+
+            // Download melalui Blob Object URL
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+
+            // Jika di mobile Safari / WebView tertentu di mana klik a download diblokir, buka fallback modal
+            if (isMobile) {
+                setTimeout(() => {
+                    bukaModalGambar(blobUrl);
+                }, 300);
+            }
+
+            setTimeout(() => {
+                document.body.removeChild(link);
+                // Biarkan URL aktif jika dipakai di modal preview
+            }, 1000);
+
+            btn.disabled = false;
+            btn.innerHTML = label;
+            if (window.lucide) lucide.createIcons();
+        }, mimeType, quality);
+
+    } catch (err) {
         console.error(err);
-        alert('Gagal mengunduh gambar. Coba lagi ya.');
-    }).finally(() => {
+        alert('Gagal membuat gambar. Coba lagi ya.');
         btn.disabled = false;
         btn.innerHTML = label;
         if (window.lucide) lucide.createIcons();
-    });
+    }
 }
 
 function unduhPdf() {
@@ -569,7 +675,7 @@ function unduhPdf() {
 
         const pageWidth = 210;
         const pageHeight = 297;
-        const margin = 5; // 5mm margin
+        const margin = 5;
         const printableWidth = pageWidth - (margin * 2);
         const printableHeight = pageHeight - (margin * 2);
 
@@ -577,7 +683,6 @@ function unduhPdf() {
         let imgWidth = printableWidth;
         let imgHeight = imgWidth / imgRatio;
 
-        // Pastikan pas 1 halaman A4 dan tidak pernah overflow ke halaman 2
         if (imgHeight > printableHeight) {
             imgHeight = printableHeight;
             imgWidth = imgHeight * imgRatio;
@@ -586,7 +691,7 @@ function unduhPdf() {
         const posX = margin + (printableWidth - imgWidth) / 2;
         const posY = margin + (printableHeight - imgHeight) / 2;
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
         pdf.addImage(imgData, 'JPEG', posX, posY, imgWidth, imgHeight, undefined, 'FAST');
         pdf.save(namaFileDasar + '.pdf');
     }).catch((err) => {
@@ -599,68 +704,321 @@ function unduhPdf() {
     });
 }
 
-function unduhExcel() {
-    const rows = [];
-    rows.push(['FORM PEMERIKSAAN MOBIL TANGKI - FUEL TERMINAL MAOS']);
-    rows.push(['NOMOR POLISI', @json($checklist->nomor_polisi), 'PEMILIK', @json($checklist->pemilik), 'Tanggal', @json($checklist->tanggal_periksa->format('Y-m-d'))]);
-    rows.push([]);
-    rows.push(['NO', 'ITEM', 'Temuan', 'Dispensasi', 'Hasil Pemeriksaan', 'KETERANGAN']);
+async function unduhExcel() {
+    const btn = document.getElementById('btn-excel');
+    const labelAwal = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i data-lucide="loader-2" class="h-3.5 w-3.5 animate-spin"></i> Memproses...';
+    if (window.lucide) lucide.createIcons();
 
-    // Row 1
-    rows.push(['1', 'Masa Sertifikat Tera', 'Mayor', '-', @json($checklist->tanggal_exp ? ('Exp: ' . $checklist->tanggal_exp) : 'Sesuai'), 'Pelaksanaan pengecekan masa tera MT']);
+    try {
+        const BIRU = 'FF2F6FA6';
+        const BIRU_TUA = 'FF1E3A8A';
+        const KUNING = 'FFFFD400';
+        const MERAH = 'FFE04B3E';
+        const HIJAU = 'FF3CB878';
+        const ABU_TERANG = 'FFF8FAFC';
+        const ABU_HEADER = 'FFE2E8F0';
+        const PUTIH = 'FFFFFFFF';
+        const thinBorder = { style: 'thin', color: { argb: 'FFCBD5E1' } };
+        const applyBorder = (cell) => { cell.border = { top: thinBorder, left: thinBorder, bottom: thinBorder, right: thinBorder }; };
 
-    // Row 2 Komp 1-4
-    @foreach($teraList as $idx => $t)
-        rows.push([
-            '2',
-            'Komp. {{ $t['komp'] ?? ($idx + 1) }}: a.Tinggi T2 Tera, b.Tinggi T2 Act, c.Selisih T2, d.Dudukan, e.Volume, f.Ijk Baut',
-            'Mayor',
-            '-',
-            'a.{{ $t['tinggiTera'] ?: '-' }}, b.{{ $t['tinggiAct'] ?: '-' }}, c.{{ $t['selisih'] ?: '-' }}, d.{{ $t['duduk'] ?: '-' }}, e.{{ $t['volume'] ?: '-' }}, f.{{ $t['ijkBaut'] ?: '-' }}',
-            @json($loop->first ? 'Lakukan Pengecekan pada ketingian T2 tera dan Ijk Baut dan segel pada mobil Tangki' : '')
-        ]);
-    @endforeach
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('Checklist MT');
+        ws.columns = [
+            { width: 8 },   // A: No
+            { width: 38 },  // B: Item
+            { width: 12 },  // C: Temuan
+            { width: 14 },  // D: Dispensasi
+            { width: 18 },  // E: Hasil
+            { width: 52 },  // F: Keterangan / Catatan
+        ];
 
-    // Row 3
-    rows.push(['3', 'Manhole :-', '', '', '', '']);
-    @foreach($manholeSub as $m)
-        @php $res = $checklist->results[$m['key']] ?? ($checklist->results['3.' . $m['no']] ?? null); @endphp
-        rows.push(['', @json($m['item']), @json($m['temuan']), @json($m['disp']), @json($res === 'ok' ? 'Sesuai' : ($res === 'bad' ? 'Temuan' : '-')), @json($m['ket'])]);
-    @endforeach
+        // 1. JUDUL RESMI
+        ws.mergeCells('A1:F1');
+        const c1 = ws.getCell('A1');
+        c1.value = 'PERTAMINA PATRA NIAGA — FUEL TERMINAL MAOS';
+        c1.font = { bold: true, size: 12, color: { argb: PUTIH } };
+        c1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: BIRU_TUA } };
+        c1.alignment = { horizontal: 'center', vertical: 'middle' };
+        ws.getRow(1).height = 24;
 
-    // Rows 4-7
-    rows.push(['4', 'T2 Coaming', 'Minor', '3 Day', @json(($checklist->results['4'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['4'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan angka T2 sesuai Tera']);
-    rows.push(['5', 'Tanda Sah Lemping Volume Nominal', 'Mayor', '-', @json(($checklist->results['5'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['5'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan lemping sesuai dan kondisi segel']);
-    rows.push(['6', 'Saluran Buangan Air', 'Minor', '3 Day', @json(($checklist->results['6'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['6'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan tidak tersumbat aliran air']);
-    rows.push(['7', 'Pengecekan Kompartemen Dalam', 'Mayor', '-', @json(($checklist->results['7'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['7'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan kebersihan dalam tangki']);
+        ws.mergeCells('A2:F2');
+        const c2 = ws.getCell('A2');
+        c2.value = 'FORM PEMERIKSAAN MOBIL TANGKI';
+        c2.font = { bold: true, size: 11, color: { argb: 'FF0F172A' } };
+        c2.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: KUNING } };
+        c2.alignment = { horizontal: 'center', vertical: 'middle' };
+        ws.getRow(2).height = 20;
 
-    // Row 8
-    rows.push(['8', 'Bracket :', '', '', '', 'Menahan Handle & Bracket ( Mayor )']);
-    @foreach($bracketSub as $b)
-        @php $res = $checklist->results[$b['key']] ?? ($checklist->results['8.' . $b['no']] ?? null); @endphp
-        rows.push(['', @json($b['item']), @json($b['temuan']), @json($b['disp']), @json($res === 'ok' ? 'Sesuai' : ($res === 'bad' ? 'Temuan' : '-')), @json($b['ket'])]);
-    @endforeach
+        // 2. IDENTITAS KENDARAAN (KOTAK RAPI)
+        let r = 4;
+        const addMetaRow = (label1, val1, label2, val2) => {
+            const row = ws.getRow(r);
+            row.getCell(1).value = label1;
+            row.getCell(1).font = { bold: true, size: 9.5, color: { argb: 'FF475569' } };
+            row.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: ABU_TERANG } };
+            
+            row.getCell(2).value = val1;
+            row.getCell(2).font = { bold: true, size: 10, color: { argb: 'FF0F172A' } };
 
-    // Rows 9-17
-    rows.push(['9', 'Seal bottom Loader', 'Mayor', '-', @json(($checklist->results['9'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['9'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan seal yang digunakan telah standard']);
-    rows.push(['10', 'Sight Glass :', '', '', '', '']);
-    @foreach($sightSub as $s)
-        @php $res = $checklist->results[$s['key']] ?? ($checklist->results['10.' . $s['no']] ?? null); @endphp
-        rows.push(['', @json($s['item']), @json($s['temuan']), @json($s['disp']), @json($res === 'ok' ? 'Sesuai' : ($res === 'bad' ? 'Temuan' : '-')), @json($s['ket'])]);
-    @endforeach
-    rows.push(['11', 'Indikator Produk', 'Minor', '2 Week', @json(($checklist->results['11'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['11'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan indikator produk tersedia']);
-    rows.push(['12', 'Copy Sertifikat Tera Terpasang', 'Minor', '3 Day', @json(($checklist->results['12'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['12'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan copy sertifikat tera terpasang pada box']);
-    rows.push(['13', 'Kebersihan area bottom loading', 'Minor', '3 Day', @json(($checklist->results['13'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['13'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan kebersihan area bottom Loading']);
-    rows.push(['14', 'Las Titik Foot Valve', 'Mayor', '-', @json(($checklist->results['14'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['14'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan las titik dalam kondisi baik']);
-    rows.push(['15', 'Selang Bongkar', 'Minor', '2 Week', @json(($checklist->results['15'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['15'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Tersedianya selang bongkar 3" & 4"']);
-    rows.push(['16', 'Drainase Rumah Selang', 'Minor', '3 Day', @json(($checklist->results['16'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['16'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan drainase rumah selang berfungsi']);
-    rows.push(['17', 'Tanda Jaminan Pengikat TUM & Chassis', 'Mayor', '-', @json(($checklist->results['17'] ?? null) === 'ok' ? 'Sesuai' : ((($checklist->results['17'] ?? null) === 'bad') ? 'Temuan' : '-')), 'Memastikan keadaan segel jaminan di chasis']);
+            row.getCell(3).value = label2;
+            row.getCell(3).font = { bold: true, size: 9.5, color: { argb: 'FF475569' } };
+            row.getCell(3).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: ABU_TERANG } };
 
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(rows);
-    ws['!cols'] = [{wch:6},{wch:38},{wch:10},{wch:12},{wch:20},{wch:42}];
-    XLSX.utils.book_append_sheet(wb, ws, 'Checklist MT');
-    XLSX.writeFile(wb, namaFileDasar + '.xlsx');
+            ws.mergeCells(`D${r}:F${r}`);
+            const cellVal2 = row.getCell(4);
+            cellVal2.value = val2;
+            cellVal2.font = { bold: true, size: 9.5, color: { argb: 'FF0F172A' } };
+
+            for (let c = 1; c <= 6; c++) applyBorder(row.getCell(c));
+            row.height = 20;
+            r++;
+        };
+
+        addMetaRow('Nomor Polisi', @json($checklist->nomor_polisi), 'Pemilik / SPBU', @json($checklist->pemilik ?: '-'));
+        addMetaRow('Tgl Periksa', @json($checklist->tanggal_periksa->translatedFormat('d F Y')), 'Exp Sertifikat Tera', @json($checklist->tanggal_exp ?: '-'));
+        addMetaRow('Pemeriksa', @json($checklist->created_by ?: '-'), 'Status Hasil', @json($checklist->isFlagged() ? ($checklist->flagCount() . ' Temuan') : 'Sesuai Standar'));
+        r++;
+
+        // 3. SEKSI 1-2: PENGUKURAN KOMPARTEMEN & MASA TERA
+        ws.mergeCells(`A${r}:F${r}`);
+        const sec1 = ws.getCell(`A${r}`);
+        sec1.value = '1–2 · PENGUKURAN KOMPARTEMEN TANGKI & MASA SERTIFIKAT TERA';
+        sec1.font = { bold: true, size: 10, color: { argb: PUTIH } };
+        sec1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: BIRU } };
+        sec1.alignment = { vertical: 'middle' };
+        applyBorder(sec1);
+        ws.getRow(r).height = 22;
+        r++;
+
+        // Header Sub-tabel Kompartemen
+        const kompHeader = ws.getRow(r);
+        const kompLabels = ['Kompartemen', 'a. T2 Tera', 'b. T2 Act', 'c. Selisih', 'd. Dudukan Tangki', 'e. Volume & f. Segel'];
+        kompLabels.forEach((lbl, idx) => {
+            const cell = kompHeader.getCell(idx + 1);
+            cell.value = lbl;
+            cell.font = { bold: true, size: 9, color: { argb: 'FF334155' } };
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: ABU_HEADER } };
+            cell.alignment = { horizontal: 'center', vertical: 'middle' };
+            applyBorder(cell);
+        });
+        kompHeader.height = 20;
+        r++;
+
+        // Isi 4 Kompartemen
+        const teraData = @json($checklist->tera ?: \App\Models\ChecklistMtMaos::blankTera());
+        teraData.forEach((t, i) => {
+            const row = ws.getRow(r);
+            row.getCell(1).value = 'Kompartemen ' + (t.komp || (i + 1));
+            row.getCell(1).font = { bold: true, size: 9 };
+            row.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+
+            row.getCell(2).value = t.tinggiTera || t.a || '-';
+            row.getCell(3).value = t.tinggiAct || t.b || '-';
+            row.getCell(4).value = t.selisih || t.c || '-';
+            row.getCell(5).value = t.duduk || t.d || '-';
+            row.getCell(6).value = (t.volume || t.e ? ('Vol: ' + (t.volume || t.e)) : '') + (t.ijkBaut || t.f ? (' | Segel: ' + (t.ijkBaut || t.f)) : '-');
+
+            for (let c = 1; c <= 6; c++) {
+                if (c > 1 && c < 6) row.getCell(c).alignment = { horizontal: 'center', vertical: 'middle' };
+                else if (c === 6) row.getCell(c).alignment = { vertical: 'middle', wrapText: true };
+                row.getCell(c).font = { size: 9 };
+                applyBorder(row.getCell(c));
+            }
+            row.height = 19;
+            r++;
+        });
+        r++;
+
+        // 4. SEKSI 3-17: KONDISI FISIK & PERLENGKAPAN
+        ws.mergeCells(`A${r}:F${r}`);
+        const sec2 = ws.getCell(`A${r}`);
+        sec2.value = '3–17 · KONDISI FISIK & PERLENGKAPAN MOBIL TANGKI';
+        sec2.font = { bold: true, size: 10, color: { argb: PUTIH } };
+        sec2.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: BIRU } };
+        sec2.alignment = { vertical: 'middle' };
+        applyBorder(sec2);
+        ws.getRow(r).height = 22;
+        r++;
+
+        // Header Tabel Fisik
+        const fisHeader = ws.getRow(r);
+        const fisLabels = ['No', 'Item Pemeriksaan', 'Temuan', 'Dispensasi', 'Hasil', 'Catatan & Keterangan Lengkap'];
+        fisLabels.forEach((lbl, idx) => {
+            const cell = fisHeader.getCell(idx + 1);
+            cell.value = lbl;
+            cell.font = { bold: true, size: 9, color: { argb: 'FF334155' } };
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: ABU_HEADER } };
+            cell.alignment = { horizontal: 'center', vertical: 'middle' };
+            applyBorder(cell);
+        });
+        fisHeader.height = 20;
+        r++;
+
+        // Render Grup & Sub-item
+        const itemsGrouped = @json(\App\Support\ChecklistMtMaosItems::all());
+        const resultsMap = @json($checklist->results ?: []);
+        const notesMap = @json($checklist->notes ?: []);
+
+        itemsGrouped.forEach(sec => {
+            if (sec.group) {
+                // Baris Group Title
+                ws.mergeCells(`A${r}:F${r}`);
+                const gCell = ws.getCell(`A${r}`);
+                gCell.value = sec.no + '. ' + sec.item + ' :-';
+                gCell.font = { bold: true, size: 9.5, color: { argb: 'FF1E293B' } };
+                gCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
+                gCell.alignment = { vertical: 'middle' };
+                applyBorder(gCell);
+                ws.getRow(r).height = 20;
+                r++;
+
+                sec.sub.forEach((s, subIdx) => {
+                    const key = sec.no + '-' + subIdx;
+                    const res = resultsMap[key] || null;
+                    const note = (notesMap[key] || '').trim();
+                    const row = ws.getRow(r);
+
+                    row.getCell(1).value = sec.no + '.' + (subIdx + 1);
+                    row.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+
+                    row.getCell(2).value = s.label;
+                    row.getCell(2).font = { size: 9.5 };
+
+                    row.getCell(3).value = s.temuan;
+                    row.getCell(3).alignment = { horizontal: 'center', vertical: 'middle' };
+
+                    row.getCell(4).value = s.disp || '-';
+                    row.getCell(4).alignment = { horizontal: 'center', vertical: 'middle' };
+
+                    const hasilCell = row.getCell(5);
+                    if (res === 'ok') {
+                        hasilCell.value = 'Sesuai';
+                        hasilCell.font = { bold: true, color: { argb: 'FF166534' }, size: 9 };
+                        hasilCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD1FAE5' } };
+                    } else if (res === 'bad') {
+                        hasilCell.value = 'Temuan';
+                        hasilCell.font = { bold: true, color: { argb: PUTIH }, size: 9 };
+                        hasilCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: MERAH } };
+                    } else {
+                        hasilCell.value = '-';
+                        hasilCell.font = { color: { argb: 'FF94A3B8' }, size: 9 };
+                    }
+                    hasilCell.alignment = { horizontal: 'center', vertical: 'middle' };
+
+                    row.getCell(6).value = s.ket + (note ? (' | CATATAN: ' + note) : '');
+                    row.getCell(6).alignment = { vertical: 'middle', wrapText: true };
+                    row.getCell(6).font = { size: 9 };
+
+                    for (let c = 1; c <= 6; c++) applyBorder(row.getCell(c));
+                    r++;
+                });
+            } else {
+                const key = sec.no;
+                const res = resultsMap[key] || null;
+                const note = (notesMap[key] || '').trim();
+                const row = ws.getRow(r);
+
+                row.getCell(1).value = sec.no;
+                row.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+
+                row.getCell(2).value = sec.item;
+                row.getCell(2).font = { size: 9.5, bold: true };
+
+                row.getCell(3).value = sec.temuan;
+                row.getCell(3).alignment = { horizontal: 'center', vertical: 'middle' };
+
+                row.getCell(4).value = sec.disp || '-';
+                row.getCell(4).alignment = { horizontal: 'center', vertical: 'middle' };
+
+                const hasilCell = row.getCell(5);
+                if (res === 'ok') {
+                    hasilCell.value = 'Sesuai';
+                    hasilCell.font = { bold: true, color: { argb: 'FF166534' }, size: 9 };
+                    hasilCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD1FAE5' } };
+                } else if (res === 'bad') {
+                    hasilCell.value = 'Temuan';
+                    hasilCell.font = { bold: true, color: { argb: PUTIH }, size: 9 };
+                    hasilCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: MERAH } };
+                } else {
+                    hasilCell.value = '-';
+                    hasilCell.font = { color: { argb: 'FF94A3B8' }, size: 9 };
+                }
+                hasilCell.alignment = { horizontal: 'center', vertical: 'middle' };
+
+                row.getCell(6).value = sec.ket + (note ? (' | CATATAN: ' + note) : '');
+                row.getCell(6).alignment = { vertical: 'middle', wrapText: true };
+                row.getCell(6).font = { size: 9 };
+
+                for (let c = 1; c <= 6; c++) applyBorder(row.getCell(c));
+                r++;
+            }
+        });
+
+        // 5. KETERANGAN TAMBAHAN
+        const ketTambahan = @json($checklist->ket_tambahan ?: '');
+        if (ketTambahan) {
+            r++;
+            ws.mergeCells(`A${r}:F${r}`);
+            const kCell = ws.getCell(`A${r}`);
+            kCell.value = 'KETERANGAN TAMBAHAN: ' + ketTambahan;
+            kCell.font = { bold: true, italic: true, size: 9.5, color: { argb: 'FF92400E' } };
+            kCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFEF3C7' } };
+            kCell.alignment = { vertical: 'middle', wrapText: true };
+            applyBorder(kCell);
+            ws.getRow(r).height = 24;
+            r++;
+        }
+
+        // 6. BLOK TANDA TANGAN
+        r += 2;
+        const signRow1 = ws.getRow(r);
+        signRow1.getCell(2).value = 'Pemeriksa,';
+        signRow1.getCell(5).value = 'Transportir / Pemilik,';
+        signRow1.getCell(2).font = { bold: true, size: 9.5 };
+        signRow1.getCell(5).font = { bold: true, size: 9.5 };
+        signRow1.getCell(2).alignment = { horizontal: 'center' };
+        signRow1.getCell(5).alignment = { horizontal: 'center' };
+
+        r++;
+        const signRow2 = ws.getRow(r);
+        signRow2.getCell(2).value = 'PT. PERTAMINA PATRA NIAGA';
+        signRow2.getCell(5).value = 'PT. PATRA LOGISTIK / PEMILIK';
+        signRow2.getCell(2).font = { bold: true, size: 9.5 };
+        signRow2.getCell(5).font = { bold: true, size: 9.5 };
+        signRow2.getCell(2).alignment = { horizontal: 'center' };
+        signRow2.getCell(5).alignment = { horizontal: 'center' };
+
+        r += 4;
+        const signRow3 = ws.getRow(r);
+        signRow3.getCell(2).value = '( ........................................ )';
+        signRow3.getCell(5).value = '( ........................................ )';
+        signRow3.getCell(2).alignment = { horizontal: 'center' };
+        signRow3.getCell(5).alignment = { horizontal: 'center' };
+
+        // Download file .xlsx
+        const buffer = await wb.xlsx.writeBuffer();
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = namaFileDasar + '.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+        }, 1000);
+
+    } catch (err) {
+        console.error(err);
+        alert('Gagal membuat Excel. Coba lagi ya.');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = labelAwal;
+        if (window.lucide) lucide.createIcons();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
