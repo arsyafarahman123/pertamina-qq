@@ -338,6 +338,41 @@ class ChecklistMtMaosController extends Controller
         }
     }
 
+    public function runImportSeed()
+    {
+        $jsonPath = base_path('checklists_seed.json');
+        if (!\Illuminate\Support\Facades\File::exists($jsonPath)) {
+            return response()->json(['status' => 'error', 'message' => 'checklists_seed.json not found'], 404);
+        }
+
+        $records = json_decode(\Illuminate\Support\Facades\File::get($jsonPath), true);
+        if (!$records) {
+            return response()->json(['status' => 'error', 'message' => 'failed to decode json'], 500);
+        }
+
+        $count = 0;
+        foreach ($records as $item) {
+            $existing = ChecklistMtMaos::where('nomor_polisi', $item['nomor_polisi'])
+                ->where('tanggal_periksa', $item['tanggal_periksa'])
+                ->first();
+
+            if (!$existing) {
+                ChecklistMtMaos::create($item);
+                $count++;
+            } else {
+                $existing->update($item);
+                $count++;
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => "Berhasil mengimpor / memperbarui {$count} data Checklist Mobil Tangki ke database!",
+            'total_imported' => $count,
+            'total_in_db' => ChecklistMtMaos::count(),
+        ]);
+    }
+
     private function validated(Request $request): array
     {
         return $request->validate([
@@ -352,3 +387,4 @@ class ChecklistMtMaosController extends Controller
         ]);
     }
 }
+
