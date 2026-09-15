@@ -15,6 +15,10 @@
                 class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
             <i data-lucide="sheet" class="h-4 w-4 text-emerald-600"></i> <span id="export-btn-label">Export Excel Semua</span>
         </button>
+        <button id="export-pdf-all-btn" onclick="triggerPdfExport()"
+                class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
+            <i data-lucide="file-text" class="h-4 w-4 text-[#006CB8]"></i> <span id="export-pdf-btn-label">Export PDF Semua</span>
+        </button>
         @if (!auth()->user()->isSpbu())
             <a href="{{ route('checklist-mt-maos.create') }}"
                class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark">
@@ -38,6 +42,9 @@
     <div class="flex flex-wrap items-center gap-2">
         <button type="button" onclick="exportSelected()" class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-emerald-600/20 transition hover:bg-emerald-700">
             <i data-lucide="sheet" class="h-4 w-4"></i> Export Terpilih ke Excel
+        </button>
+        <button type="button" onclick="exportSelectedPdf()" class="inline-flex items-center gap-1.5 rounded-xl bg-[#006CB8] px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700">
+            <i data-lucide="file-text" class="h-4 w-4"></i> Export Terpilih ke PDF
         </button>
         <button type="button" onclick="uncheckAll()" class="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 shadow-sm hover:bg-slate-50">
             Batal Pilih
@@ -205,6 +212,7 @@ function updateSelection() {
     const selectionBar = document.getElementById('selection-bar');
     const countLabel = document.getElementById('selected-count');
     const exportBtnLabel = document.getElementById('export-btn-label');
+    const exportPdfBtnLabel = document.getElementById('export-pdf-btn-label');
 
     // Update baris terpilih
     allCbs.forEach(cb => {
@@ -230,12 +238,14 @@ function updateSelection() {
         }
         if (countLabel) countLabel.textContent = count;
         if (exportBtnLabel) exportBtnLabel.textContent = 'Export Excel (' + count + ' Terpilih)';
+        if (exportPdfBtnLabel) exportPdfBtnLabel.textContent = 'Export PDF (' + count + ' Terpilih)';
     } else {
         if (selectionBar) {
             selectionBar.classList.add('hidden');
             selectionBar.classList.remove('flex');
         }
         if (exportBtnLabel) exportBtnLabel.textContent = 'Export Excel Semua';
+        if (exportPdfBtnLabel) exportPdfBtnLabel.textContent = 'Export PDF Semua';
     }
 
     if (window.lucide) lucide.createIcons();
@@ -271,6 +281,28 @@ function exportSelected() {
 function triggerExport() {
     const selected = getSelectedIds();
     runExport(selected);
+}
+
+function exportSelectedPdf() {
+    const selected = getSelectedIds();
+    if (!selected.length) {
+        alert('Silakan centang minimal 1 checklist untuk diekspor ke PDF.');
+        return;
+    }
+    runPdfExport(selected);
+}
+
+function triggerPdfExport() {
+    const selected = getSelectedIds();
+    runPdfExport(selected);
+}
+
+function runPdfExport(ids = []) {
+    let url = "{{ route('checklist-mt-maos.cetak-banyak') }}";
+    if (ids && ids.length > 0) {
+        url += '?ids=' + ids.join(',');
+    }
+    window.open(url, '_blank');
 }
 
 async function runExport(ids = []) {

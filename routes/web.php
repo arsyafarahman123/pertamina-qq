@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('checklist-mt-maos')->name('checklist-mt-maos.')->group(function () {
         Route::get('/', [\App\Http\Controllers\ChecklistMtMaosController::class, 'index'])->name('index');
         Route::get('/export-semua', [\App\Http\Controllers\ChecklistMtMaosController::class, 'exportAll'])->name('export-all');
+        Route::get('/cetak-banyak', [\App\Http\Controllers\ChecklistMtMaosController::class, 'cetakBanyak'])->name('cetak-banyak');
         Route::get('/{checklist}', [\App\Http\Controllers\ChecklistMtMaosController::class, 'show'])->name('show');
         Route::get('/{checklist}/export', [\App\Http\Controllers\ChecklistMtMaosController::class, 'exportOne'])->name('export');
         Route::get('/{checklist}/cetak', [\App\Http\Controllers\ChecklistMtMaosController::class, 'cetak'])->name('cetak');

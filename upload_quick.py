@@ -11,9 +11,11 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
+    'routes/web.php',
     'app/Http/Controllers/ChecklistMtMaosController.php',
     'app/Models/ChecklistMtMaos.php',
     'resources/views/checklist-mt-maos/cetak.blade.php',
+    'resources/views/checklist-mt-maos/cetak-banyak.blade.php',
     'resources/views/checklist-mt-maos/form.blade.php',
     'resources/views/checklist-mt-maos/index.blade.php',
     'resources/views/checklist-mt-maos/show.blade.php',

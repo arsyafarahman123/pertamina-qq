@@ -85,6 +85,35 @@ class ChecklistMtMaosController extends Controller
         ]);
     }
 
+    public function cetakBanyak(Request $request)
+    {
+        $user = Auth::user();
+        $query = ChecklistMtMaos::query()->latest('tanggal_periksa')->latest('id');
+        if ($user->isSpbu()) {
+            $query->where('pemilik', 'like', '%' . $user->spbu_name . '%');
+        }
+
+        if ($idsParam = $request->query('ids')) {
+            $ids = is_array($idsParam) ? $idsParam : explode(',', (string) $idsParam);
+            $ids = array_filter(array_map('intval', $ids));
+            if (!empty($ids)) {
+                $query->whereIn('id', $ids);
+            }
+        }
+
+        $checklists = $query->get();
+
+        if ($checklists->isEmpty()) {
+            return redirect()->route('checklist-mt-maos.index')->with('gagal', 'Tidak ada data checklist yang dipilih.');
+        }
+
+        return view('checklist-mt-maos.cetak-banyak', [
+            'checklists' => $checklists,
+            'flat' => ChecklistMtMaosItems::flat(),
+            'grouped' => ChecklistMtMaosItems::all(),
+        ]);
+    }
+
     public function edit(ChecklistMtMaos $checklist)
     {
         return view('checklist-mt-maos.form', [
