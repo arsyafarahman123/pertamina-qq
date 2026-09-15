@@ -88,4 +88,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/checklist-mt-maos-import-seed-direct', [\App\Http\Controllers\ChecklistMtMaosController::class, 'runImportSeed']);
+Route::get('/checklist-mt-maos-backup-data', [\App\Http\Controllers\ChecklistMtMaosController::class, 'exportJsonBackup']);
+
 

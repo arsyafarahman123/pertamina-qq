@@ -1,9 +1,10 @@
 [
   {
+    "id": 5,
     "nomor_polisi": "B9022SFV",
     "pemilik": "PT Pertamina Patra Niaga",
     "tanggal_exp": "01/02/2026",
-    "tanggal_periksa": "2025-11-03",
+    "tanggal_periksa": "2025-11-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -103,13 +104,16 @@
     "ket_tambahan": "Pelaksanaan Pengecekan masa tera MT",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 6,
     "nomor_polisi": "R9519EM",
     "pemilik": "PT Katrako Putra Selaras",
     "tanggal_exp": "18/03/2027",
-    "tanggal_periksa": "2025-11-03",
+    "tanggal_periksa": "2025-11-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -209,13 +213,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 7,
     "nomor_polisi": "R8435CN",
     "pemilik": "PT Katrako Putra Selaras",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2025-11-03",
+    "tanggal_periksa": "2025-11-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -315,13 +322,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 8,
     "nomor_polisi": "R9131B",
     "pemilik": "PT Serayu Mitra Jaya",
     "tanggal_exp": "10/09/2026",
-    "tanggal_periksa": "2025-11-06",
+    "tanggal_periksa": "2025-11-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -421,13 +431,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 9,
     "nomor_polisi": "N9086UI",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "10/01/2026",
-    "tanggal_periksa": "2025-11-12",
+    "tanggal_periksa": "2025-11-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -519,13 +532,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:37:33.000000Z"
   },
   {
+    "id": 10,
     "nomor_polisi": "N9326UI",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2025-11-12",
+    "tanggal_periksa": "2025-11-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -617,13 +633,16 @@
     "ket_tambahan": "stiker belum di update sesuai sertifikat tera , sertifikat tera tidak dipasang di area bottom loading",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:45:28.000000Z"
   },
   {
+    "id": 11,
     "nomor_polisi": "N9405UH",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "10/01/2026",
-    "tanggal_periksa": "2025-11-12",
+    "tanggal_periksa": "2025-11-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -723,13 +742,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 12,
     "nomor_polisi": "G9048OA",
     "pemilik": "PT Murni Adhi Dukuh Jaya",
     "tanggal_exp": "10/07/2027",
-    "tanggal_periksa": "2025-11-17",
+    "tanggal_periksa": "2025-11-17T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -821,13 +843,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:49:30.000000Z"
   },
   {
+    "id": 13,
     "nomor_polisi": "AD8603OH",
     "pemilik": "PT Kayamas Niaga M",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2025-11-17",
+    "tanggal_periksa": "2025-11-17T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -919,13 +944,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:40:07.000000Z"
   },
   {
+    "id": 14,
     "nomor_polisi": "R8253OT",
     "pemilik": "Serayu Mitrajaya",
     "tanggal_exp": "09/09/2026",
-    "tanggal_periksa": "2025-11-17",
+    "tanggal_periksa": "2025-11-17T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1017,13 +1045,16 @@
     "ket_tambahan": "copy sertifikat di pasang diarea bottom loading kebersihan area bottom loading tidak dijaga",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:43:28.000000Z"
   },
   {
+    "id": 15,
     "nomor_polisi": "G9047OA",
     "pemilik": "PT Murni Adhi Dukuh Jaya",
     "tanggal_exp": "10/07/2027",
-    "tanggal_periksa": "2025-11-17",
+    "tanggal_periksa": "2025-11-17T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -1123,13 +1154,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:42.000000Z"
   },
   {
+    "id": 16,
     "nomor_polisi": "L8381 VCA",
     "pemilik": "PT Almira Distribusi dan Gas",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2025-12-01",
+    "tanggal_periksa": "2025-12-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1221,13 +1255,16 @@
     "ket_tambahan": "stiker komp 2 t2 belum diganti \r\nstiker komp 1&2 t1 belum diganti",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:41:17.000000Z"
   },
   {
+    "id": 17,
     "nomor_polisi": "E9537 YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "27/11/2027",
-    "tanggal_periksa": "2025-12-01",
+    "tanggal_periksa": "2025-12-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1319,13 +1356,16 @@
     "ket_tambahan": "stiker tera belum ada \r\npin pengunci bottom loader diikat menggunakan kawat bisa dilepas",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:40:08.000000Z"
   },
   {
+    "id": 18,
     "nomor_polisi": "E9536 YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "26/11/2027",
-    "tanggal_periksa": "2025-12-01",
+    "tanggal_periksa": "2025-12-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1417,13 +1457,16 @@
     "ket_tambahan": "stiker tera belum ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:39:11.000000Z"
   },
   {
+    "id": 19,
     "nomor_polisi": "E9542 YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "01/12/2027",
-    "tanggal_periksa": "2025-12-01",
+    "tanggal_periksa": "2025-12-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1515,13 +1558,16 @@
     "ket_tambahan": "stiker tera belum ada \r\nlastik komp 2&3 tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:38:33.000000Z"
   },
   {
+    "id": 20,
     "nomor_polisi": "E9535YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "28/11/2027",
-    "tanggal_periksa": "2025-12-01",
+    "tanggal_periksa": "2025-12-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1613,13 +1659,16 @@
     "ket_tambahan": "lastig pada komp 3 tidak ada \r\nstiker tera belum dipasang",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:37:47.000000Z"
   },
   {
+    "id": 21,
     "nomor_polisi": "E9547 YC",
     "pemilik": "PT Puspita",
     "tanggal_exp": "02/12/2027",
-    "tanggal_periksa": "2025-12-03",
+    "tanggal_periksa": "2025-12-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1711,13 +1760,16 @@
     "ket_tambahan": "stiker t1, t2 komp 1,2,3",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:42:17.000000Z"
   },
   {
+    "id": 22,
     "nomor_polisi": "H 9730 OF",
     "pemilik": "PT STN",
     "tanggal_exp": "24/07/2026",
-    "tanggal_periksa": "2025-12-03",
+    "tanggal_periksa": "2025-12-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -1817,13 +1869,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 23,
     "nomor_polisi": "AB 8086 NA",
     "pemilik": "PT Wijaya Sakti Abadi",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2025-12-10",
+    "tanggal_periksa": "2025-12-10T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -1915,13 +1970,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:43:35.000000Z"
   },
   {
+    "id": 24,
     "nomor_polisi": "AB 8463 UF",
     "pemilik": "PT Wijaya Sakti Abadi",
     "tanggal_exp": "Aug-27",
-    "tanggal_periksa": "2025-12-10",
+    "tanggal_periksa": "2025-12-10T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2013,13 +2071,16 @@
     "ket_tambahan": "Tangga haindrail tidak berfungsi \r\nstiker t1, t2 tidak sama dengan sertifikat \r\nsegel jaminan manhole tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:45:21.000000Z"
   },
   {
+    "id": 25,
     "nomor_polisi": "B 99295 FV",
     "pemilik": "PT Eascost Indonesia",
     "tanggal_exp": "31/01/2027",
-    "tanggal_periksa": "2025-12-22",
+    "tanggal_periksa": "2025-12-22T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2111,13 +2172,16 @@
     "ket_tambahan": "komp 2 kotor \r\ntutup haindrail rusak",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:46:32.000000Z"
   },
   {
+    "id": 26,
     "nomor_polisi": "N 8054U EEA",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "October 2027",
-    "tanggal_periksa": "2025-12-29",
+    "tanggal_periksa": "2025-12-29T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2209,13 +2273,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:47:33.000000Z"
   },
   {
+    "id": 27,
     "nomor_polisi": "N 8533 U9",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "May 2026",
-    "tanggal_periksa": "2025-12-29",
+    "tanggal_periksa": "2025-12-29T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2307,13 +2374,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:48:03.000000Z"
   },
   {
+    "id": 28,
     "nomor_polisi": "B9067SFW",
     "pemilik": "PT Trifilasofi Utility Indonesia",
     "tanggal_exp": "18/03/2027",
-    "tanggal_periksa": "2026-01-05",
+    "tanggal_periksa": "2026-01-05T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2405,13 +2475,16 @@
     "ket_tambahan": "tdk ad sertfikat tera yg terpasang di area bottom loading segel pd meter terputus dijadwalkan untuk tera ulang meter arus",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:51:03.000000Z"
   },
   {
+    "id": 29,
     "nomor_polisi": "AD8618OH",
     "pemilik": "PT Karya Niaga Manunggal Jaya",
     "tanggal_exp": "23/07/2027",
-    "tanggal_periksa": "2026-01-05",
+    "tanggal_periksa": "2026-01-05T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2503,13 +2576,16 @@
     "ket_tambahan": "- Pada kompartemen 3 di sertifikat tera tangki mulai ketinggian 1670 dan aktra leja minus 3 mm.\r\n- sertifikat tdk terpasang di area bottom loading",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:57:45.000000Z"
   },
   {
+    "id": 30,
     "nomor_polisi": "H8024OF",
     "pemilik": "PT STN",
     "tanggal_exp": "13/11/2026",
-    "tanggal_periksa": "2026-01-05",
+    "tanggal_periksa": "2026-01-05T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2601,13 +2677,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:59:54.000000Z"
   },
   {
+    "id": 31,
     "nomor_polisi": "AB8086NA",
     "pemilik": "PT Wijaya Sakti Abadi",
     "tanggal_exp": "08/03/2026",
-    "tanggal_periksa": "2026-01-05",
+    "tanggal_periksa": "2026-01-05T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2699,13 +2778,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:23:44.000000Z"
   },
   {
+    "id": 169,
     "nomor_polisi": "H9677OF",
     "pemilik": null,
     "tanggal_exp": "25/01/2026",
-    "tanggal_periksa": "2026-01-05",
+    "tanggal_periksa": "2026-01-05T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2797,13 +2879,16 @@
     "ket_tambahan": "Tidk ada segel chasis",
     "status": "final",
     "user_id": 1,
-    "created_by": "Admin Lab QQ"
+    "created_by": "Admin Lab QQ",
+    "created_at": "2026-09-15T08:50:34.000000Z",
+    "updated_at": "2026-09-15T08:50:34.000000Z"
   },
   {
+    "id": 32,
     "nomor_polisi": "AD8135OH",
     "pemilik": "PT SHA Solo",
     "tanggal_exp": "29/04/2027",
-    "tanggal_periksa": "2026-01-07",
+    "tanggal_periksa": "2026-01-07T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2895,13 +2980,16 @@
     "ket_tambahan": "- handram tdk berfungsi\r\n- manhole kotor\r\n- ratori tdk menyala\r\n- sertifikat copy tidak ada di bottom loader",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:26:40.000000Z"
   },
   {
+    "id": 33,
     "nomor_polisi": "N8021UEA",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "09/06/2027",
-    "tanggal_periksa": "2026-01-07",
+    "tanggal_periksa": "2026-01-07T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -2993,13 +3081,16 @@
     "ket_tambahan": "- seal bottom loader komp 2 sobek perlu diganti \r\n-expled apar tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:29:04.000000Z"
   },
   {
+    "id": 34,
     "nomor_polisi": "H8966OA",
     "pemilik": "PT Sumber Trans Niaga",
     "tanggal_exp": "May 2027",
-    "tanggal_periksa": "2026-01-07",
+    "tanggal_periksa": "2026-01-07T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3091,13 +3182,16 @@
     "ket_tambahan": "kompartemen kotor",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:30:42.000000Z"
   },
   {
+    "id": 35,
     "nomor_polisi": "R9356BN",
     "pemilik": "PT Katrako Putra Selaras",
     "tanggal_exp": "18/07/2027",
-    "tanggal_periksa": "2026-01-08",
+    "tanggal_periksa": "2026-01-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3189,13 +3283,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:31:14.000000Z"
   },
   {
+    "id": 36,
     "nomor_polisi": "L8397VCA",
     "pemilik": "PT Almira Distribusi dan Gas",
     "tanggal_exp": "17/07/2027",
-    "tanggal_periksa": "2026-01-08",
+    "tanggal_periksa": "2026-01-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3287,13 +3384,16 @@
     "ket_tambahan": "- stiker t2 komp 1 dan komp 2 tidak sesuai sertifikat\r\n- stiker t1 komp 1 dan komp 2 tidak sesuai sertifikat",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:32:48.000000Z"
   },
   {
+    "id": 37,
     "nomor_polisi": "E9493YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "03/07/2027",
-    "tanggal_periksa": "2026-01-11",
+    "tanggal_periksa": "2026-01-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -3393,13 +3493,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 38,
     "nomor_polisi": "N8869OF",
     "pemilik": "PT Dharma Citra Energy",
     "tanggal_exp": "05/03/2027",
-    "tanggal_periksa": "2026-01-11",
+    "tanggal_periksa": "2026-01-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3491,13 +3594,16 @@
     "ket_tambahan": "sticker t1, t2, komp 1,2,3 driver side",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:33:31.000000Z"
   },
   {
+    "id": 39,
     "nomor_polisi": "N9405OH",
     "pemilik": "PT Dharma Citra Energy",
     "tanggal_exp": "15/01/2028",
-    "tanggal_periksa": "2026-01-14",
+    "tanggal_periksa": "2026-01-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3589,13 +3695,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:34:07.000000Z"
   },
   {
+    "id": 40,
     "nomor_polisi": "N9730OF",
     "pemilik": "PT STN",
     "tanggal_exp": "24/07/2026",
-    "tanggal_periksa": "2026-01-14",
+    "tanggal_periksa": "2026-01-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3687,13 +3796,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:34:56.000000Z"
   },
   {
+    "id": 41,
     "nomor_polisi": "N9657OI",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "25/06/2026",
-    "tanggal_periksa": "2026-01-14",
+    "tanggal_periksa": "2026-01-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3785,13 +3897,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:35:58.000000Z"
   },
   {
+    "id": 42,
     "nomor_polisi": "B9504TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "22/07/2026",
-    "tanggal_periksa": "2026-01-14",
+    "tanggal_periksa": "2026-01-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -3883,13 +3998,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:36:32.000000Z"
   },
   {
+    "id": 43,
     "nomor_polisi": "H8966OA",
     "pemilik": "PT Sumber Trans Niaga",
     "tanggal_exp": "27/05/2027",
-    "tanggal_periksa": "2026-01-14",
+    "tanggal_periksa": "2026-01-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -3989,13 +4107,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 44,
     "nomor_polisi": "B9505TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "06/08/2026",
-    "tanggal_periksa": "2026-01-19",
+    "tanggal_periksa": "2026-01-19T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -4095,13 +4216,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 168,
     "nomor_polisi": "H 8966 OA",
     "pemilik": "PT Sumber Trans Niaga",
     "tanggal_exp": "27 Mei 2027",
-    "tanggal_periksa": "2026-01-19",
+    "tanggal_periksa": "2026-01-19T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4193,13 +4317,16 @@
     "ket_tambahan": "hanya 1 lvt titik dibottom loader",
     "status": "final",
     "user_id": 2,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T08:42:23.000000Z",
+    "updated_at": "2026-09-15T08:42:23.000000Z"
   },
   {
+    "id": 45,
     "nomor_polisi": "H9883OF",
     "pemilik": "PT Samudra Mukti Energy",
     "tanggal_exp": "09/07/2027",
-    "tanggal_periksa": "2026-01-20",
+    "tanggal_periksa": "2026-01-20T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4291,13 +4418,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:44:24.000000Z"
   },
   {
+    "id": 46,
     "nomor_polisi": "H8481OH",
     "pemilik": "PT Patra Logistik",
     "tanggal_exp": "12/09/2026",
-    "tanggal_periksa": "2026-01-27",
+    "tanggal_periksa": "2026-01-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -4397,13 +4527,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 47,
     "nomor_polisi": "E9412YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "25/11/2026",
-    "tanggal_periksa": "2026-01-27",
+    "tanggal_periksa": "2026-01-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4495,13 +4628,16 @@
     "ket_tambahan": "pin pengunci manhole com3 tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:45:54.000000Z"
   },
   {
+    "id": 48,
     "nomor_polisi": "H8428OH",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "30/10/2026",
-    "tanggal_periksa": "2026-01-27",
+    "tanggal_periksa": "2026-01-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4593,13 +4729,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:46:29.000000Z"
   },
   {
+    "id": 49,
     "nomor_polisi": "B9810TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "29/04/2026",
-    "tanggal_periksa": "2026-02-02",
+    "tanggal_periksa": "2026-02-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4691,13 +4830,16 @@
     "ket_tambahan": "komp 1,2,3 tidak ada segel manhole tapi ada lastig",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:10:29.000000Z"
   },
   {
+    "id": 50,
     "nomor_polisi": "R9238IH",
     "pemilik": "PT Suatu Hati",
     "tanggal_exp": "08/07/2026",
-    "tanggal_periksa": "2026-02-02",
+    "tanggal_periksa": "2026-02-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -4797,13 +4939,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 51,
     "nomor_polisi": "R9237IH",
     "pemilik": "PT Satu Hati",
     "tanggal_exp": "07/07/2026",
-    "tanggal_periksa": "2026-02-02",
+    "tanggal_periksa": "2026-02-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4895,13 +5040,16 @@
     "ket_tambahan": "komp 1,2,3 beberapa produk tidak terlihat",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:07:41.000000Z"
   },
   {
+    "id": 52,
     "nomor_polisi": "B9800SFU",
     "pemilik": "PT Pertamina Patra Niaga",
     "tanggal_exp": "12/02/2026",
-    "tanggal_periksa": "2026-02-03",
+    "tanggal_periksa": "2026-02-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -4993,13 +5141,16 @@
     "ket_tambahan": "- bagian bottom loader komp 1 indikator produk rusak\r\n- tanggal 12 feb 2026 tera tanki\r\n- segel volum tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:04:11.000000Z"
   },
   {
+    "id": 53,
     "nomor_polisi": "B9805SFU",
     "pemilik": "PT Pertamina Patra Logistik",
     "tanggal_exp": "20/02/2027",
-    "tanggal_periksa": "2026-02-03",
+    "tanggal_periksa": "2026-02-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -5091,13 +5242,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:11:28.000000Z"
   },
   {
+    "id": 54,
     "nomor_polisi": "AA8410OP",
     "pemilik": "PT Tanah Putih",
     "tanggal_exp": "20/02/2027",
-    "tanggal_periksa": "2026-02-03",
+    "tanggal_periksa": "2026-02-03T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -5197,13 +5351,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 55,
     "nomor_polisi": "H9536OH",
     "pemilik": "PT Patra Logistik",
     "tanggal_exp": "04/09/2027",
-    "tanggal_periksa": "2026-02-09",
+    "tanggal_periksa": "2026-02-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -5295,13 +5452,16 @@
     "ket_tambahan": "T1 tidak sama disertifikat",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:15:02.000000Z"
   },
   {
+    "id": 56,
     "nomor_polisi": "B9697SFV",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "24/10/2027",
-    "tanggal_periksa": "2026-02-09",
+    "tanggal_periksa": "2026-02-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -5393,13 +5553,16 @@
     "ket_tambahan": "komp1  dan komp 2 kotor",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:14:15.000000Z"
   },
   {
+    "id": 57,
     "nomor_polisi": "B9570SEC",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "08/10/2027",
-    "tanggal_periksa": "2026-02-09",
+    "tanggal_periksa": "2026-02-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -5491,13 +5654,16 @@
     "ket_tambahan": "T1 belum diganti semua",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:12:59.000000Z"
   },
   {
+    "id": 58,
     "nomor_polisi": "B9061SFV",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "31/07/2026",
-    "tanggal_periksa": "2026-02-11",
+    "tanggal_periksa": "2026-02-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -5589,13 +5755,16 @@
     "ket_tambahan": "- area pt0 kotor \r\n- tera ulang pt0\r\n- masih ada sisa produk di kompartmen\r\n-segel volume\r\n- segel jaminan manhole",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:16:58.000000Z"
   },
   {
+    "id": 59,
     "nomor_polisi": "B9812TEI",
     "pemilik": "PT.Adam Trans",
     "tanggal_exp": "30/04/2027",
-    "tanggal_periksa": "2026-02-11",
+    "tanggal_periksa": "2026-02-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -5695,13 +5864,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 60,
     "nomor_polisi": "B9811TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "14/07/2026",
-    "tanggal_periksa": "2026-02-11",
+    "tanggal_periksa": "2026-02-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -5801,13 +5973,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 61,
     "nomor_polisi": "L8397UCA",
     "pemilik": "PT Almira Distribusi dan Gas",
     "tanggal_exp": "17/07/2027",
-    "tanggal_periksa": "2026-02-12",
+    "tanggal_periksa": "2026-02-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -5899,13 +6074,16 @@
     "ket_tambahan": "t1 komp 1 = 209\r\nt1 komp 2 = 204",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:18:10.000000Z"
   },
   {
+    "id": 62,
     "nomor_polisi": "H93910F",
     "pemilik": "PT Adhi Buana Persada",
     "tanggal_exp": "15/05/2027",
-    "tanggal_periksa": "2026-02-12",
+    "tanggal_periksa": "2026-02-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -6005,13 +6183,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 63,
     "nomor_polisi": "R9839BR",
     "pemilik": "PT Satu Hati",
     "tanggal_exp": "31/07/2026",
-    "tanggal_periksa": "2026-02-18",
+    "tanggal_periksa": "2026-02-18T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -6111,13 +6292,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 64,
     "nomor_polisi": "E9225YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "18/02/2027",
-    "tanggal_periksa": "2026-02-18",
+    "tanggal_periksa": "2026-02-18T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -6217,13 +6401,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 65,
     "nomor_polisi": "E9512YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "27/10/2027",
-    "tanggal_periksa": "2026-02-18",
+    "tanggal_periksa": "2026-02-18T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -6315,13 +6502,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:19:24.000000Z"
   },
   {
+    "id": 66,
     "nomor_polisi": "N8864UG",
     "pemilik": "PT Dharma Citra Energy",
     "tanggal_exp": "23/02/2028",
-    "tanggal_periksa": "2026-02-23",
+    "tanggal_periksa": "2026-02-23T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -6421,13 +6611,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 67,
     "nomor_polisi": "N886GUF",
     "pemilik": "PT Dharma Citra Energy",
     "tanggal_exp": "05/05/2027",
-    "tanggal_periksa": "2026-02-23",
+    "tanggal_periksa": "2026-02-23T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -6527,13 +6720,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 68,
     "nomor_polisi": "E9552YC",
     "pemilik": "PT Puspita Cipto",
     "tanggal_exp": "24/10/2026",
-    "tanggal_periksa": "2026-02-23",
+    "tanggal_periksa": "2026-02-23T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -6633,13 +6829,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 69,
     "nomor_polisi": "H8481OH",
     "pemilik": "PT Limas Biru Mandiri",
     "tanggal_exp": "12/09/2026",
-    "tanggal_periksa": "2026-02-23",
+    "tanggal_periksa": "2026-02-23T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -6731,13 +6930,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:20:46.000000Z"
   },
   {
+    "id": 70,
     "nomor_polisi": "B9504TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "22/07/2026",
-    "tanggal_periksa": "2026-02-25",
+    "tanggal_periksa": "2026-02-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -6829,13 +7031,16 @@
     "ket_tambahan": "komp 1,2,3 tidak ada segel volume",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:22:39.000000Z"
   },
   {
+    "id": 71,
     "nomor_polisi": "B9520TE1",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "04/11/2026",
-    "tanggal_periksa": "2026-02-25",
+    "tanggal_periksa": "2026-02-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -6927,13 +7132,16 @@
     "ket_tambahan": "- stiker tera belum terpasang\r\n- komp 1 kotor",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:21:59.000000Z"
   },
   {
+    "id": 72,
     "nomor_polisi": "B9505TE1",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "06/08/2026",
-    "tanggal_periksa": "2026-02-25",
+    "tanggal_periksa": "2026-02-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7033,13 +7241,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 73,
     "nomor_polisi": "E9554YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "30/06/2027",
-    "tanggal_periksa": "2026-03-02",
+    "tanggal_periksa": "2026-03-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7139,13 +7350,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 74,
     "nomor_polisi": "B910650I",
     "pemilik": "PT PPN",
     "tanggal_exp": "30/07/2027",
-    "tanggal_periksa": "2026-03-02",
+    "tanggal_periksa": "2026-03-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7245,13 +7459,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 75,
     "nomor_polisi": "B9376TFU",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "23/10/2027",
-    "tanggal_periksa": "2026-03-02",
+    "tanggal_periksa": "2026-03-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7351,13 +7568,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 76,
     "nomor_polisi": "E9566YB",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "24/02/2027",
-    "tanggal_periksa": "2026-03-02",
+    "tanggal_periksa": "2026-03-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7457,13 +7677,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 77,
     "nomor_polisi": "B9378TFU",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "28/10/2027",
-    "tanggal_periksa": "2026-03-02",
+    "tanggal_periksa": "2026-03-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7563,13 +7786,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 78,
     "nomor_polisi": "R9130B",
     "pemilik": "PT Serayu",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2026-03-04",
+    "tanggal_periksa": "2026-03-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7669,13 +7895,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:55.000000Z"
   },
   {
+    "id": 79,
     "nomor_polisi": "N8059UEA",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "07/10/2027",
-    "tanggal_periksa": "2026-03-04",
+    "tanggal_periksa": "2026-03-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7775,13 +8004,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 80,
     "nomor_polisi": "B90775EI",
     "pemilik": "PT PPN",
     "tanggal_exp": "03/03/2028",
-    "tanggal_periksa": "2026-03-04",
+    "tanggal_periksa": "2026-03-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7881,13 +8113,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 81,
     "nomor_polisi": "H9013OH",
     "pemilik": "PT Limas Biru Mandiri",
     "tanggal_exp": "15/04/2027",
-    "tanggal_periksa": "2026-03-09",
+    "tanggal_periksa": "2026-03-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -7987,13 +8222,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 82,
     "nomor_polisi": "B9223SFV",
     "pemilik": "PT PPN",
     "tanggal_exp": "25/03/2027",
-    "tanggal_periksa": "2026-03-09",
+    "tanggal_periksa": "2026-03-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8093,13 +8331,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 83,
     "nomor_polisi": "R9519EM",
     "pemilik": "PT Katraco Putra Selasa",
     "tanggal_exp": "18/03/2027",
-    "tanggal_periksa": "2026-03-09",
+    "tanggal_periksa": "2026-03-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8199,13 +8440,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 84,
     "nomor_polisi": "B9246SFV",
     "pemilik": "PT PPN",
     "tanggal_exp": "25/02/2027",
-    "tanggal_periksa": "2026-03-11",
+    "tanggal_periksa": "2026-03-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8305,13 +8549,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:56.000000Z"
   },
   {
+    "id": 85,
     "nomor_polisi": "B9234SFV",
     "pemilik": "PT PPN",
     "tanggal_exp": "21/01/2028",
-    "tanggal_periksa": "2026-03-11",
+    "tanggal_periksa": "2026-03-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8411,13 +8658,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:56.000000Z"
   },
   {
+    "id": 86,
     "nomor_polisi": "H8428OH",
     "pemilik": "PT Lumas",
     "tanggal_exp": "28/10/2026",
-    "tanggal_periksa": "2026-03-11",
+    "tanggal_periksa": "2026-03-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8517,13 +8767,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:56.000000Z"
   },
   {
+    "id": 87,
     "nomor_polisi": "H9155OF",
     "pemilik": "PT Patlog",
     "tanggal_exp": "18/09/2027",
-    "tanggal_periksa": "2026-03-15",
+    "tanggal_periksa": "2026-03-15T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8623,13 +8876,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:56.000000Z"
   },
   {
+    "id": 88,
     "nomor_polisi": "G9532OA",
     "pemilik": "PT Murni Adhi Dukuh Jaya",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2026-03-16",
+    "tanggal_periksa": "2026-03-16T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8729,13 +8985,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 89,
     "nomor_polisi": "G9214OA",
     "pemilik": "PT Murni Adhi Dukuh Jaya",
     "tanggal_exp": "14/10/2026",
-    "tanggal_periksa": "2026-04-01",
+    "tanggal_periksa": "2026-04-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8836,13 +9095,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:29:56.000000Z"
   },
   {
+    "id": 90,
     "nomor_polisi": "N8533UG",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "13/05/2026",
-    "tanggal_periksa": "2026-04-06",
+    "tanggal_periksa": "2026-04-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -8942,13 +9204,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 91,
     "nomor_polisi": "R8114K",
     "pemilik": "-",
     "tanggal_exp": "23/10/2026",
-    "tanggal_periksa": "2026-04-06",
+    "tanggal_periksa": "2026-04-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9048,13 +9313,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 92,
     "nomor_polisi": "N9369UI",
     "pemilik": "PT Patra Logistik (Sinar Wahana Surya)",
     "tanggal_exp": "16/05/2026",
-    "tanggal_periksa": "2026-04-06",
+    "tanggal_periksa": "2026-04-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9154,13 +9422,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 93,
     "nomor_polisi": "H9771OF",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "07/05/2026",
-    "tanggal_periksa": "2026-04-06",
+    "tanggal_periksa": "2026-04-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -9252,13 +9523,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:31:15.000000Z"
   },
   {
+    "id": 94,
     "nomor_polisi": "B9290TFV",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "10/06/2027",
-    "tanggal_periksa": "2026-04-15",
+    "tanggal_periksa": "2026-04-15T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -9350,13 +9624,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:33:35.000000Z"
   },
   {
+    "id": 95,
     "nomor_polisi": "B9355TFV",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "15/01/2027",
-    "tanggal_periksa": "2026-04-15",
+    "tanggal_periksa": "2026-04-15T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9456,13 +9733,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 96,
     "nomor_polisi": "E9445YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "06/03/2027",
-    "tanggal_periksa": "2026-04-22",
+    "tanggal_periksa": "2026-04-22T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9562,13 +9842,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 97,
     "nomor_polisi": "E9334YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "05/06/2026",
-    "tanggal_periksa": "2026-04-22",
+    "tanggal_periksa": "2026-04-22T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9668,13 +9951,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 98,
     "nomor_polisi": "E9412YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "25/11/2026",
-    "tanggal_periksa": "2026-04-27",
+    "tanggal_periksa": "2026-04-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9775,13 +10061,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 99,
     "nomor_polisi": "E9493YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "03/07/2027",
-    "tanggal_periksa": "2026-04-27",
+    "tanggal_periksa": "2026-04-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9881,13 +10170,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 100,
     "nomor_polisi": "E9495YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "04/07/2027",
-    "tanggal_periksa": "2026-04-27",
+    "tanggal_periksa": "2026-04-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -9987,13 +10279,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 101,
     "nomor_polisi": "R9564B",
     "pemilik": "PT Serayu Mitra Jaya",
     "tanggal_exp": "03/11/2027",
-    "tanggal_periksa": "2026-05-04",
+    "tanggal_periksa": "2026-05-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -10093,13 +10388,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 102,
     "nomor_polisi": "R9131B",
     "pemilik": "PT Serayu Mitra Jaya",
     "tanggal_exp": "10/04/2026",
-    "tanggal_periksa": "2026-05-04",
+    "tanggal_periksa": "2026-05-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10191,13 +10489,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:39:10.000000Z"
   },
   {
+    "id": 103,
     "nomor_polisi": "R9675B",
     "pemilik": "PT Serayu Mitra Jaya",
     "tanggal_exp": "12/11/2026",
-    "tanggal_periksa": "2026-05-04",
+    "tanggal_periksa": "2026-05-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10289,13 +10590,16 @@
     "ket_tambahan": "segel volume komp 2 tidak ada \r\nkomp 1 kotor",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:40:21.000000Z"
   },
   {
+    "id": 104,
     "nomor_polisi": "H8965OA",
     "pemilik": "PT STN",
     "tanggal_exp": "27/05/2027",
-    "tanggal_periksa": "2026-05-04",
+    "tanggal_periksa": "2026-05-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -10395,13 +10699,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 105,
     "nomor_polisi": "R9674B",
     "pemilik": "PT Serayu Mitra Jaya",
     "tanggal_exp": "17/09/2027",
-    "tanggal_periksa": "2026-05-04",
+    "tanggal_periksa": "2026-05-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -10502,13 +10809,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 106,
     "nomor_polisi": "H8966DA",
     "pemilik": "PT STN",
     "tanggal_exp": "27/05/2027",
-    "tanggal_periksa": "2026-05-04",
+    "tanggal_periksa": "2026-05-04T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10600,13 +10910,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:41:43.000000Z"
   },
   {
+    "id": 107,
     "nomor_polisi": "E9535YC",
     "pemilik": "PT Patlog Puspita Cipta",
     "tanggal_exp": "28/10/2027",
-    "tanggal_periksa": "2026-05-06",
+    "tanggal_periksa": "2026-05-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10698,13 +11011,16 @@
     "ket_tambahan": "tidak ada segel trailer-chasis",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:43:44.000000Z"
   },
   {
+    "id": 108,
     "nomor_polisi": "B9298SRW-SAT16KL",
     "pemilik": "PT Elnusa Pevortin",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2026-05-06",
+    "tanggal_periksa": "2026-05-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10796,13 +11112,16 @@
     "ket_tambahan": "tera ulang \r\ntidak ada alas bottom loader\r\ntidak ada segel tangki-chasis",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:45:00.000000Z"
   },
   {
+    "id": 109,
     "nomor_polisi": "H9739OH",
     "pemilik": "PT Adhi Drama Persada",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2026-05-06",
+    "tanggal_periksa": "2026-05-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10894,13 +11213,16 @@
     "ket_tambahan": "Tera ulang \r\nTidak ada alas bottom loader",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:45:52.000000Z"
   },
   {
+    "id": 110,
     "nomor_polisi": "B9299SFW-SAT",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2026-05-06",
+    "tanggal_periksa": "2026-05-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -10992,13 +11314,16 @@
     "ket_tambahan": "Tera ulang \r\nTidak ada alas bottom loader",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:47:33.000000Z"
   },
   {
+    "id": 111,
     "nomor_polisi": "H9740OGH",
     "pemilik": "PT Adhi Buana Persada",
     "tanggal_exp": "-",
-    "tanggal_periksa": "2026-05-06",
+    "tanggal_periksa": "2026-05-06T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -11090,13 +11415,16 @@
     "ket_tambahan": "Tera ulang \r\nTidak ada alas bottom loader",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:48:24.000000Z"
   },
   {
+    "id": 112,
     "nomor_polisi": "E9454YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "27/11/2027",
-    "tanggal_periksa": "2026-05-11",
+    "tanggal_periksa": "2026-05-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -11196,13 +11524,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 113,
     "nomor_polisi": "E9542YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "01/12/2027",
-    "tanggal_periksa": "2026-05-11",
+    "tanggal_periksa": "2026-05-11T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -11294,13 +11625,16 @@
     "ket_tambahan": null,
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:49:56.000000Z"
   },
   {
+    "id": 114,
     "nomor_polisi": "N8021UEA",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "04/06/2027",
-    "tanggal_periksa": "2026-05-18",
+    "tanggal_periksa": "2026-05-18T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -11392,13 +11726,16 @@
     "ket_tambahan": "segel chasis patah",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T07:52:59.000000Z"
   },
   {
+    "id": 115,
     "nomor_polisi": "B9022SFV",
     "pemilik": "PT PPN",
     "tanggal_exp": "20/02/2028",
-    "tanggal_periksa": "2026-05-18",
+    "tanggal_periksa": "2026-05-18T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -11498,13 +11835,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 116,
     "nomor_polisi": "L8381VCA",
     "pemilik": "PT Almira",
     "tanggal_exp": "17/08/2027",
-    "tanggal_periksa": "2026-05-20",
+    "tanggal_periksa": "2026-05-20T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -11605,13 +11945,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 117,
     "nomor_polisi": "R8435CM",
     "pemilik": "PT Kotralo Perda Selaras",
     "tanggal_exp": "13/11/2026",
-    "tanggal_periksa": "2026-05-20",
+    "tanggal_periksa": "2026-05-20T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -11711,13 +12054,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 118,
     "nomor_polisi": "R9707DT",
     "pemilik": "PT Serayu",
     "tanggal_exp": "24/06/2027",
-    "tanggal_periksa": "2026-05-20",
+    "tanggal_periksa": "2026-05-20T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -11817,13 +12163,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 119,
     "nomor_polisi": "E9547YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "03/12/2027",
-    "tanggal_periksa": "2026-05-20",
+    "tanggal_periksa": "2026-05-20T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -11915,13 +12264,16 @@
     "ket_tambahan": "Tera ulang (segel chasis)",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:07:43.000000Z"
   },
   {
+    "id": 120,
     "nomor_polisi": "AA88OF",
     "pemilik": "PT Tanah Putih",
     "tanggal_exp": "25/06/2027",
-    "tanggal_periksa": "2026-05-25",
+    "tanggal_periksa": "2026-05-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12013,13 +12365,16 @@
     "ket_tambahan": "Segel chasis tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:08:30.000000Z"
   },
   {
+    "id": 166,
     "nomor_polisi": "R825OT",
     "pemilik": null,
     "tanggal_exp": "09/09/2026",
-    "tanggal_periksa": "2026-05-25",
+    "tanggal_periksa": "2026-05-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12111,13 +12466,16 @@
     "ket_tambahan": "Segel volume tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Admin Lab QQ"
+    "created_by": "Admin Lab QQ",
+    "created_at": "2026-09-15T08:04:25.000000Z",
+    "updated_at": "2026-09-15T08:04:25.000000Z"
   },
   {
+    "id": 121,
     "nomor_polisi": "AD8603OH",
     "pemilik": "PT Karyamas Niaga Manunggal Jaya",
     "tanggal_exp": "22/01/2028",
-    "tanggal_periksa": "2026-06-01",
+    "tanggal_periksa": "2026-06-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -12217,13 +12575,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 122,
     "nomor_polisi": "E9453YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "11/02/2027",
-    "tanggal_periksa": "2026-06-01",
+    "tanggal_periksa": "2026-06-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -12323,13 +12684,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 123,
     "nomor_polisi": "AD8618OH",
     "pemilik": "PT Karyamas Niaga Manunggal Jaya",
     "tanggal_exp": "23/07/2027",
-    "tanggal_periksa": "2026-06-01",
+    "tanggal_periksa": "2026-06-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -12429,13 +12793,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 124,
     "nomor_polisi": "B9425TEK",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "05/03/2028",
-    "tanggal_periksa": "2026-06-08",
+    "tanggal_periksa": "2026-06-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12527,13 +12894,16 @@
     "ket_tambahan": "Masih tera bawaan",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:10:41.000000Z"
   },
   {
+    "id": 125,
     "nomor_polisi": "E9450YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "12/02/2027",
-    "tanggal_periksa": "2026-06-08",
+    "tanggal_periksa": "2026-06-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12625,13 +12995,16 @@
     "ket_tambahan": "Manhole komp 1 kotor \r\nPengunci manhole komp 3 tidak ada \r\nKomp 3 kotor",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:11:41.000000Z"
   },
   {
+    "id": 126,
     "nomor_polisi": "N9086OI",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "13/01/2028",
-    "tanggal_periksa": "2026-06-08",
+    "tanggal_periksa": "2026-06-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12723,13 +13096,16 @@
     "ket_tambahan": "Lastik bottom loader komp 2",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:12:23.000000Z"
   },
   {
+    "id": 127,
     "nomor_polisi": "N9326OI",
     "pemilik": "PT Sinar Wahana Surya",
     "tanggal_exp": "13/01/2028",
-    "tanggal_periksa": "2026-06-08",
+    "tanggal_periksa": "2026-06-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12821,13 +13197,16 @@
     "ket_tambahan": "Komp 2 kotor \r\nsegel chasis putus",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:24:19.000000Z"
   },
   {
+    "id": 128,
     "nomor_polisi": "H9730OF",
     "pemilik": "PT STN",
     "tanggal_exp": "24/07/2026",
-    "tanggal_periksa": "2026-06-08",
+    "tanggal_periksa": "2026-06-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -12919,13 +13298,16 @@
     "ket_tambahan": "Segel volume \r\nSegel chasis \r\nsegel jaminan manhole",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:25:27.000000Z"
   },
   {
+    "id": 129,
     "nomor_polisi": "E9264YC",
     "pemilik": "PT Puspita Cipta",
     "tanggal_exp": "17/07/2026",
-    "tanggal_periksa": "2026-06-10",
+    "tanggal_periksa": "2026-06-10T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13017,13 +13399,16 @@
     "ket_tambahan": "Segel chasis tidak ada",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:28:17.000000Z"
   },
   {
+    "id": 130,
     "nomor_polisi": "H8024OF",
     "pemilik": "PT STN",
     "tanggal_exp": "13/11/2026",
-    "tanggal_periksa": "2026-06-10",
+    "tanggal_periksa": "2026-06-10T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13115,13 +13500,16 @@
     "ket_tambahan": "Segel volume tidak ada \r\nSegel gantian manhole",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:29:07.000000Z"
   },
   {
+    "id": 131,
     "nomor_polisi": "N9504OH",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "15/01/2028",
-    "tanggal_periksa": "2026-06-14",
+    "tanggal_periksa": "2026-06-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13213,13 +13601,16 @@
     "ket_tambahan": "tidak ada segel chasis",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:29:48.000000Z"
   },
   {
+    "id": 132,
     "nomor_polisi": "N8641OH",
     "pemilik": "PT Dharma Citra Energi",
     "tanggal_exp": "29/06/2026",
-    "tanggal_periksa": "2026-06-14",
+    "tanggal_periksa": "2026-06-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13311,13 +13702,16 @@
     "ket_tambahan": "tidak ada segel chasis \r\ntidak ada segel volume",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:30:23.000000Z"
   },
   {
+    "id": 133,
     "nomor_polisi": "R8053OT",
     "pemilik": "PT Serayu Mitrajaya",
     "tanggal_exp": "09/11/2026",
-    "tanggal_periksa": "2026-06-20",
+    "tanggal_periksa": "2026-06-20T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13409,13 +13803,16 @@
     "ket_tambahan": "segel straigner",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:31:04.000000Z"
   },
   {
+    "id": 134,
     "nomor_polisi": "H96770F",
     "pemilik": "PT Adhi Buana Persada",
     "tanggal_exp": "19/01/2028",
-    "tanggal_periksa": "2026-07-01",
+    "tanggal_periksa": "2026-07-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -13515,13 +13912,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 135,
     "nomor_polisi": "H9698OF",
     "pemilik": "PT Adhi Buana Persada",
     "tanggal_exp": "14/01/2028",
-    "tanggal_periksa": "2026-07-01",
+    "tanggal_periksa": "2026-07-01T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13613,13 +14013,16 @@
     "ket_tambahan": "Lastik komp 3 \r\nPengunci manhole komp 3",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T08:36:32.000000Z"
   },
   {
+    "id": 136,
     "nomor_polisi": "R9356BM",
     "pemilik": "PT Katraco Putra Selaras",
     "tanggal_exp": "18/07/2026",
-    "tanggal_periksa": "2026-07-08",
+    "tanggal_periksa": "2026-07-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -13719,13 +14122,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 167,
     "nomor_polisi": "R9356BM",
     "pemilik": null,
     "tanggal_exp": "18/07/2026",
-    "tanggal_periksa": "2026-07-08",
+    "tanggal_periksa": "2026-07-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -13817,13 +14223,16 @@
     "ket_tambahan": "Tidk ada segel chasis",
     "status": "final",
     "user_id": 1,
-    "created_by": "Admin Lab QQ"
+    "created_by": "Admin Lab QQ",
+    "created_at": "2026-09-15T08:33:27.000000Z",
+    "updated_at": "2026-09-15T08:33:27.000000Z"
   },
   {
+    "id": 137,
     "nomor_polisi": "R9237IH",
     "pemilik": "PT Satu Hati",
     "tanggal_exp": "31/03/2028",
-    "tanggal_periksa": "2026-07-27",
+    "tanggal_periksa": "2026-07-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -13923,13 +14332,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 138,
     "nomor_polisi": "B9810TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "25/04/2027",
-    "tanggal_periksa": "2026-07-27",
+    "tanggal_periksa": "2026-07-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14030,13 +14442,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 139,
     "nomor_polisi": "H9536OH",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "04/09/2027",
-    "tanggal_periksa": "2026-07-27",
+    "tanggal_periksa": "2026-07-27T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14137,13 +14552,16 @@
     "ket_tambahan": "Tera Ulang",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 140,
     "nomor_polisi": "B9106SEI",
     "pemilik": "PT PPN",
     "tanggal_exp": "30/07/2027",
-    "tanggal_periksa": "2026-07-29",
+    "tanggal_periksa": "2026-07-29T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14243,13 +14661,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 141,
     "nomor_polisi": "R9238IH",
     "pemilik": "PT Satu Hati",
     "tanggal_exp": "08/07/2028",
-    "tanggal_periksa": "2026-07-29",
+    "tanggal_periksa": "2026-07-29T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14349,13 +14770,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 142,
     "nomor_polisi": "B9061SFV",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "31/07/2026",
-    "tanggal_periksa": "2026-08-10",
+    "tanggal_periksa": "2026-08-10T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14455,13 +14879,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 143,
     "nomor_polisi": "B9570SEI",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "08/10/2027",
-    "tanggal_periksa": "2026-08-10",
+    "tanggal_periksa": "2026-08-10T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14562,13 +14989,16 @@
     "ket_tambahan": "Tera Ulang",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 146,
     "nomor_polisi": "AA8410OP",
     "pemilik": "PT Tanah Putih",
     "tanggal_exp": "20/02/2027",
-    "tanggal_periksa": "2026-08-12",
+    "tanggal_periksa": "2026-08-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14669,13 +15099,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 147,
     "nomor_polisi": "B9077SEI",
     "pemilik": "PT PPN",
     "tanggal_exp": "03/03/2028",
-    "tanggal_periksa": "2026-08-12",
+    "tanggal_periksa": "2026-08-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14775,13 +15208,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 148,
     "nomor_polisi": "B9811TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "18/06/2028",
-    "tanggal_periksa": "2026-08-12",
+    "tanggal_periksa": "2026-08-12T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14881,13 +15317,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 144,
     "nomor_polisi": "H8481OH",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "12/09/2027",
-    "tanggal_periksa": "2026-08-17",
+    "tanggal_periksa": "2026-08-17T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -14987,13 +15426,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 145,
     "nomor_polisi": "H9155OF",
     "pemilik": "PT Lumas Prima Makmur",
     "tanggal_exp": "18/09/2027",
-    "tanggal_periksa": "2026-08-17",
+    "tanggal_periksa": "2026-08-17T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15093,13 +15535,16 @@
     "ket_tambahan": "Tera Ulang",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 149,
     "nomor_polisi": "B9223SFV",
     "pemilik": "PT Pertamina Patra Niaga",
     "tanggal_exp": "25/03/2027",
-    "tanggal_periksa": "2026-08-19",
+    "tanggal_periksa": "2026-08-19T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15199,13 +15644,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 150,
     "nomor_polisi": "H9013OH",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "15/04/2027",
-    "tanggal_periksa": "2026-08-19",
+    "tanggal_periksa": "2026-08-19T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15305,13 +15753,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 151,
     "nomor_polisi": "H8428OH",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "28/10/2026",
-    "tanggal_periksa": "2026-08-25",
+    "tanggal_periksa": "2026-08-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15411,13 +15862,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 152,
     "nomor_polisi": "B9697SFV",
     "pemilik": "PT Elnusa Petrofin",
     "tanggal_exp": "24/10/2027",
-    "tanggal_periksa": "2026-08-25",
+    "tanggal_periksa": "2026-08-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15518,13 +15972,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 153,
     "nomor_polisi": "B9812TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "30/04/2027",
-    "tanggal_periksa": "2026-08-25",
+    "tanggal_periksa": "2026-08-25T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15624,13 +16081,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 154,
     "nomor_polisi": "B9505TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "12/08/2028",
-    "tanggal_periksa": "2026-08-31",
+    "tanggal_periksa": "2026-08-31T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15731,13 +16191,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 155,
     "nomor_polisi": "B9504TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "27/07/2028",
-    "tanggal_periksa": "2026-08-31",
+    "tanggal_periksa": "2026-08-31T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15838,13 +16301,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 156,
     "nomor_polisi": "B9520TEI",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "22/01/2027",
-    "tanggal_periksa": "2026-08-31",
+    "tanggal_periksa": "2026-08-31T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -15945,13 +16411,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 157,
     "nomor_polisi": "B9376TFV",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "25/10/2027",
-    "tanggal_periksa": "2026-08-31",
+    "tanggal_periksa": "2026-08-31T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16051,13 +16520,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 158,
     "nomor_polisi": "R9839BR",
     "pemilik": "PT Satu Hati",
     "tanggal_exp": "28/07/2028",
-    "tanggal_periksa": "2026-09-02",
+    "tanggal_periksa": "2026-09-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16158,13 +16630,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 159,
     "nomor_polisi": "B9378TFV",
     "pemilik": "PT Adam Trans",
     "tanggal_exp": "28/10/2027",
-    "tanggal_periksa": "2026-09-02",
+    "tanggal_periksa": "2026-09-02T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16264,13 +16739,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 160,
     "nomor_polisi": "R9519EM",
     "pemilik": "PT Katraco Putra Selaras",
     "tanggal_exp": "18/03/2027",
-    "tanggal_periksa": "2026-09-07",
+    "tanggal_periksa": "2026-09-07T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16370,13 +16848,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 161,
     "nomor_polisi": "N8054UEA",
     "pemilik": "PT Dharma Citra Energy",
     "tanggal_exp": "07/10/2027",
-    "tanggal_periksa": "2026-09-08",
+    "tanggal_periksa": "2026-09-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16476,13 +16957,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 162,
     "nomor_polisi": "N8869UF",
     "pemilik": "PT Dharma Citra Energy",
     "tanggal_exp": "05/03/2027",
-    "tanggal_periksa": "2026-09-08",
+    "tanggal_periksa": "2026-09-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16583,13 +17067,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 163,
     "nomor_polisi": "B9234SFV",
     "pemilik": "PT Pertamina Patra Niaga",
     "tanggal_exp": "21/01/2028",
-    "tanggal_periksa": "2026-09-08",
+    "tanggal_periksa": "2026-09-08T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16690,13 +17177,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 164,
     "nomor_polisi": "G9532OA",
     "pemilik": "PT Murni Adhi Dukuh Jaya",
     "tanggal_exp": "17/03/2028",
-    "tanggal_periksa": "2026-09-09",
+    "tanggal_periksa": "2026-09-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16797,13 +17287,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 165,
     "nomor_polisi": "B9246SFV",
     "pemilik": "PT Pertamina Patra Niaga",
     "tanggal_exp": "25/02/2027",
-    "tanggal_periksa": "2026-09-09",
+    "tanggal_periksa": "2026-09-09T17:00:00.000000Z",
     "tera": [
       {
         "komp": 1,
@@ -16903,13 +17396,16 @@
     "ket_tambahan": "",
     "status": "final",
     "user_id": 1,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T04:40:57.000000Z",
+    "updated_at": "2026-09-15T04:40:57.000000Z"
   },
   {
+    "id": 3,
     "nomor_polisi": "G 9214 OA",
     "pemilik": "PT Murni Adhi Dukuh Jaya",
     "tanggal_exp": "14 Oktober 2026",
-    "tanggal_periksa": "2026-09-14",
+    "tanggal_periksa": "2026-09-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -17001,13 +17497,16 @@
     "ket_tambahan": "Tera ulang",
     "status": "final",
     "user_id": 2,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T02:36:33.000000Z",
+    "updated_at": "2026-09-15T03:49:42.000000Z"
   },
   {
+    "id": 4,
     "nomor_polisi": "H 9771 OF",
     "pemilik": "PT Lumas Biru Mandiri",
     "tanggal_exp": "15 April 2027",
-    "tanggal_periksa": "2026-09-14",
+    "tanggal_periksa": "2026-09-14T17:00:00.000000Z",
     "tera": [
       {
         "komp": "1",
@@ -17099,6 +17598,8 @@
     "ket_tambahan": "Tera ulang (sertifikat tera tera T2nya tidak sesuai)",
     "status": "final",
     "user_id": 2,
-    "created_by": "Petugas QC & Lapangan"
+    "created_by": "Petugas QC & Lapangan",
+    "created_at": "2026-09-15T02:45:31.000000Z",
+    "updated_at": "2026-09-15T02:45:31.000000Z"
   }
 ]
