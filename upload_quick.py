@@ -11,6 +11,8 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
+    'app/Models/ChecklistMtMaos.php',
+    'app/Http/Controllers/ChecklistMtMaosController.php',
     'resources/views/layouts/app.blade.php',
     'resources/views/retain-sampel/_slide-laporan.blade.php',
     'resources/views/retain-sampel/index.blade.php',

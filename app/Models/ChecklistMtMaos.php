@@ -33,13 +33,54 @@ class ChecklistMtMaos extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Memecah catatan tambahan (ket_tambahan) menjadi array item temuan terpisah.
+     * Mendukung pemisah strip (-), bullet (•), koma (,), titik koma (;), nomor (1., 2.), dan baris baru (\n).
+     */
+    public function getKetTambahanItems(): array
+    {
+        $text = $this->ket_tambahan ?? '';
+        if ($text === null || trim($text) === '' || trim($text) === '-') {
+            return [];
+        }
+
+        $raw = trim($text);
+        $raw = str_replace(["\r\n", "\r"], "\n", $raw);
+
+        // Split berdasarkan baris baru, strip/bullet dengan koma/spasi, atau koma antar kalimat
+        $parts = preg_split('/(?:[\n\r]+|\s*[,;]\s*[-•*]\s*|\s+[-•*]\s*|^[-•*]\s*|\s*[,;]\s*(?=[a-zA-Z0-9]))/u', $raw);
+
+        $items = [];
+        foreach ($parts as $p) {
+            $clean = trim($p, " \t\n\r\0\x0B-,•;*");
+            if ($clean !== '' && $clean !== '-') {
+                $items[] = $clean;
+            }
+        }
+
+        // Fallback jika pemisahan di atas menghasilkan <= 1 item tetapi ada koma / titik koma yang memisahkan
+        if (count($items) <= 1 && (str_contains($raw, ',') || str_contains($raw, ';'))) {
+            $commaParts = preg_split('/[,;]/', $raw);
+            $temp = [];
+            foreach ($commaParts as $cp) {
+                $clean = trim($cp, " \t\n\r\0\x0B-,•;*");
+                if ($clean !== '' && $clean !== '-') {
+                    $temp[] = $clean;
+                }
+            }
+            if (count($temp) > 1) {
+                $items = $temp;
+            }
+        }
+
+        return $items;
+    }
+
     /** Jumlah item yang ditandai "temuan" (tidak sesuai / ada catatan tambahan pemeriksa). */
     public function flagCount(): int
     {
         $count = collect($this->results ?? [])->filter(fn ($v) => $v === 'bad')->count();
-        if (!empty(trim($this->ket_tambahan ?? ''))) {
-            $count += 1;
-        }
+        $count += count($this->getKetTambahanItems());
         return $count;
     }
 
@@ -74,9 +115,9 @@ class ChecklistMtMaos extends Model
             }
         }
 
-        // 4. Keterangan Tambahan
-        if (!empty(trim($this->ket_tambahan ?? ''))) {
-            $list[] = 'Keterangan: ' . trim($this->ket_tambahan);
+        // 4. Keterangan Tambahan (setiap poin dipisah jadi temuan tersendiri)
+        foreach ($this->getKetTambahanItems() as $item) {
+            $list[] = 'Keterangan: ' . $item;
         }
 
         return $list;

@@ -232,12 +232,12 @@ class ChecklistMtMaosController extends Controller
             }
 
             // 4. Keterangan Tambahan jika ada
-            if (!empty($c->ket_tambahan)) {
+            foreach ($c->getKetTambahanItems() as $kItem) {
                 $temuan[] = [
-                    'label' => 'Catatan Tambahan Pemeriksa',
+                    'label' => $kItem,
                     'kategori' => 'Catatan',
                     'disp' => '-',
-                    'catatan' => trim($c->ket_tambahan),
+                    'catatan' => $kItem,
                 ];
             }
 
