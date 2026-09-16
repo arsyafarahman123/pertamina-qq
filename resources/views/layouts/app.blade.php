@@ -430,50 +430,16 @@
 </script>
 @yield('scripts')
 <script>
-    (function initLucideSystem() {
-        function runIcons() {
-            if (typeof window.renderLucideIcons === 'function') {
-                window.renderLucideIcons();
-            } else if (typeof window.lucide !== 'undefined' && typeof window.lucide.createIcons === 'function') {
-                try { window.lucide.createIcons(); } catch (e) {}
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof window.lucide !== 'undefined' && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
         }
-
-        // Jalankan segera
-        runIcons();
-
-        // Jalankan di berbagai event siklus hidup browser & framework
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', runIcons);
+    });
+    window.addEventListener('load', function() {
+        if (typeof window.lucide !== 'undefined' && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
         }
-        window.addEventListener('load', runIcons);
-        document.addEventListener('alpine:initialized', runIcons);
-        document.addEventListener('alpine:navigated', runIcons);
-
-        // Polling bertahap untuk memastikan elemen dinamis / async ter-render
-        [50, 150, 300, 600, 1200, 2500].forEach(function(delay) {
-            setTimeout(runIcons, delay);
-        });
-
-        // MutationObserver untuk otomatis merender ikon jika ada perubahan DOM dinamis
-        try {
-            if (window.MutationObserver && document.body) {
-                var observer = new MutationObserver(function(mutations) {
-                    var needsRender = false;
-                    for (var i = 0; i < mutations.length; i++) {
-                        if (mutations[i].addedNodes && mutations[i].addedNodes.length > 0) {
-                            needsRender = true;
-                            break;
-                        }
-                    }
-                    if (needsRender) {
-                        runIcons();
-                    }
-                });
-                observer.observe(document.body, { childList: true, subtree: true });
-            }
-        } catch (e) {}
-    })();
+    });
 </script>
 </body>
 </html>
