@@ -16,7 +16,7 @@
     </div>
     <div class="flex flex-wrap items-center gap-2">
         <button type="button" 
-                onclick="window.dispatchEvent(new CustomEvent('open-retain-tutorial'))"
+                onclick="(function(){ try { const AC = window.AudioContext || window.webkitAudioContext; if(AC){ window._userAudioCtx = window._userAudioCtx || new AC(); if(window._userAudioCtx.state === 'suspended') window._userAudioCtx.resume(); } } catch(e){} window.dispatchEvent(new CustomEvent('open-retain-tutorial')); })()"
                 class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs sm:text-sm font-bold text-slate-700 shadow-sm transition hover:border-brand-blue hover:text-brand-blue">
             <i data-lucide="book-open" class="h-4 w-4 text-brand-blue"></i> Petunjuk &amp; SOP Retain
         </button>

@@ -59,14 +59,22 @@
                 </div>
 
                 <div class="flex items-center gap-2">
+                    <!-- Indikator Animasi Musik Berjalan -->
+                    <template x-if="soundEnabled">
+                        <div class="hidden sm:flex items-center gap-1 bg-white/10 px-2.5 py-1.5 rounded-xl border border-white/15 text-[11px] font-medium text-emerald-300">
+                            <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>Musik &amp; Suara Aktif</span>
+                        </div>
+                    </template>
+
                     <!-- Tombol Kontrol Suara & Musik -->
                     <button type="button" 
                             @click="toggleAudio()" 
-                            :class="soundEnabled ? 'bg-emerald-500/90 text-white hover:bg-emerald-600' : 'bg-rose-500/20 text-rose-300 hover:bg-rose-500/30'"
+                            :class="soundEnabled ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-rose-500/20 text-rose-300 hover:bg-rose-500/30'"
                             class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition shadow-sm"
                             :title="soundEnabled ? 'Klik untuk matikan suara & musik' : 'Klik untuk aktifkan suara & musik'">
                         <i :data-lucide="soundEnabled ? 'volume-2' : 'volume-x'" class="h-4 w-4"></i>
-                        <span class="hidden sm:inline" x-text="soundEnabled ? 'Suara + Musik Aktif' : 'Audio Mati'"></span>
+                        <span class="hidden sm:inline" x-text="soundEnabled ? 'Mute' : 'Bunyikan'"></span>
                     </button>
 
                     <!-- Tombol Tutup -->
@@ -366,10 +374,10 @@
 
                 <!-- Voice Replay Button -->
                 <button type="button" 
-                        @click="speakNarration()" 
-                        class="inline-flex items-center gap-1 rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-[11px] font-bold text-slate-700 transition">
+                        @click="playTutorialAudio()" 
+                        class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 hover:bg-slate-200 px-3.5 py-1.5 text-[11px] font-bold text-slate-700 transition">
                     <i data-lucide="rotate-ccw" class="h-3 w-3 text-brand-blue"></i>
-                    <span>Ulangi Suara &amp; Musik</span>
+                    <span>Putar Ulang Suara &amp; Musik</span>
                 </button>
 
                 <button type="button" 
@@ -395,11 +403,9 @@
             demoPlaying: true,
             demoInterval: null,
             speechSynth: window.speechSynthesis || null,
-            currentUtterance: null,
             audioCtx: null,
-            bgmGainNode: null,
             bgmInterval: null,
-            bgmChordIndex: 0,
+            noteIndex: 0,
             steps: [
                 { 
                     navTitle: 'Akses & Filter',
@@ -432,89 +438,102 @@
                 window.addEventListener('open-retain-tutorial', () => {
                     this.step = 0;
                     this.open = true;
-                    this.initAudioContext();
-                    this.startBgm();
+                    this.ensureAudioContext();
                     this.startDemoLoop();
+                    this.playTutorialAudio();
                     this.$nextTick(() => {
                         lucide.createIcons();
-                        this.speakNarration();
                     });
                 });
 
                 this.$watch('step', () => {
                     this.$nextTick(() => lucide.createIcons());
-                    this.speakNarration();
+                    this.playTutorialAudio();
                 });
             },
-            initAudioContext() {
+            ensureAudioContext() {
                 try {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (!this.audioCtx && AudioContext) {
-                        this.audioCtx = new AudioContext();
-                        this.bgmGainNode = this.audioCtx.createGain();
-                        this.bgmGainNode.gain.setValueAtTime(0.04, this.audioCtx.currentTime); // Lembut sebagai ambient background
-                        this.bgmGainNode.connect(this.audioCtx.destination);
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (!this.audioCtx && AudioContextClass) {
+                        this.audioCtx = new AudioContextClass();
                     }
                     if (this.audioCtx && this.audioCtx.state === 'suspended') {
                         this.audioCtx.resume();
                     }
                 } catch (e) {
-                    console.log('Web Audio not initialized:', e);
+                    console.error('AudioContext init error:', e);
                 }
             },
-            startBgm() {
+            playBgmMelodyNote(freq, type = 'sine', gainVal = 0.08, dur = 0.8) {
                 if (!this.soundEnabled || !this.audioCtx) return;
-                this.stopBgm();
+                try {
+                    this.ensureAudioContext();
+                    const now = this.audioCtx.currentTime;
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
 
-                // Pola melodi ambient korporat lembut (C major 7th / F major 9th progression)
-                const chords = [
-                    [261.63, 329.63, 392.00, 493.88], // Cmaj7 (C4, E4, G4, B4)
-                    [220.00, 261.63, 329.63, 392.00], // Am7   (A3, C4, E4, G4)
-                    [174.61, 220.00, 261.63, 329.63], // Fmaj7 (F3, A3, C4, E4)
-                    [196.00, 246.94, 293.66, 392.00]  // G     (G3, B3, D4, G4)
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(gainVal, now + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + dur + 0.05);
+                } catch (e) {}
+            },
+            startBgmEngine() {
+                this.stopBgmEngine();
+                if (!this.soundEnabled) return;
+                this.ensureAudioContext();
+
+                // Progresi Melodi Lofi & Acoustic Bells Tutorial Korporat
+                const melodyPattern = [
+                    { note: 523.25, dur: 0.6, bass: 130.81 }, // C5 + C3
+                    { note: 659.25, dur: 0.5, bass: null },   // E5
+                    { note: 783.99, dur: 0.7, bass: 196.00 }, // G5 + G3
+                    { note: 587.33, dur: 0.5, bass: null },   // D5
+                    { note: 440.00, dur: 0.6, bass: 110.00 }, // A4 + A2
+                    { note: 523.25, dur: 0.5, bass: null },   // C5
+                    { note: 659.25, dur: 0.7, bass: 174.61 }, // E5 + F3
+                    { note: 587.33, dur: 0.5, bass: null },   // D5
                 ];
 
-                const playChord = () => {
-                    if (!this.soundEnabled || !this.audioCtx || this.audioCtx.state !== 'running') return;
-                    const chord = chords[this.bgmChordIndex % chords.length];
-                    this.bgmChordIndex++;
+                this.noteIndex = 0;
+                this.bgmInterval = setInterval(() => {
+                    if (!this.soundEnabled) return;
+                    const p = melodyPattern[this.noteIndex % melodyPattern.length];
+                    this.noteIndex++;
 
-                    chord.forEach((freq, i) => {
-                        try {
-                            const osc = this.audioCtx.createOscillator();
-                            const gain = this.audioCtx.createGain();
-                            
-                            osc.type = 'sine'; // Suara lembut dan elegan
-                            osc.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+                    // Mainkan melodi pengiring lembut tapi jelas terdengar
+                    const trebleVol = this.voicePlaying ? 0.04 : 0.09;
+                    const bassVol = this.voicePlaying ? 0.03 : 0.07;
 
-                            // Ducking volume: saat voicePlaying volume musik mengecil lembut
-                            const targetVol = this.voicePlaying ? 0.015 : 0.035;
-                            gain.gain.setValueAtTime(0, this.audioCtx.currentTime);
-                            gain.gain.linearRampToValueAtTime(targetVol, this.audioCtx.currentTime + 0.8 + (i * 0.15));
-                            gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + 3.2);
-
-                            osc.connect(gain);
-                            gain.connect(this.bgmGainNode);
-
-                            osc.start(this.audioCtx.currentTime + (i * 0.1));
-                            osc.stop(this.audioCtx.currentTime + 3.4);
-                        } catch (err) {}
-                    });
-                };
-
-                playChord();
-                this.bgmInterval = setInterval(playChord, 3000);
+                    this.playBgmMelodyNote(p.note, 'sine', trebleVol, p.dur);
+                    if (p.bass) {
+                        this.playBgmMelodyNote(p.bass, 'triangle', bassVol, p.dur * 1.5);
+                    }
+                }, 480);
             },
-            stopBgm() {
+            stopBgmEngine() {
                 if (this.bgmInterval) {
                     clearInterval(this.bgmInterval);
                     this.bgmInterval = null;
                 }
             },
+            playTutorialAudio() {
+                this.ensureAudioContext();
+                this.startBgmEngine();
+                this.speakNarration();
+            },
             closeModal() {
                 this.open = false;
                 this.stopSpeech();
-                this.stopBgm();
+                this.stopBgmEngine();
                 this.stopDemoLoop();
             },
             nextStep() {
@@ -536,11 +555,9 @@
                 this.soundEnabled = !this.soundEnabled;
                 if (!this.soundEnabled) {
                     this.stopSpeech();
-                    this.stopBgm();
+                    this.stopBgmEngine();
                 } else {
-                    this.initAudioContext();
-                    this.startBgm();
-                    this.speakNarration();
+                    this.playTutorialAudio();
                 }
             },
             stopSpeech() {
@@ -552,13 +569,12 @@
             speakNarration() {
                 if (!this.soundEnabled || !this.speechSynth) return;
                 this.stopSpeech();
-                this.initAudioContext();
 
                 try {
                     const text = this.steps[this.step].narration;
                     const utterance = new SpeechSynthesisUtterance(text);
                     utterance.lang = 'id-ID';
-                    utterance.rate = 0.95; // Kecepatan jelas & mudah dipahami
+                    utterance.rate = 0.95;
                     utterance.pitch = 1.0;
 
                     utterance.onstart = () => {
@@ -571,7 +587,6 @@
                         this.voicePlaying = false;
                     };
 
-                    this.currentUtterance = utterance;
                     this.speechSynth.speak(utterance);
                 } catch (e) {
                     this.voicePlaying = false;
