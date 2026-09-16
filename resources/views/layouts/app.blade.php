@@ -45,11 +45,12 @@
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 
-    <script src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.344.0/umd/lucide.min.js"></script>
+    <!-- Script Inti (Lokal Cepat & Anti-Lag) -->
+    <script src="{{ asset('js/alpine.min.js') }}" defer></script>
+    <script src="{{ asset('js/lucide.min.js') }}"></script>
     <script>
         if (typeof window.lucide === 'undefined') {
-            document.write('<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"><\/script>');
+            document.write('<script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"><\/script>');
         }
         window.renderLucideIcons = function() {
             if (typeof window.lucide !== 'undefined' && typeof window.lucide.createIcons === 'function') {

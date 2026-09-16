@@ -2,8 +2,6 @@
 @section('title', 'Checklist Mobil Tangki')
 
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 
 <!-- ===== Header aksi ===== -->
 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">

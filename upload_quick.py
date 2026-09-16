@@ -11,9 +11,10 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
-    'app/Models/ChecklistMtMaos.php',
-    'app/Http/Controllers/ChecklistMtMaosController.php',
+    'public/js/lucide.min.js',
+    'public/js/alpine.min.js',
     'resources/views/layouts/app.blade.php',
+    'resources/views/checklist-mt-maos/index.blade.php',
     'resources/views/retain-sampel/_slide-laporan.blade.php',
     'resources/views/retain-sampel/_tutorial-modal.blade.php',
     'resources/views/retain-sampel/index.blade.php',
@@ -65,6 +66,15 @@ def main():
                 with open(local_path, 'rb') as fp:
                     ftp.storbinary(f"STOR {file_name}", fp)
                 print(f"[OK] Uploaded {file_name}")
+
+                # Jika file ada di public/js/, upload juga ke /htdocs/js/
+                if rel_dir == 'public/js':
+                    alt_dir = f"{remote_base}/js"
+                    ensure_dir(ftp, alt_dir)
+                    ftp.cwd(alt_dir)
+                    with open(local_path, 'rb') as fp2:
+                        ftp.storbinary(f"STOR {file_name}", fp2)
+                    print(f"[OK] Also Uploaded to {alt_dir}/{file_name}")
                 break
             except Exception as e:
                 print(f"  Retry {attempt+1} on {file_name}: {e}")
