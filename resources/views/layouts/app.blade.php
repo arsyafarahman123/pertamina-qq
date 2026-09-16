@@ -46,7 +46,19 @@
     </style>
 
     <script src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.344.0/umd/lucide.min.js"></script>
+    <script>
+        if (typeof window.lucide === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"><\/script>');
+        }
+        window.renderLucideIcons = function() {
+            if (typeof window.lucide !== 'undefined' && typeof window.lucide.createIcons === 'function') {
+                try {
+                    window.lucide.createIcons();
+                } catch (e) {}
+            }
+        };
+    </script>
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-800 antialiased">
 <div x-data="{ sidebarOpen: false }" class="flex min-h-screen">
@@ -416,6 +428,51 @@
     })();
 </script>
 @yield('scripts')
-<script>lucide.createIcons();</script>
+<script>
+    (function initLucideSystem() {
+        function runIcons() {
+            if (typeof window.renderLucideIcons === 'function') {
+                window.renderLucideIcons();
+            } else if (typeof window.lucide !== 'undefined' && typeof window.lucide.createIcons === 'function') {
+                try { window.lucide.createIcons(); } catch (e) {}
+            }
+        }
+
+        // Jalankan segera
+        runIcons();
+
+        // Jalankan di berbagai event siklus hidup browser & framework
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runIcons);
+        }
+        window.addEventListener('load', runIcons);
+        document.addEventListener('alpine:initialized', runIcons);
+        document.addEventListener('alpine:navigated', runIcons);
+
+        // Polling bertahap untuk memastikan elemen dinamis / async ter-render
+        [50, 150, 300, 600, 1200, 2500].forEach(function(delay) {
+            setTimeout(runIcons, delay);
+        });
+
+        // MutationObserver untuk otomatis merender ikon jika ada perubahan DOM dinamis
+        try {
+            if (window.MutationObserver && document.body) {
+                var observer = new MutationObserver(function(mutations) {
+                    var needsRender = false;
+                    for (var i = 0; i < mutations.length; i++) {
+                        if (mutations[i].addedNodes && mutations[i].addedNodes.length > 0) {
+                            needsRender = true;
+                            break;
+                        }
+                    }
+                    if (needsRender) {
+                        runIcons();
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+            }
+        } catch (e) {}
+    })();
+</script>
 </body>
 </html>
