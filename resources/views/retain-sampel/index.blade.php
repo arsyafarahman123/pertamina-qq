@@ -2,7 +2,6 @@
 @section('title', 'Laporan Harian Retain Sampel Penyaluran MT')
 
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
     <div>
@@ -306,7 +305,18 @@
 @endif
 
 <script>
-function unduhGambar(elementId, mimeType, filename) {
+async function ensureHtml2Canvas() {
+    if (window.html2canvas) return true;
+    return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        s.onload = () => resolve(true);
+        s.onerror = () => reject(new Error('Gagal memuat pustaka html2canvas'));
+        document.head.appendChild(s);
+    });
+}
+
+async function unduhGambar(elementId, mimeType, filename) {
     const el = document.getElementById(elementId);
     if (!el) {
         alert('Elemen tidak ditemukan');
@@ -316,26 +326,30 @@ function unduhGambar(elementId, mimeType, filename) {
     const origCursor = document.body.style.cursor;
     document.body.style.cursor = 'wait';
 
-    html2canvas(el, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        ignoreElements: function(element) {
-            return element.classList.contains('no-print');
-        },
-        logging: false
-    }).then(canvas => {
+    try {
+        await ensureHtml2Canvas();
+
+        const canvas = await html2canvas(el, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            ignoreElements: function(element) {
+                return element.classList.contains('no-print');
+            },
+            logging: false
+        });
+
         const link = document.createElement('a');
         link.download = filename;
         link.href = canvas.toDataURL(mimeType, 0.95);
         link.click();
-        document.body.style.cursor = origCursor;
-    }).catch(err => {
+    } catch (err) {
         console.error(err);
         alert('Gagal mengambil tangkapan layar: ' + err.message);
+    } finally {
         document.body.style.cursor = origCursor;
-    });
+    }
 }
 </script>
 

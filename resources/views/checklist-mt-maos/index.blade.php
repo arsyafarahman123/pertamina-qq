@@ -303,6 +303,17 @@ function runPdfExport(ids = []) {
     window.open(url, '_blank');
 }
 
+async function ensureExcelJs() {
+    if (window.ExcelJS) return true;
+    return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
+        s.onload = () => resolve(true);
+        s.onerror = () => reject(new Error('Gagal memuat pustaka Excel'));
+        document.head.appendChild(s);
+    });
+}
+
 async function runExport(ids = []) {
     const btn = document.getElementById('export-all-btn');
     const labelAwal = btn ? btn.innerHTML : '';
@@ -312,6 +323,8 @@ async function runExport(ids = []) {
     }
 
     try {
+        await ensureExcelJs();
+
         let url = "{{ route('checklist-mt-maos.export-all') }}";
         if (ids && ids.length > 0) {
             url += '?ids=' + ids.join(',');
