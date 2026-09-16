@@ -144,7 +144,7 @@
     <div x-show="modeTampil === '12:00'" x-cloak class="space-y-3">
         <div class="no-print flex items-center justify-between px-2">
             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                Laporan Sesi Pukul 12.00 WIB (Re-Tank Siang)
+                Laporan Sesi Pukul 12.00 WIB (Retain Siang)
             </span>
             <div class="flex items-center gap-2">
                 <button onclick="unduhGambar('slide-1200-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Retain-1200-{{ $tanggal }}.png')"
@@ -169,7 +169,7 @@
     <div x-show="modeTampil === '18:00'" x-cloak class="space-y-3">
         <div class="no-print flex items-center justify-between px-2">
             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                Laporan Sesi Pukul 18.00 WIB (Re-Tank Sore)
+                Laporan Sesi Pukul 18.00 WIB (Retain Sore)
             </span>
             <div class="flex items-center gap-2">
                 <button onclick="unduhGambar('slide-1800-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Retain-1800-{{ $tanggal }}.png')"

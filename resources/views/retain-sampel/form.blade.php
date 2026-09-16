@@ -61,7 +61,7 @@
                             <option value="{{ $j }}"></option>
                         @endforeach
                     </datalist>
-                    <span class="mt-1 block text-[10.5px] text-slate-400">Pilih jam sesi observasi 06:00 (bisa awal), 12:00 (re-tank siang), atau 18:00 (re-tank sore).</span>
+                    <span class="mt-1 block text-[10.5px] text-slate-400">Pilih jam sesi observasi 06:00 (bisa awal), 12:00 (retain siang), atau 18:00 (retain sore).</span>
                 </div>
             </div>
 

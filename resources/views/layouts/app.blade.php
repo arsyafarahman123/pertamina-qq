@@ -86,7 +86,7 @@
                     <a href="{{ route('retain-sampel.index') }}"
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'retain-sampel.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="droplets" class="h-5 w-5 shrink-0"></i>
-                        Rekap Penyaluran / Re-tank
+                        Rekap Retain Sampel MT
                     </a>
 
                     <a href="{{ route('checklist-mt-maos.index') }}"
@@ -147,7 +147,7 @@
                     <a href="{{ route('retain-sampel.index') }}"
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'retain-sampel.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="droplets" class="h-5 w-5 shrink-0"></i>
-                        Penyaluran / Re-tank
+                        Retain Sampel MT
                     </a>
                 </div>
             @endif

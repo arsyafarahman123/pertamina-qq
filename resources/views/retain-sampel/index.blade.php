@@ -89,12 +89,12 @@
             <button type="button" @click="activeTab = '12:00'"
                     :class="activeTab === '12:00' ? 'bg-[#0f3861] text-white shadow-md' : 'text-slate-700 hover:text-slate-900 hover:bg-white/60'"
                     class="inline-flex items-center gap-2 rounded-xl px-4 py-2 transition-all">
-                <i data-lucide="sun" class="h-3.5 w-3.5"></i> Pukul 12.00 WIB <span class="text-[10px] opacity-80 font-normal hidden sm:inline">(Re-tank Siang)</span>
+                <i data-lucide="sun" class="h-3.5 w-3.5"></i> Pukul 12.00 WIB <span class="text-[10px] opacity-80 font-normal hidden sm:inline">(Retain Siang)</span>
             </button>
             <button type="button" @click="activeTab = '18:00'"
                     :class="activeTab === '18:00' ? 'bg-[#0f3861] text-white shadow-md' : 'text-slate-700 hover:text-slate-900 hover:bg-white/60'"
                     class="inline-flex items-center gap-2 rounded-xl px-4 py-2 transition-all">
-                <i data-lucide="sunset" class="h-3.5 w-3.5"></i> Pukul 18.00 WIB <span class="text-[10px] opacity-80 font-normal hidden sm:inline">(Re-tank Sore)</span>
+                <i data-lucide="sunset" class="h-3.5 w-3.5"></i> Pukul 18.00 WIB <span class="text-[10px] opacity-80 font-normal hidden sm:inline">(Retain Sore)</span>
             </button>
             <button type="button" @click="activeTab = 'rekap-semua'"
                     :class="activeTab === 'rekap-semua' ? 'bg-[#0f3861] text-white shadow-md' : 'text-slate-700 hover:text-slate-900 hover:bg-white/60'"
@@ -148,7 +148,7 @@
     {{-- TAB 2: PUKUL 12.00 WIB --}}
     <div x-show="activeTab === '12:00'" x-cloak class="space-y-3">
         <div class="flex items-center justify-between px-1">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Slide Format Laporan — Pukul 12.00 WIB (Sampel 06.00 Tetap + Re-Tank 12.00)</span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Slide Format Laporan — Pukul 12.00 WIB (Sampel 06.00 Tetap + Retain 12.00)</span>
             <div class="flex items-center gap-2">
                 <button onclick="unduhGambar('slide-1200-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Retain-1200-{{ $tanggal }}.png')"
                         class="inline-flex items-center gap-1.5 rounded-xl bg-[#0f3b66] hover:bg-[#16518a] px-3.5 py-1.5 text-xs font-bold text-white shadow transition">
@@ -173,7 +173,7 @@
     {{-- TAB 3: PUKUL 18.00 WIB --}}
     <div x-show="activeTab === '18:00'" x-cloak class="space-y-3">
         <div class="flex items-center justify-between px-1">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Slide Format Laporan — Pukul 18.00 WIB (Sampel 06.00 Tetap + Re-Tank 18.00)</span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Slide Format Laporan — Pukul 18.00 WIB (Sampel 06.00 Tetap + Retain 18.00)</span>
             <div class="flex items-center gap-2">
                 <button onclick="unduhGambar('slide-1800-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Retain-1800-{{ $tanggal }}.png')"
                         class="inline-flex items-center gap-1.5 rounded-xl bg-[#0f3b66] hover:bg-[#16518a] px-3.5 py-1.5 text-xs font-bold text-white shadow transition">
@@ -198,13 +198,13 @@
     {{-- TAB 4: REKAP KESELURUHAN (06.00 - 18.00) --}}
     <div x-show="activeTab === 'rekap-semua'" x-cloak class="space-y-3">
         <div class="flex items-center justify-between px-1">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Laporan Rekap Keseluruhan — Pukul 06.00 s/d 18.00 WIB</span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Slide Format Laporan — Rekap Lengkap (06.00, 12.00, 18.00)</span>
             <div class="flex items-center gap-2">
-                <button onclick="unduhGambar('slide-rekap-semua-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Rekap-Keseluruhan-{{ $tanggal }}.png')"
+                <button onclick="unduhGambar('slide-rekap-semua-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Retain-Rekap-Lengkap-{{ $tanggal }}.png')"
                         class="inline-flex items-center gap-1.5 rounded-xl bg-[#0f3b66] hover:bg-[#16518a] px-3.5 py-1.5 text-xs font-bold text-white shadow transition">
                     <i data-lucide="download" class="h-3.5 w-3.5"></i> Download PNG
                 </button>
-                <button onclick="unduhGambar('slide-rekap-semua-{{ str_replace('-', '', $tanggal) }}', 'image/jpeg', 'Laporan-Rekap-Keseluruhan-{{ $tanggal }}.jpg')"
+                <button onclick="unduhGambar('slide-rekap-semua-{{ str_replace('-', '', $tanggal) }}', 'image/jpeg', 'Laporan-Retain-Rekap-Lengkap-{{ $tanggal }}.jpg')"
                         class="inline-flex items-center gap-1.5 rounded-xl bg-slate-700 hover:bg-slate-800 px-3 py-1.5 text-xs font-bold text-white shadow transition">
                     <i data-lucide="image" class="h-3.5 w-3.5"></i> JPG
                 </button>
@@ -227,8 +227,8 @@
                 <div class="flex items-center justify-between px-1">
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">
                         @if ($jam === '06:00') Sesi Pukul 06.00 WIB (Awal Penyaluran)
-                        @elseif ($jam === '12:00') Sesi Pukul 12.00 WIB (Re-Tank Siang)
-                        @else Sesi Pukul 18.00 WIB (Re-Tank Sore) @endif
+                        @elseif ($jam === '12:00') Sesi Pukul 12.00 WIB (Retain Siang)
+                        @else Sesi Pukul 18.00 WIB (Retain Sore) @endif
                     </span>
                     <div class="flex items-center gap-2">
                         <button onclick="unduhGambar('slide-{{ str_replace(':', '', $jam) }}-{{ str_replace('-', '', $tanggal) }}', 'image/png', 'Laporan-Retain-{{ str_replace(':', '', $jam) }}-{{ $tanggal }}.png')"
@@ -271,8 +271,8 @@
         @php
             $jamMeta = [
                 '06:00' => ['title' => 'Pukul 06.00 WIB — Data Awal Penyaluran', 'bg' => 'bg-blue-50', 'text' => 'text-blue-900', 'border' => 'border-blue-200'],
-                '12:00' => ['title' => 'Pukul 12.00 WIB — Re-tank / Pergantian Sampel', 'bg' => 'bg-amber-50', 'text' => 'text-amber-900', 'border' => 'border-amber-200'],
-                '18:00' => ['title' => 'Pukul 18.00 WIB — Re-tank / Pergantian Sampel', 'bg' => 'bg-indigo-50', 'text' => 'text-indigo-900', 'border' => 'border-indigo-200'],
+                '12:00' => ['title' => 'Pukul 12.00 WIB — Retain / Pergantian Sampel', 'bg' => 'bg-amber-50', 'text' => 'text-amber-900', 'border' => 'border-amber-200'],
+                '18:00' => ['title' => 'Pukul 18.00 WIB — Retain / Pergantian Sampel', 'bg' => 'bg-indigo-50', 'text' => 'text-indigo-900', 'border' => 'border-indigo-200'],
             ];
             $meta = $jamMeta[$jam];
             $entriesSesi = $rekap[$jam] ?? [];

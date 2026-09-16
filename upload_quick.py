@@ -11,18 +11,11 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
-    'routes/web.php',
-    'app/Http/Controllers/ChecklistMtMaosController.php',
-    'app/Models/ChecklistMtMaos.php',
-    'checklists_seed.json',
-    'database/seeders/ChecklistMtMaosSeeder.php',
-    'resources/views/auth/login.blade.php',
-    'resources/views/checklist-mt-maos/cetak.blade.php',
-    'resources/views/checklist-mt-maos/cetak-banyak.blade.php',
-    'resources/views/checklist-mt-maos/form.blade.php',
-    'resources/views/checklist-mt-maos/index.blade.php',
-    'resources/views/checklist-mt-maos/show.blade.php',
-    'public/images/pertamina-mark.svg',
+    'resources/views/layouts/app.blade.php',
+    'resources/views/retain-sampel/_slide-laporan.blade.php',
+    'resources/views/retain-sampel/index.blade.php',
+    'resources/views/retain-sampel/form.blade.php',
+    'resources/views/retain-sampel/cetak.blade.php',
 ]
 
 def connect_ftp():

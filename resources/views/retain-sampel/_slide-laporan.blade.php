@@ -314,13 +314,13 @@
                     </div>
                 </div>
 
-                {{-- SESI 2: PUKUL 12.00 WIB (Re-Tank Siang) --}}
+                {{-- SESI 2: PUKUL 12.00 WIB (Retain Siang) --}}
                 <div class="flex flex-col justify-between rounded-3xl bg-[#f0f4f8]/90 p-4 sm:p-5 border border-slate-200/90 shadow-sm">
                     <div>
                         <div class="mb-3 flex items-center justify-between">
                             <span class="inline-flex items-center gap-2 rounded-full bg-[#123e6b] px-3.5 py-1.5 text-xs font-bold text-white shadow-sm">
                                 <span class="h-2 w-2 rounded-full bg-[#e86a17]"></span>
-                                12.00 WIB (Re-Tank Siang)
+                                12.00 WIB (Retain Siang)
                             </span>
                             <button type="button" onclick="document.getElementById('form-edit-rekap-1200-{{ $slugSesi }}').classList.toggle('hidden')"
                                     class="no-print inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0f3861] bg-white border border-slate-200 hover:border-brand-blue px-2.5 py-1 rounded-lg shadow-sm">
@@ -328,21 +328,21 @@
                             </button>
                         </div>
 
-                        {{-- Foto Re-Tank 12.00 --}}
+                        {{-- Foto Retain 12.00 --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-2 text-center shadow-inner mb-3">
                             <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
                                 @if ($foto12Retank)
-                                    <img src="{{ $foto12Retank->url() }}" crossorigin="anonymous" alt="Re-Tank 12.00" class="h-full w-full object-contain">
+                                    <img src="{{ $foto12Retank->url() }}" crossorigin="anonymous" alt="Retain 12.00" class="h-full w-full object-contain">
                                 @else
                                     <div class="p-3 text-center">
                                         <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                             <path d="M19 19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2l4-8V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v7l4 8z"/>
                                         </svg>
-                                        <p class="text-[10px] font-bold text-slate-400 mt-1">Foto Re-Tank 12.00</p>
+                                        <p class="text-[10px] font-bold text-slate-400 mt-1">Foto Retain 12.00</p>
                                     </div>
                                 @endif
                             </div>
-                            <span class="text-[10px] font-bold text-slate-600 block mt-1.5">Foto Sampel Re-Tank 12.00 WIB</span>
+                            <span class="text-[10px] font-bold text-slate-600 block mt-1.5">Foto Sampel Retain 12.00 WIB</span>
                         </div>
                     </div>
 
@@ -374,13 +374,13 @@
                     </div>
                 </div>
 
-                {{-- SESI 3: PUKUL 18.00 WIB (Re-Tank Sore) --}}
+                {{-- SESI 3: PUKUL 18.00 WIB (Retain Sore) --}}
                 <div class="flex flex-col justify-between rounded-3xl bg-[#f0f4f8]/90 p-4 sm:p-5 border border-slate-200/90 shadow-sm">
                     <div>
                         <div class="mb-3 flex items-center justify-between">
                             <span class="inline-flex items-center gap-2 rounded-full bg-[#123e6b] px-3.5 py-1.5 text-xs font-bold text-white shadow-sm">
                                 <span class="h-2 w-2 rounded-full bg-[#DA251D]"></span>
-                                18.00 WIB (Re-Tank Sore)
+                                18.00 WIB (Retain Sore)
                             </span>
                             <button type="button" onclick="document.getElementById('form-edit-rekap-1800-{{ $slugSesi }}').classList.toggle('hidden')"
                                     class="no-print inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0f3861] bg-white border border-slate-200 hover:border-brand-blue px-2.5 py-1 rounded-lg shadow-sm">
@@ -388,21 +388,21 @@
                             </button>
                         </div>
 
-                        {{-- Foto Re-Tank 18.00 --}}
+                        {{-- Foto Retain 18.00 --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-2 text-center shadow-inner mb-3">
                             <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
                                 @if ($foto18Retank)
-                                    <img src="{{ $foto18Retank->url() }}" crossorigin="anonymous" alt="Re-Tank 18.00" class="h-full w-full object-contain">
+                                    <img src="{{ $foto18Retank->url() }}" crossorigin="anonymous" alt="Retain 18.00" class="h-full w-full object-contain">
                                 @else
                                     <div class="p-3 text-center">
                                         <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                             <path d="M19 19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2l4-8V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v7l4 8z"/>
                                         </svg>
-                                        <p class="text-[10px] font-bold text-slate-400 mt-1">Foto Re-Tank 18.00</p>
+                                        <p class="text-[10px] font-bold text-slate-400 mt-1">Foto Retain 18.00</p>
                                     </div>
                                 @endif
                             </div>
-                            <span class="text-[10px] font-bold text-slate-600 block mt-1.5">Foto Sampel Re-Tank 18.00 WIB</span>
+                            <span class="text-[10px] font-bold text-slate-600 block mt-1.5">Foto Sampel Retain 18.00 WIB</span>
                         </div>
                     </div>
 
@@ -477,7 +477,7 @@
 
             <div id="form-edit-rekap-1200-{{ $slugSesi }}" class="hidden no-print rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
                 <div class="mb-3 flex items-center justify-between border-b pb-2">
-                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Re-Tank Siang (Pukul 12.00 WIB)</span>
+                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Retain Siang (Pukul 12.00 WIB)</span>
                     <button type="button" onclick="document.getElementById('form-edit-rekap-1200-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                 </div>
                 <div class="space-y-3">
@@ -515,7 +515,7 @@
 
             <div id="form-edit-rekap-1800-{{ $slugSesi }}" class="hidden no-print rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
                 <div class="mb-3 flex items-center justify-between border-b pb-2">
-                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Re-Tank Sore (Pukul 18.00 WIB)</span>
+                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Retain Sore (Pukul 18.00 WIB)</span>
                     <button type="button" onclick="document.getElementById('form-edit-rekap-1800-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                 </div>
                 <div class="space-y-3">
@@ -1033,7 +1033,7 @@
 
                 @else
                     {{-- ----------------------------------------------------
-                         KOTAK KANAN: RE-TANK INDIVIDUAL (12.00 ATAU 18.00 WIB)
+                         KOTAK KANAN: RETAIN INDIVIDUAL (12.00 ATAU 18.00 WIB)
                          ---------------------------------------------------- --}}
                     <div>
                         <div class="mb-4 flex items-center justify-between">
@@ -1044,7 +1044,7 @@
                                     </svg>
                                 </span>
                                 <span class="text-xs sm:text-sm font-bold tracking-wide">
-                                    Re-tank (Pukul {{ str_replace(':', '.', $sesiJam) }} WIB)
+                                    Retain (Pukul {{ str_replace(':', '.', $sesiJam) }} WIB)
                                 </span>
                             </div>
 
@@ -1053,11 +1053,11 @@
                                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                 </svg>
-                                <span>Edit Data Re-Tank</span>
+                                <span>Edit Data Retain</span>
                             </button>
                         </div>
 
-                        {{-- Foto Re-Tank --}}
+                        {{-- Foto Retain --}}
                         <div class="group relative mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
                             <div class="flex h-56 sm:h-64 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
                                 @if ($fotoSesiKanan && $fotoSesiKanan->isPdf())
@@ -1066,24 +1066,24 @@
                                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                             <polyline points="14 2 14 8 20 8"></polyline>
                                         </svg>
-                                        <span class="text-xs font-bold text-red-600">Dokumen PDF Re-tank</span>
+                                        <span class="text-xs font-bold text-red-600">Dokumen PDF Retain</span>
                                     </a>
                                 @elseif ($fotoSesiKanan)
-                                    <img src="{{ $fotoSesiKanan->url() }}" crossorigin="anonymous" alt="Foto Re-Tank {{ $sesiJam }}" class="h-full w-full object-contain">
+                                    <img src="{{ $fotoSesiKanan->url() }}" crossorigin="anonymous" alt="Foto Retain {{ $sesiJam }}" class="h-full w-full object-contain">
                                 @else
                                     <div class="text-center p-4">
                                         <svg class="mx-auto h-8 w-8 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                             <path d="M19 19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2l4-8V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v7l4 8z"/>
                                         </svg>
-                                        <p class="text-xs font-bold text-slate-400 mt-2">Foto Re-Tank Pukul {{ str_replace(':', '.', $sesiJam) }}</p>
+                                        <p class="text-xs font-bold text-slate-400 mt-2">Foto Retain Pukul {{ str_replace(':', '.', $sesiJam) }}</p>
                                         <p class="text-[10px] text-slate-400">Pergantian Sampel Produk</p>
                                     </div>
                                 @endif
                             </div>
 
-                            {{-- Form Upload Foto Re-Tank (no-print) --}}
+                            {{-- Form Upload Foto Retain (no-print) --}}
                             <div class="no-print mt-2 flex items-center justify-between border-t border-slate-100 pt-2 px-1">
-                                <span class="text-[11px] font-semibold text-slate-500">Foto Botol Re-Tank {{ str_replace(':', '.', $sesiJam) }}</span>
+                                <span class="text-[11px] font-semibold text-slate-500">Foto Botol Retain {{ str_replace(':', '.', $sesiJam) }}</span>
                                 <form method="POST" action="{{ route('retain-sampel.foto-sesi.store') }}" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="tanggal" value="{{ $tanggal }}">
@@ -1101,17 +1101,17 @@
                             </div>
                         </div>
 
-                        {{-- Teks Keterangan Re-Tank --}}
+                        {{-- Teks Keterangan Retain --}}
                         <div class="mb-3 space-y-0.5 text-xs sm:text-sm font-semibold text-slate-800">
-                            <p>Update Re-tank hari ini <span class="font-bold">{{ $tanggalIndo }}</span></p>
+                            <p>Update Retain hari ini <span class="font-bold">{{ $tanggalIndo }}</span></p>
                             <p>Pukul {{ str_replace(':', '.', $sesiJam) }} WIB adalah sebagai berikut :</p>
                         </div>
                     </div>
 
-                    {{-- Form Edit Cepat Re-Tank (Toggled) --}}
+                    {{-- Form Edit Cepat Retain (Toggled) --}}
                     <div id="form-edit-retank-{{ $slugSesi }}" class="hidden no-print mb-4 rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
                         <div class="mb-3 flex items-center justify-between border-b pb-2">
-                            <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Re-Tank (Pukul {{ str_replace(':', '.', $sesiJam) }} WIB)</span>
+                            <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Retain (Pukul {{ str_replace(':', '.', $sesiJam) }} WIB)</span>
                             <button type="button" onclick="document.getElementById('form-edit-retank-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                         </div>
                         <div class="space-y-4">
@@ -1204,7 +1204,7 @@
                             </table>
                         @else
                             <div class="py-6 text-center text-xs text-slate-400 italic">
-                                Belum ada data Re-tank yang diinput untuk sesi pukul {{ str_replace(':', '.', $sesiJam) }} WIB.
+                                Belum ada data Retain yang diinput untuk sesi pukul {{ str_replace(':', '.', $sesiJam) }} WIB.
                             </div>
                         @endif
                     </div>
@@ -1234,7 +1234,7 @@
                 </h3>
             </div>
             <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                Penyaluran 06.00 WIB + Re-Tank 12.00 WIB + Re-Tank 18.00 WIB
+                Penyaluran 06.00 WIB + Retain 12.00 WIB + Retain 18.00 WIB
             </span>
         </div>
 
@@ -1246,7 +1246,7 @@
                         <th rowspan="2" class="border-r border-slate-400 px-3 py-2 text-left font-black uppercase text-[11px]">Produk</th>
                         @foreach (['06:00', '12:00', '18:00'] as $j)
                             <th colspan="5" class="border-r last:border-r-0 border-slate-400 px-3 py-2 font-black uppercase text-[11px]">
-                                Pukul {{ str_replace(':', '.', $j) }} WIB {{ $j === '06:00' ? '(Awal Penyaluran)' : '(Re-Tank)' }}
+                                Pukul {{ str_replace(':', '.', $j) }} WIB {{ $j === '06:00' ? '(Awal Penyaluran)' : '(Retain)' }}
                             </th>
                         @endforeach
                     </tr>
@@ -1286,7 +1286,7 @@
         @if (!empty($nopolRekapLengkap))
             <div class="rounded-2xl bg-[#f0f4f8]/90 p-4 border border-slate-200">
                 <p class="text-[11px] font-black text-slate-700 uppercase tracking-wide mb-2.5">
-                    Daftar Mobil Tangki (MT) Penyaluran & Re-Tank Hari Ini:
+                    Daftar Mobil Tangki (MT) Penyaluran & Retain Hari Ini:
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     @foreach ($nopolRekapLengkap as $prod => $items)
