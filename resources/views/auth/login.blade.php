@@ -6,6 +6,8 @@
     <title>Portal Masuk — Fuel Maos · PT Pertamina Patra Niaga</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/pertamina-mark.svg') }}">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Google Fonts & Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,8 +61,8 @@
         }
     </style>
 
-    <script src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="{{ asset('js/alpine.min.js') }}" defer></script>
+    <script src="{{ asset('js/lucide.min.js') }}"></script>
 </head>
 <body class="h-full bg-slate-100 text-slate-800 antialiased">
 
@@ -209,6 +211,14 @@
                 </p>
             </div>
 
+            <!-- Alert Status / Info -->
+            @if (session('status'))
+                <div class="mb-5 flex items-start gap-2.5 rounded-xl border border-blue-200 bg-blue-50 p-3.5 text-xs text-blue-700">
+                    <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-brand-blue"></i>
+                    <span>{{ session('status') }}</span>
+                </div>
+            @endif
+
             <!-- Alert Error -->
             @if ($errors->any())
                 <div class="mb-5 flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-xs text-red-700">
@@ -218,7 +228,7 @@
             @endif
 
             <!-- Form Login -->
-            <form method="POST" action="{{ route('login.post') }}" class="space-y-4" x-data="{ showPass: false }">
+            <form id="loginForm" method="POST" action="{{ route('login.post') }}" class="space-y-4" x-data="{ showPass: false, submitting: false }" @submit="submitting = true">
                 @csrf
 
                 <!-- Email -->
@@ -265,8 +275,8 @@
                 <!-- Remember Me & Status -->
                 <div class="flex items-center justify-between pt-0.5">
                     <label class="flex cursor-pointer items-center gap-2 text-xs text-slate-600 select-none">
-                        <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue/30 accent-brand-blue">
-                        <span>Ingat sesi saya</span>
+                        <input type="checkbox" name="remember" value="1" checked class="h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue/30 accent-brand-blue">
+                        <span class="font-medium">Ingat sesi saya</span>
                     </label>
                     <span class="text-[11px] text-slate-400 flex items-center gap-1">
                         <i data-lucide="shield" class="h-3 w-3 text-brand-blue"></i> TLS Terproteksi
@@ -275,9 +285,14 @@
 
                 <!-- Tombol Submit -->
                 <button type="submit"
-                        class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue py-3 px-4 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition duration-150 hover:bg-brand-blueHover hover:shadow-lg hover:shadow-brand-blue/30 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2">
-                    <span>Masuk ke Fuel Maos</span>
-                    <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                        :disabled="submitting"
+                        class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue py-3 px-4 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition duration-150 hover:bg-brand-blueHover hover:shadow-lg hover:shadow-brand-blue/30 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 disabled:opacity-75 disabled:cursor-not-allowed">
+                    <span x-show="!submitting">Masuk ke Fuel Maos</span>
+                    <span x-show="submitting" x-cloak class="flex items-center gap-2">
+                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        Memverifikasi...
+                    </span>
+                    <i x-show="!submitting" data-lucide="arrow-right" class="h-4 w-4"></i>
                 </button>
             </form>
 
@@ -294,11 +309,48 @@
 </div>
 
 <script>
+    // Inisialisasi ikon Lucide
     document.addEventListener('DOMContentLoaded', function () {
         if (window.lucide) {
             lucide.createIcons();
         }
     });
+
+    // Auto-refresh CSRF token untuk mencegah error "419 Page Expired" di HP & Laptop
+    async function refreshCsrfToken() {
+        try {
+            const res = await fetch("{{ route('csrf-token') }}", {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                cache: 'no-store'
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.token) {
+                    const csrfInputs = document.querySelectorAll('input[name="_token"]');
+                    csrfInputs.forEach(input => input.value = data.token);
+                    const metaToken = document.querySelector('meta[name="csrf-token"]');
+                    if (metaToken) metaToken.setAttribute('content', data.token);
+                }
+            }
+        } catch (e) {
+            // Ignore background fetch error silently
+        }
+    }
+
+    // Refresh ketika tab aktif kembali (terutama setelah HP dibuka dari layar mati / background)
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            refreshCsrfToken();
+        }
+    });
+
+    // Refresh saat kembali dari cache (bfcache browser HP)
+    window.addEventListener('pageshow', function(event) {
+        refreshCsrfToken();
+    });
+
+    // Refresh berkala setiap 5 menit
+    setInterval(refreshCsrfToken, 5 * 60 * 1000);
 </script>
 </body>
 </html>

@@ -11,8 +11,11 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
-    'public/js/lucide.min.js',
-    'public/js/alpine.min.js',
+    'config/session.php',
+    'bootstrap/app.php',
+    'app/Http/Controllers/AuthController.php',
+    'routes/web.php',
+    'resources/views/auth/login.blade.php',
     'resources/views/layouts/app.blade.php',
     'resources/views/checklist-mt-maos/index.blade.php',
     'resources/views/retain-sampel/_slide-laporan.blade.php',
@@ -20,6 +23,8 @@ files_to_upload = [
     'resources/views/retain-sampel/index.blade.php',
     'resources/views/retain-sampel/form.blade.php',
     'resources/views/retain-sampel/cetak.blade.php',
+    'public/js/lucide.min.js',
+    'public/js/alpine.min.js',
 ]
 
 def connect_ftp():

@@ -19,7 +19,17 @@ $app = Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Illuminate\Session\TokenMismatchException $e, \Illuminate\Http\Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Sesi keamanan telah diperbarui. Silakan ulangi login.',
+                    'csrf_token' => csrf_token(),
+                ], 419);
+            }
+            return redirect()->route('login')->withErrors([
+                'email' => 'Sesi login telah disegarkan. Silakan masukkan kembali kredensial Anda.',
+            ]);
+        });
     })->create();
 
 return $app;
