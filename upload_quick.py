@@ -15,6 +15,7 @@ files_to_upload = [
     'app/Http/Controllers/ChecklistMtMaosController.php',
     'resources/views/layouts/app.blade.php',
     'resources/views/retain-sampel/_slide-laporan.blade.php',
+    'resources/views/retain-sampel/_tutorial-modal.blade.php',
     'resources/views/retain-sampel/index.blade.php',
     'resources/views/retain-sampel/form.blade.php',
     'resources/views/retain-sampel/cetak.blade.php',

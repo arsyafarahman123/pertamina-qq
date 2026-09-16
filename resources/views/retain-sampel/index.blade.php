@@ -15,6 +15,11 @@
         <p class="text-xs sm:text-sm text-slate-500 mt-1">Format resmi Pertamina Patra Niaga. Density'15 otomatis ASTM Table 53. Laporan harian 06.00, 12.00, dan 18.00 WIB.</p>
     </div>
     <div class="flex flex-wrap items-center gap-2">
+        <button type="button" 
+                onclick="window.dispatchEvent(new CustomEvent('open-retain-tutorial'))"
+                class="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 px-3.5 py-2 text-xs sm:text-sm font-bold text-white shadow-md shadow-orange-500/25 transition hover:scale-105 active:scale-95">
+            <i data-lucide="help-circle" class="h-4 w-4"></i> Panduan Cara Pakai
+        </button>
         <a href="{{ route('retain-sampel.semua') }}"
            class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs sm:text-sm font-bold text-slate-700 shadow-sm transition hover:border-brand-blue hover:text-brand-blue">
             <i data-lucide="calendar-range" class="h-4 w-4 text-slate-400"></i> Lihat Semua Tanggal
@@ -333,4 +338,6 @@ function unduhGambar(elementId, mimeType, filename) {
     });
 }
 </script>
+
+@include('retain-sampel._tutorial-modal')
 @endsection
