@@ -4,22 +4,25 @@ namespace App\Services;
 
 /**
  * Menghitung Density'15 (density terkoreksi ke 15°C) SECARA OTOMATIS dari
- * Density Obs (hasil baca hidrometer) + Suhu Obs sesuai acuan resmi
- * Tabel 53B (Generalized Products / ASTM D1250 / API 2540 / IP 200).
+ * Density Obs (hasil baca hidrometer / rho_t) + Suhu Obs (t °C)
+ * sesuai acuan resmi Tabel 53B (ASTM D1250 / API 2540 / IP 200, 1980 - Generalized Products).
  *
- * Mengikuti nilai Tabel 53B:
- *   - Pertalite (0.7330 pada 26°C) -> 0.7418 (741.8 kg/m3)
- *   - Pertamax  (0.7430 pada 26°C) -> 0.7517 (751.7 kg/m3)
- *   - Biosolar  (0.8150 pada 26°C) -> 0.8225 (822.5 kg/m3)
+ * Mengikuti nilai baku Tabel 53B (Sheet Excel GASOLIN / KEROSENE / SOLAR):
+ *   - Pertalite (0.7330 @ 26°C) -> 0.7418 (741.8 kg/m3)
+ *   - Pertamax  (0.7430 @ 26°C) -> 0.7517 (751.7 kg/m3)
+ *   - Biosolar  (0.8150 @ 26°C) -> 0.8225 (822.5 kg/m3)
+ *   - Pertalite (0.7350 @ 25°C) -> 0.7430 (743.0 kg/m3)
+ *
+ * Nilai kembalian SELALU dalam format standar 0.xxxx (g/mL atau kg/L).
  */
 class DensityCorrectionService
 {
     /**
-     * Titik jangkar koefisien koreksi per °C berdasarkan Tabel 53B
+     * Titik jangkar koefisien koreksi per °C berdasarkan Tabel 53B resmi
      * [density_kg_m3, slope_per_degC]
      */
     protected static array $tabel53bAnchors = [
-        [690.0, 0.8650],
+        [690.0, 0.8636],
         [700.0, 0.8500],
         [710.0, 0.8364],
         [720.0, 0.8182],
@@ -72,9 +75,9 @@ class DensityCorrectionService
     }
 
     /**
-     * @param float $densityObs Density hasil baca hidrometer (satuan g/mL mis. 0.7330 atau kg/m3 mis. 733.0)
-     * @param float $suhuObsC   Suhu sampel saat dibaca (°C)
-     * @return float Density'15 dibulatkan 4 desimal
+     * @param float $densityObs Densitas terbaca rho_t (satuan g/mL mis. 0.7330 atau kg/m3 mis. 733.0)
+     * @param float $suhuObsC   Suhu pengukuran t (°C)
+     * @return float Density'15 dalam format 0.xxxx (misal 0.7418 / 0.7517 / 0.8225)
      */
     public static function hitungDensity15(float $densityObs, float $suhuObsC): float
     {
@@ -82,26 +85,26 @@ class DensityCorrectionService
             return 0.0;
         }
 
-        // Deteksi apakah input dalam kg/m3 (> 100) atau g/mL (< 10)
-        $isDalamKgM3 = $densityObs > 100.0;
-        $rhoObs = $isDalamKgM3 ? $densityObs : ($densityObs * 1000.0);
+        // Normalisasi ke basis kg/m3 (rho_t)
+        $rhoT = $densityObs > 10.0 ? $densityObs : ($densityObs * 1000.0);
 
-        // Jika angka dummy di luar range wajar, kembalikan rounded
-        if ($rhoObs < 100.0 || $rhoObs > 2000.0) {
-            return round($densityObs, 4);
+        // Jika angka di luar range wajar hidrokarbon cair
+        if ($rhoT < 100.0 || $rhoT > 2000.0) {
+            return $densityObs > 10.0 ? round($densityObs / 1000.0, 4) : round($densityObs, 4);
         }
 
         $dT = $suhuObsC - 15.0;
 
         if (abs($dT) < 0.00001) {
-            return round($densityObs, 4);
+            return round($rhoT / 1000.0, 4);
         }
 
         // Hitung faktor koreksi Tabel 53B
-        $slope = self::hitungSlope53B($rhoObs);
-        $rho15 = $rhoObs + ($slope * $dT);
+        $slope = self::hitungSlope53B($rhoT);
+        $rho15 = $rhoT + ($slope * $dT);
 
-        return $isDalamKgM3 ? round($rho15, 4) : round($rho15 / 1000.0, 4);
+        // SELALU kembalikan dalam format 0.xxxx (g/mL atau kg/L) dibulatkan 4 desimal
+        return round($rho15 / 1000.0, 4);
     }
 }
 

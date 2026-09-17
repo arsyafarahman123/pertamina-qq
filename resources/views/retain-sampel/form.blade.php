@@ -184,9 +184,9 @@
 </div>
 
 <script>
-// Live ASTM Table 53B Calculation on-the-fly (Tabel 53B Generalized Products)
+// Live Table 53B Calculation on-the-fly (Baku Tabel 53B Generalized Products)
 const tabel53bAnchorsJS = [
-    [690.0, 0.8650],
+    [690.0, 0.8636],
     [700.0, 0.8500],
     [710.0, 0.8364],
     [720.0, 0.8182],
@@ -233,19 +233,18 @@ function hitungDensity15JS(obs, temp) {
     const t = parseFloat(temp);
     if (rawObs <= 0 || !isFinite(rawObs) || !isFinite(t)) return null;
 
-    const isKgM3 = rawObs > 100.0;
-    const rhoObs = isKgM3 ? rawObs : (rawObs * 1000.0);
-    if (rhoObs < 100.0 || rhoObs > 2000.0) return isKgM3 ? rawObs : rawObs;
+    const rhoObs = rawObs > 10.0 ? rawObs : (rawObs * 1000.0);
+    if (rhoObs < 100.0 || rhoObs > 2000.0) return rawObs > 10.0 ? (rawObs / 1000.0) : rawObs;
 
     const deltaT = t - 15.0;
     if (Math.abs(deltaT) < 0.00001) {
-        return isKgM3 ? rhoObs : (rhoObs / 1000.0);
+        return rhoObs / 1000.0;
     }
 
     const slope = hitungSlope53BJS(rhoObs);
     const rho15 = rhoObs + (slope * deltaT);
 
-    return isKgM3 ? rho15 : (rho15 / 1000.0);
+    return rho15 / 1000.0;
 }
 
 function updateDensityPreview() {

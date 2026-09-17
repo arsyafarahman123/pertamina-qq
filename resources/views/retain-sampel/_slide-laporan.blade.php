@@ -148,7 +148,11 @@
 
     $formatAngka = function ($val, $desimal = 4) {
         if ($val === null || $val === '') return '-';
-        return str_replace('.', ',', number_format((float)$val, $desimal, '.', ''));
+        $num = (float)$val;
+        if ($num >= 10.0) {
+            $num = $num / 1000.0;
+        }
+        return str_replace('.', ',', number_format($num, $desimal, '.', ''));
     };
 
     $formatSuhu = function ($val) {
@@ -702,15 +706,20 @@
                                     <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700">Density Obs</td>
                                     @foreach ($produk06Aktif as $p)
                                         @php $e = $produk06Entries[$p] ?? null; @endphp
-                                        <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-medium">{{ $e ? $formatAngka($e->density_obs, 3) : '-' }}</td>
+                                        <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-medium">{{ $e ? $formatAngka($e->density_obs, 4) : '-' }}</td>
                                     @endforeach
                                 </tr>
                                 {{-- Density'15 --}}
                                 <tr class="bg-blue-50/40">
                                     <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-[#0f3b66]">Density'15</td>
                                     @foreach ($produk06Aktif as $p)
-                                        @php $e = $produk06Entries[$p] ?? null; @endphp
-                                        <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-bold text-[#0f3b66]">{{ $e ? $formatAngka($e->density_15, 4) : '-' }}</td>
+                                        @php
+                                            $e = $produk06Entries[$p] ?? null;
+                                            $d15Val = $e && $e->density_obs && $e->temperatur
+                                                ? \App\Services\DensityCorrectionService::hitungDensity15((float)$e->density_obs, (float)$e->temperatur)
+                                                : ($e?->density_15);
+                                        @endphp
+                                        <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-bold text-[#0f3b66]">{{ $e ? $formatAngka($d15Val, 4) : '-' }}</td>
                                     @endforeach
                                 </tr>
                                 {{-- Temperatur --}}
@@ -1198,7 +1207,7 @@
                                         <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700">Density Obs</td>
                                         @foreach ($produkKananAktif as $p)
                                             @php $e = $produkKananEntries[$p] ?? null; @endphp
-                                            <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-medium">{{ $e ? $formatAngka($e->density_obs, 3) : '-' }}</td>
+                                            <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-medium">{{ $e ? $formatAngka($e->density_obs, 4) : '-' }}</td>
                                         @endforeach
                                     </tr>
                                     {{-- Density'15 --}}
@@ -1293,7 +1302,7 @@
                                 @php $e = $rekap[$j][$p] ?? null; @endphp
                                 @if ($e)
                                     <td class="border-r border-slate-200 px-2 py-1.5 font-bold">{{ $e->mt_nopol ?: '-' }}</td>
-                                    <td class="border-r border-slate-200 px-2 py-1.5">{{ $formatAngka($e->density_obs, 3) }}</td>
+                                    <td class="border-r border-slate-200 px-2 py-1.5">{{ $formatAngka($e->density_obs, 4) }}</td>
                                     <td class="border-r border-slate-200 px-2 py-1.5 font-bold text-brand-blue">{{ $formatAngka($e->density_15, 4) }}</td>
                                     <td class="border-r border-slate-200 px-2 py-1.5">{{ $formatSuhu($e->temperatur) }}°C</td>
                                     <td class="border-r last:border-r-0 border-slate-200 px-2 py-1.5 font-semibold">{{ $e->tangki_timbun ?: '-' }}</td>

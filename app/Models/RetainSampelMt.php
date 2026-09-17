@@ -33,6 +33,43 @@ class RetainSampelMt extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getDensityObsAttribute($value)
+    {
+        if ($value === null) return null;
+        $num = (float)$value;
+        return $num >= 10.0 ? round($num / 1000.0, 4) : $num;
+    }
+
+    public function getDensity15Attribute($value)
+    {
+        if ($this->density_obs !== null && $this->temperatur !== null) {
+            return \App\Services\DensityCorrectionService::hitungDensity15((float)$this->density_obs, (float)$this->temperatur);
+        }
+        if ($value === null) return null;
+        $num = (float)$value;
+        return $num >= 10.0 ? round($num / 1000.0, 4) : $num;
+    }
+
+    public function setDensityObsAttribute($value)
+    {
+        if ($value === null || $value === '') {
+            $this->attributes['density_obs'] = null;
+        } else {
+            $num = (float)$value;
+            $this->attributes['density_obs'] = $num >= 10.0 ? round($num / 1000.0, 4) : round($num, 4);
+        }
+    }
+
+    public function setDensity15Attribute($value)
+    {
+        if ($value === null || $value === '') {
+            $this->attributes['density_15'] = null;
+        } else {
+            $num = (float)$value;
+            $this->attributes['density_15'] = $num >= 10.0 ? round($num / 1000.0, 4) : round($num, 4);
+        }
+    }
+
     /**
      * URL foto botol sampel untuk baris ini (null kalau belum diupload).
      *
