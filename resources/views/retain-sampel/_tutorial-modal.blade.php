@@ -406,26 +406,43 @@
             audioCtx: null,
             bgmInterval: null,
             noteIndex: 0,
+            speechPlayId: 0,
+            currentAudio: null,
             steps: [
                 { 
                     navTitle: 'Akses & Filter',
-                    narration: 'Langkah pertama: Buka menu Retain Sampel MT di sebelah kiri. Anda dapat memilih filter tanggal untuk melihat arsip atau klik tombol Input Retain Sampel untuk memasukkan data baru.'
+                    chunks: [
+                        'Langkah pertama: Buka menu Retain Sampel MT di navigasi sebelah kiri.',
+                        'Pilih tanggal operasional untuk melihat arsip, atau klik tombol Input Retain Baru untuk memasukkan data hari ini.'
+                    ]
                 },
                 { 
                     navTitle: 'Input 06.00 Pagi',
-                    narration: 'Langkah kedua: Pada sesi jam enam pagi, masukkan data awal dan unggah tiga foto pilar mutu: yaitu Foto Botol Retain, visual kompartemen tiga mobil tangki pertama, dan visual tangki timbun yang aktif beroperasi.'
+                    chunks: [
+                        'Langkah kedua: Pada sesi jam enam pagi, masukkan data awal dan unggah tiga foto pilar mutu:',
+                        'Yaitu Foto Botol Retain, visual kompartemen tiga mobil tangki pertama, dan visual tangki timbun aktif.'
+                    ]
                 },
                 { 
                     navTitle: 'Input Sesi 12 & 18',
-                    narration: 'Langkah ketiga: Untuk sesi jam dua belas siang dan delapan belas sore, Anda cukup mengunggah foto sampel dan data terkini. Sistem secara otomatis menampilkan kotak acuan jam enam pagi di sebelah kiri sebagai pembanding.'
+                    chunks: [
+                        'Langkah ketiga: Untuk sesi jam dua belas siang dan delapan belas sore, unggah foto sampel dan hasil uji terkini.',
+                        'Sistem secara otomatis menampilkan kotak acuan jam enam pagi di sebelah kiri sebagai pembanding.'
+                    ]
                 },
                 { 
                     navTitle: 'Hitung ASTM 53B',
-                    narration: 'Langkah keempat: Masukkan nilai density observed dan suhu pengujian. Sistem secara otomatis menghitung nilai density lima belas derajat celcius sesuai tabel lima puluh tiga B ASTM dengan presisi empat angka desimal resmi migas.'
+                    chunks: [
+                        'Langkah keempat: Masukkan nilai density observed dan suhu pengujian.',
+                        'Sistem secara otomatis menghitung nilai density lima belas derajat celcius sesuai tabel lima puluh tiga B ASTM secara presisi empat angka desimal.'
+                    ]
                 },
                 { 
                     navTitle: 'Simulasi & Unduh',
-                    narration: 'Langkah kelima: Klik tab sesi yang ingin dilihat, lalu klik tombol Unduh Banner PNG HD. Banner laporan resmi resolusi tinggi siap langsung dikirimkan ke grup koordinasi regional Pertamina.'
+                    chunks: [
+                        'Langkah kelima: Klik tab sesi yang ingin dilihat, lalu klik tombol Unduh Banner PNG HD.',
+                        'Banner laporan resmi resolusi tinggi siap langsung dikirimkan ke grup koordinasi regional Pertamina.'
+                    ]
                 },
             ],
             demoSteps: [
@@ -435,6 +452,13 @@
                 { tabName: 'Unduh Banner', action: 'Klik Tombol Unduh Banner PNG', desc: 'Menghasilkan gambar resolusi tinggi (PNG HD) siap kirim WhatsApp Regional', badge: '4. Ekspor HD Selesai' },
             ],
             init() {
+                // Pre-fetch browser speech synthesis voices if available
+                if (this.speechSynth && this.speechSynth.onvoiceschanged !== undefined) {
+                    this.speechSynth.onvoiceschanged = () => {
+                        this.speechSynth.getVoices();
+                    };
+                }
+
                 window.addEventListener('open-retain-tutorial', () => {
                     this.step = 0;
                     this.open = true;
@@ -509,9 +533,9 @@
                     const p = melodyPattern[this.noteIndex % melodyPattern.length];
                     this.noteIndex++;
 
-                    // Mainkan melodi pengiring lembut tapi jelas terdengar
-                    const trebleVol = this.voicePlaying ? 0.04 : 0.09;
-                    const bassVol = this.voicePlaying ? 0.03 : 0.07;
+                    // Mainkan melodi pengiring lembut saat suara narator aktif
+                    const trebleVol = this.voicePlaying ? 0.025 : 0.08;
+                    const bassVol = this.voicePlaying ? 0.02 : 0.06;
 
                     this.playBgmMelodyNote(p.note, 'sine', trebleVol, p.dur);
                     if (p.bass) {
@@ -561,30 +585,128 @@
                 }
             },
             stopSpeech() {
+                this.speechPlayId++; // Membatalkan antrian suara sebelumnya
+                if (this.currentAudio) {
+                    try {
+                        this.currentAudio.pause();
+                        this.currentAudio.currentTime = 0;
+                        this.currentAudio = null;
+                    } catch (e) {}
+                }
                 if (this.speechSynth) {
-                    this.speechSynth.cancel();
+                    try {
+                        this.speechSynth.cancel();
+                    } catch (e) {}
                 }
                 this.voicePlaying = false;
             },
+            getIndonesianVoice() {
+                if (!this.speechSynth) return null;
+                const voices = this.speechSynth.getVoices() || [];
+                if (!voices.length) return null;
+
+                // 1. Cari suara resmi Bahasa Indonesia (id-ID)
+                let idVoice = voices.find(v => {
+                    const lang = (v.lang || '').toLowerCase().replace('_', '-');
+                    const name = (v.name || '').toLowerCase();
+                    return (lang === 'id-id' || lang === 'id' || lang.startsWith('id-') || lang.startsWith('in-')) &&
+                           (name.includes('indonesia') || name.includes('damayanti') || name.includes('andika') || name.includes('gadis') || name.includes('natural') || name.includes('google'));
+                });
+
+                // 2. Jika tidak ada nama spesifik, cari kode bahasa id-ID
+                if (!idVoice) {
+                    idVoice = voices.find(v => {
+                        const lang = (v.lang || '').toLowerCase().replace('_', '-');
+                        return lang === 'id-id' || lang === 'id' || lang.startsWith('id-') || lang.startsWith('in-');
+                    });
+                }
+
+                // 3. Cari dari nama yang mengandung 'indonesia'
+                if (!idVoice) {
+                    idVoice = voices.find(v => (v.name || '').toLowerCase().includes('indonesia'));
+                }
+
+                return idVoice || null;
+            },
             speakNarration() {
-                if (!this.soundEnabled || !this.speechSynth) return;
+                if (!this.soundEnabled) return;
                 this.stopSpeech();
 
+                const curStep = this.steps[this.step];
+                if (!curStep || !curStep.chunks || !curStep.chunks.length) return;
+
+                const currentPlayId = ++this.speechPlayId;
+                this.voicePlaying = true;
+
+                // TIER 1: Gunakan stream audio suara Bahasa Indonesia asli (Native Indonesian Voice)
+                // Memastikan di semua merk HP (Samsung, Xiaomi, iPhone, Oppo, Realme) & Laptop bersuara Bahasa Indonesia murni tanpa aksen Inggris
+                let chunkIdx = 0;
+                const playNextChunk = () => {
+                    if (!this.soundEnabled || !this.voicePlaying || this.speechPlayId !== currentPlayId) {
+                        this.voicePlaying = false;
+                        return;
+                    }
+                    if (chunkIdx >= curStep.chunks.length) {
+                        this.voicePlaying = false;
+                        return;
+                    }
+
+                    const text = curStep.chunks[chunkIdx];
+                    chunkIdx++;
+
+                    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=id&client=tw-ob&q=${encodeURIComponent(text)}`;
+                    const audio = new Audio(url);
+                    this.currentAudio = audio;
+
+                    audio.onended = () => {
+                        if (this.speechPlayId === currentPlayId) {
+                            setTimeout(playNextChunk, 220);
+                        }
+                    };
+
+                    audio.onerror = () => {
+                        // Fallback ke Web Speech API jika offline
+                        if (this.speechPlayId === currentPlayId) {
+                            this.speakWebSpeechFallback(curStep.chunks.join(' '), currentPlayId);
+                        }
+                    };
+
+                    audio.play().catch(e => {
+                        // Fallback ke Web Speech API jika browser memblokir stream
+                        if (this.speechPlayId === currentPlayId) {
+                            this.speakWebSpeechFallback(curStep.chunks.join(' '), currentPlayId);
+                        }
+                    });
+                };
+
+                playNextChunk();
+            },
+            speakWebSpeechFallback(fullText, playId) {
+                if (!this.speechSynth || !this.soundEnabled) {
+                    this.voicePlaying = false;
+                    return;
+                }
                 try {
-                    const text = this.steps[this.step].narration;
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'id-ID';
+                    const utterance = new SpeechSynthesisUtterance(fullText);
+                    const idVoice = this.getIndonesianVoice();
+
+                    if (idVoice) {
+                        utterance.voice = idVoice;
+                        utterance.lang = idVoice.lang || 'id-ID';
+                    } else {
+                        utterance.lang = 'id-ID';
+                    }
                     utterance.rate = 0.95;
                     utterance.pitch = 1.0;
 
                     utterance.onstart = () => {
-                        this.voicePlaying = true;
+                        if (this.speechPlayId === playId) this.voicePlaying = true;
                     };
                     utterance.onend = () => {
-                        this.voicePlaying = false;
+                        if (this.speechPlayId === playId) this.voicePlaying = false;
                     };
                     utterance.onerror = () => {
-                        this.voicePlaying = false;
+                        if (this.speechPlayId === playId) this.voicePlaying = false;
                     };
 
                     this.speechSynth.speak(utterance);

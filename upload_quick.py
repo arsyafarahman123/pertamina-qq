@@ -11,27 +11,26 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
+    'app/Services/DensityCorrectionService.php',
+    'app/Services/FuelMaosService.php',
+    'resources/views/retain-sampel/form.blade.php',
+    'resources/views/retain-sampel/_tutorial-modal.blade.php',
+    'resources/views/retain-sampel/_slide-laporan.blade.php',
+    'resources/views/dashboard/index.blade.php',
+    'resources/views/auth/login.blade.php',
     'config/session.php',
     'bootstrap/app.php',
     'app/Http/Controllers/AuthController.php',
     'routes/web.php',
-    'resources/views/auth/login.blade.php',
-    'resources/views/layouts/app.blade.php',
-    'resources/views/checklist-mt-maos/index.blade.php',
-    'resources/views/retain-sampel/_slide-laporan.blade.php',
-    'resources/views/retain-sampel/_tutorial-modal.blade.php',
-    'resources/views/retain-sampel/index.blade.php',
-    'resources/views/retain-sampel/form.blade.php',
-    'resources/views/retain-sampel/cetak.blade.php',
-    'public/js/lucide.min.js',
-    'public/js/alpine.min.js',
 ]
 
 def connect_ftp():
-    print(f"Connecting to {FTP_HOST}...")
-    ftp = ftplib.FTP(FTP_HOST, timeout=30)
+    print(f"Connecting to {FTP_HOST}...", flush=True)
+    ftp = ftplib.FTP()
+    ftp.connect(FTP_HOST, 21, timeout=15)
     ftp.login(FTP_USER, FTP_PASS)
     ftp.set_pasv(True)
+    print("Connected & Logged in!", flush=True)
     return ftp
 
 def ensure_dir(ftp, path):
@@ -65,12 +64,12 @@ def main():
         ensure_dir(ftp, target_dir)
         ftp.cwd(target_dir)
 
-        print(f"Uploading {rel_path} -> {target_dir}/{file_name}...")
+        print(f"Uploading {rel_path} -> {target_dir}/{file_name}...", flush=True)
         for attempt in range(3):
             try:
                 with open(local_path, 'rb') as fp:
                     ftp.storbinary(f"STOR {file_name}", fp)
-                print(f"[OK] Uploaded {file_name}")
+                print(f"[OK] Uploaded {file_name}", flush=True)
 
                 # Jika file ada di public/js/, upload juga ke /htdocs/js/
                 if rel_dir == 'public/js':
@@ -79,16 +78,16 @@ def main():
                     ftp.cwd(alt_dir)
                     with open(local_path, 'rb') as fp2:
                         ftp.storbinary(f"STOR {file_name}", fp2)
-                    print(f"[OK] Also Uploaded to {alt_dir}/{file_name}")
+                    print(f"[OK] Also Uploaded to {alt_dir}/{file_name}", flush=True)
                 break
             except Exception as e:
-                print(f"  Retry {attempt+1} on {file_name}: {e}")
+                print(f"  Retry {attempt+1} on {file_name}: {e}", flush=True)
                 time.sleep(2)
                 ftp = connect_ftp()
                 ftp.cwd(target_dir)
 
     ftp.quit()
-    print("All modified files deployed successfully to InfinityFree!")
+    print("All modified files deployed successfully to InfinityFree!", flush=True)
 
 if __name__ == '__main__':
     main()

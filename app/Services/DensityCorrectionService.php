@@ -4,39 +4,47 @@ namespace App\Services;
 
 /**
  * Menghitung Density'15 (density terkoreksi ke 15°C) SECARA OTOMATIS dari
- * Density Obs (hasil baca hidrometer) + Suhu Obs — menggantikan cara manual
- * "cari di Tabel ASTM 53" satu-satu.
+ * Density Obs (hasil baca hidrometer) + Suhu Obs sesuai standar resmi
+ * ASTM D1250 / API 2540 / IP 200 (1980) Table 53B (Generalized Products).
  *
- * Rumus yang dipakai adalah rumus resmi di balik Tabel ASTM-IP Petroleum
- * Measurement Table 53B/54B ("Generalized Products", basis 15°C) —
- * ASTM D1250 / API MPMS Chapter 11.1:
+ * Rumus:
+ *   Δt = t - 15
+ *   α15 = K0 / (ρ15^2) + K1 / ρ15
+ *   ρ15 = ρt * exp[ α15 * Δt * (1 + 0.8 * α15 * Δt) ]
  *
- *   alpha(rho15) = (K0 + K1 * rho15) / rho15^2      [rho dalam kg/m3]
- *   dT           = T_obs - 15                        [°C]
- *   CTL          = exp( -alpha * dT * (1 + 0.8 * alpha * dT) )
- *   rho15        = rho_obs / CTL
+ * Zona Transisi (770 <= ρ15 < 778 kg/m3):
+ *   α15 = A + B / (ρ15^2), dengan A = -0.00336312, B = 2680.3206
  *
- * rho15 muncul di kedua sisi (alpha bergantung rho15), jadi diselesaikan
- * dengan iterasi singkat (konvergen dalam 3-4 langkah karena alpha berubah
- * sangat kecil terhadap rho). Hasilnya identik dengan pembacaan tabel ASTM 53
- * kertas sampai 3-4 digit desimal.
+ * Konstanta K0 dan K1:
+ *   - 653 <= ρ15 < 770 : K0 = 346.4228, K1 = 0.4388  (Gasoline / Naphtha)
+ *   - 770 <= ρ15 < 778 : Zona transisi (A & B)
+ *   - 778 <= ρ15 < 839 : K0 = 594.5418, K1 = 0.0     (Kerosene / Jet Fuel)
+ *   - 839 <= ρ15 <= 1075 : K0 = 186.9696, K1 = 0.48618 (Solar / Gas Oil)
  */
 class DensityCorrectionService
 {
     /**
-     * Pilih konstanta K0/K1 sesuai grup densitas (kg/m3 @15°C) — persis cara
-     * Tabel ASTM 53/54 aslinya dibagi per kelompok produk:
-     *   - Grup Bensin (653-778)      : Pertalite / Pertamax / Pertamax Turbo
-     *   - Grup Jet/Kerosene (778-840): produk ringan lain
-     *   - Grup Solar/Fuel Oil (>840) : Solar / Biosolar / Dexlite / Pertadex
+     * Hitung koefisien muai termal α15 berdasarkan nilai perkiraan / iterasi ρ15.
      */
-    protected static function pilihKoefisien(float $rhoKira2): array
+    public static function hitungAlpha15(float $rho15): float
     {
-        return match (true) {
-            $rhoKira2 < 778.0 => [346.4228, 0.4388],   // bensin
-            $rhoKira2 < 839.9 => [594.5418, 0.0],      // kerosene/jet
-            default => [186.9696, 0.4862],             // solar/fuel oil
-        };
+        if ($rho15 <= 0.0001) {
+            return 0.0;
+        }
+
+        if ($rho15 < 770.0) {
+            // 653 <= ρ15 < 770 (Gasoline / Naphtha)
+            return (346.4228 / ($rho15 ** 2)) + (0.4388 / $rho15);
+        } elseif ($rho15 < 778.0) {
+            // 770 <= ρ15 < 778 (Zona Transisi)
+            return -0.00336312 + (2680.3206 / ($rho15 ** 2));
+        } elseif ($rho15 < 839.0) {
+            // 778 <= ρ15 < 839 (Kerosene / Jet Fuel)
+            return (594.5418 / ($rho15 ** 2));
+        } else {
+            // 839 <= ρ15 <= 1075 (Solar / Gas Oil)
+            return (186.9696 / ($rho15 ** 2)) + (0.48618 / $rho15);
+        }
     }
 
     /**
@@ -50,9 +58,7 @@ class DensityCorrectionService
             return 0.0;
         }
 
-        // Fleksibel: deteksi apakah input dalam kg/m3 (> 100) atau g/mL (< 10)
-        // Kalau input 500-1100, sudah dalam kg/m3
-        // Kalau input 0.5 - 1.2, dalam g/mL -> konversi ke kg/m3
+        // Deteksi apakah input dalam kg/m3 (> 100) atau g/mL (< 10)
         $isDalamKgM3 = $densityObs > 100.0;
         $rhoObs = $isDalamKgM3 ? $densityObs : ($densityObs * 1000.0);
 
@@ -63,31 +69,30 @@ class DensityCorrectionService
 
         $dT = $suhuObsC - 15.0;
 
-        // Kalau suhu obs pas 15°C, tidak perlu koreksi.
-        if (abs($dT) < 0.0001) {
+        // Jika suhu tepat 15°C, tidak ada koreksi suhu
+        if (abs($dT) < 0.00001) {
             return round($densityObs, 4);
         }
 
-        [$k0, $k1] = self::pilihKoefisien($rhoObs);
-        $rho15 = $rhoObs; // tebakan awal
+        // Iterasi: tebakan awal ρ15 ≈ ρt
+        $rho15 = $rhoObs;
 
-        for ($i = 0; $i < 12; $i++) {
-            if ($rho15 <= 0.0001) {
-                break;
-            }
-            $alpha = ($k0 + $k1 * $rho15) / ($rho15 ** 2);
-            $ctl = exp(-$alpha * $dT * (1.0 + 0.8 * $alpha * $dT));
+        for ($i = 0; $i < 15; $i++) {
+            $alpha15 = self::hitungAlpha15($rho15);
             
-            if ($ctl <= 0.000001 || !is_finite($ctl)) {
+            // Rumus utama: ρ15 = ρt * exp[ α15 * Δt * (1 + 0.8 * α15 * Δt) ]
+            $exponent = $alpha15 * $dT * (1.0 + 0.8 * $alpha15 * $dT);
+            $rho15Baru = $rhoObs * exp($exponent);
+
+            if (!is_finite($rho15Baru) || $rho15Baru <= 0.0001) {
                 break;
             }
-
-            $rho15Baru = $rhoObs / $ctl;
 
             if (abs($rho15Baru - $rho15) < 0.00001) {
                 $rho15 = $rho15Baru;
                 break;
             }
+
             $rho15 = $rho15Baru;
         }
 

@@ -184,35 +184,52 @@
 </div>
 
 <script>
-// Live ASTM Table 53 Calculation on-the-fly
+// Live ASTM Table 53B Calculation on-the-fly (ASTM D1250 / API 2540 / IP 200, 1980)
 function hitungDensity15JS(obs, temp) {
     if (!obs || !temp || isNaN(obs) || isNaN(temp)) return null;
-    const dObs = parseFloat(obs);
+    const rawObs = parseFloat(obs);
     const t = parseFloat(temp);
-    if (dObs <= 0) return null;
+    if (rawObs <= 0 || !isFinite(rawObs) || !isFinite(t)) return null;
 
-    let K0 = 346.42278, K1 = 0.43884, K2 = 0.0;
-    if (dObs >= 653.0 && dObs < 770.5) { // Gasoline
-        K0 = 346.42278; K1 = 0.43884;
-    } else if (dObs >= 770.5 && dObs < 838.5) { // Kerosine / Jet
-        K0 = 594.5418; K1 = 0.0;
-    } else if (dObs >= 838.5 && dObs < 900.0) { // Diesel
-        K0 = 186.9696; K1 = 0.4862;
+    const isKgM3 = rawObs > 100.0;
+    const rhoObs = isKgM3 ? rawObs : (rawObs * 1000.0);
+    if (rhoObs < 100.0 || rhoObs > 2000.0) return isKgM3 ? rawObs : rawObs;
+
+    const deltaT = t - 15.0;
+    if (Math.abs(deltaT) < 0.00001) {
+        return isKgM3 ? rhoObs : (rhoObs / 1000.0);
     }
 
-    let d15 = dObs;
-    const deltaT = t - 15.0;
-    for (let i = 0; i < 5; i++) {
-        const alpha15 = (K0 + K1 * d15) / (d15 * d15);
-        const vcf = Math.exp(-alpha15 * deltaT * (1.0 + 0.8 * alpha15 * deltaT));
-        const newD15 = dObs / vcf;
-        if (Math.abs(newD15 - d15) < 0.0001) {
-            d15 = newD15;
+    let rho15 = rhoObs;
+    for (let i = 0; i < 15; i++) {
+        let alpha15;
+        if (rho15 < 770.0) {
+            // 653 <= rho15 < 770 (Gasoline / Naphtha)
+            alpha15 = (346.4228 / (rho15 * rho15)) + (0.4388 / rho15);
+        } else if (rho15 < 778.0) {
+            // 770 <= rho15 < 778 (Zona Transisi)
+            alpha15 = -0.00336312 + (2680.3206 / (rho15 * rho15));
+        } else if (rho15 < 839.0) {
+            // 778 <= rho15 < 839 (Kerosene / Jet Fuel)
+            alpha15 = 594.5418 / (rho15 * rho15);
+        } else {
+            // 839 <= rho15 <= 1075 (Solar / Gas Oil)
+            alpha15 = (186.9696 / (rho15 * rho15)) + (0.48618 / rho15);
+        }
+
+        const exponent = alpha15 * deltaT * (1.0 + 0.8 * alpha15 * deltaT);
+        const newRho15 = rhoObs * Math.exp(exponent);
+
+        if (!isFinite(newRho15) || newRho15 <= 0.0001) break;
+
+        if (Math.abs(newRho15 - rho15) < 0.00001) {
+            rho15 = newRho15;
             break;
         }
-        d15 = newD15;
+        rho15 = newRho15;
     }
-    return d15;
+
+    return isKgM3 ? rho15 : (rho15 / 1000.0);
 }
 
 function updateDensityPreview() {

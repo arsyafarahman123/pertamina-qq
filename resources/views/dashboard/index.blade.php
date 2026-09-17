@@ -13,7 +13,7 @@
     };
 @endphp
 
-<!-- ===================== Hero Banner khas Pertamina ===================== -->
+<!-- ===================== Hero Banner Pertamina ===================== -->
 <div class="relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-r from-brand-red via-red-600 to-brand-blue p-6 shadow-xl shadow-red-500/10 sm:p-8">
     <div class="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl"></div>
     <div class="pointer-events-none absolute -left-10 bottom-0 h-40 w-40 rounded-full bg-white/10 blur-3xl"></div>
