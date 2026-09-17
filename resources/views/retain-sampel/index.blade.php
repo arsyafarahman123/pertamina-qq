@@ -2,6 +2,15 @@
 @section('title', 'Laporan Harian Retain Sampel Penyaluran MT')
 
 @section('content')
+@php
+    $carbonTgl = \Illuminate\Support\Carbon::parse($tanggal);
+    $namaHariMap = ['Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa', 'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'];
+    $namaBulanMap = [1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'];
+    
+    $hariIndo = $namaHariMap[$carbonTgl->format('l')] ?? $carbonTgl->format('l');
+    $bulanIndo = $namaBulanMap[(int)$carbonTgl->format('n')] ?? $carbonTgl->format('F');
+    $tanggalIndo = $hariIndo . ', ' . $carbonTgl->format('d') . ' ' . $bulanIndo . ' ' . $carbonTgl->format('Y');
+@endphp
 
 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
     <div>
