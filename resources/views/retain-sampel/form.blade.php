@@ -184,7 +184,49 @@
 </div>
 
 <script>
-// Live ASTM Table 53B Calculation on-the-fly (ASTM D1250 / API 2540 / IP 200, 1980)
+// Live ASTM Table 53B Calculation on-the-fly (Tabel 53B Generalized Products)
+const tabel53bAnchorsJS = [
+    [690.0, 0.8650],
+    [700.0, 0.8500],
+    [710.0, 0.8364],
+    [720.0, 0.8182],
+    [730.0, 0.8091],
+    [733.0, 0.8000],
+    [740.0, 0.7909],
+    [743.0, 0.7909],
+    [750.0, 0.7727],
+    [759.0, 0.7636],
+    [800.0, 0.7000],
+    [810.0, 0.6909],
+    [815.0, 0.6818],
+    [820.0, 0.6818],
+    [830.0, 0.6727],
+    [839.0, 0.6636],
+    [840.0, 0.6636],
+    [850.0, 0.6545],
+    [860.0, 0.6545],
+    [869.0, 0.6455]
+];
+
+function hitungSlope53BJS(rho) {
+    const anchors = tabel53bAnchorsJS;
+    const len = anchors.length;
+    if (rho <= anchors[0][0]) return anchors[0][1];
+    if (rho >= anchors[len - 1][0]) return anchors[len - 1][1];
+
+    for (let i = 0; i < len - 1; i++) {
+        const r1 = anchors[i][0];
+        const s1 = anchors[i][1];
+        const r2 = anchors[i + 1][0];
+        const s2 = anchors[i + 1][1];
+        if (rho >= r1 && rho <= r2) {
+            const frac = (r2 > r1) ? ((rho - r1) / (r2 - r1)) : 0;
+            return s1 + frac * (s2 - s1);
+        }
+    }
+    return 0.75;
+}
+
 function hitungDensity15JS(obs, temp) {
     if (!obs || !temp || isNaN(obs) || isNaN(temp)) return null;
     const rawObs = parseFloat(obs);
@@ -200,34 +242,8 @@ function hitungDensity15JS(obs, temp) {
         return isKgM3 ? rhoObs : (rhoObs / 1000.0);
     }
 
-    let rho15 = rhoObs;
-    for (let i = 0; i < 15; i++) {
-        let alpha15;
-        if (rho15 < 770.0) {
-            // 653 <= rho15 < 770 (Gasoline / Naphtha)
-            alpha15 = (346.4228 / (rho15 * rho15)) + (0.4388 / rho15);
-        } else if (rho15 < 778.0) {
-            // 770 <= rho15 < 778 (Zona Transisi)
-            alpha15 = -0.00336312 + (2680.3206 / (rho15 * rho15));
-        } else if (rho15 < 839.0) {
-            // 778 <= rho15 < 839 (Kerosene / Jet Fuel)
-            alpha15 = 594.5418 / (rho15 * rho15);
-        } else {
-            // 839 <= rho15 <= 1075 (Solar / Gas Oil)
-            alpha15 = (186.9696 / (rho15 * rho15)) + (0.48618 / rho15);
-        }
-
-        const exponent = alpha15 * deltaT * (1.0 + 0.8 * alpha15 * deltaT);
-        const newRho15 = rhoObs * Math.exp(exponent);
-
-        if (!isFinite(newRho15) || newRho15 <= 0.0001) break;
-
-        if (Math.abs(newRho15 - rho15) < 0.00001) {
-            rho15 = newRho15;
-            break;
-        }
-        rho15 = newRho15;
-    }
+    const slope = hitungSlope53BJS(rhoObs);
+    const rho15 = rhoObs + (slope * deltaT);
 
     return isKgM3 ? rho15 : (rho15 / 1000.0);
 }
