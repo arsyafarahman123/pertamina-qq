@@ -267,10 +267,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function triggerDownload(blobOrUrl, filename) {
+    const link = document.createElement('a');
+    link.download = filename;
+    if (typeof blobOrUrl === 'string') {
+        link.href = blobOrUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        const url = URL.createObjectURL(blobOrUrl);
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }, 2000);
+    }
+}
+
 function unduhGambar(elementId, mimeType, filename) {
     const el = document.getElementById(elementId);
     if (!el) {
-        alert('Elemen slide tidak ditemukan');
+        alert('Elemen slide tidak ditemukan: ' + elementId);
         return;
     }
 
@@ -291,7 +311,7 @@ function unduhGambar(elementId, mimeType, filename) {
         return html2canvas(el, {
             scale: 2,
             useCORS: true,
-            allowTaint: true,
+            allowTaint: false,
             backgroundColor: '#ffffff',
             windowWidth: 1280,
             scrollX: 0,
@@ -302,14 +322,21 @@ function unduhGambar(elementId, mimeType, filename) {
             logging: false
         });
     }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = filename;
-        link.href = canvas.toDataURL(mimeType, 0.95);
-        link.click();
+        if (canvas.toBlob) {
+            canvas.toBlob(function(blob) {
+                if (blob) {
+                    triggerDownload(blob, filename);
+                } else {
+                    triggerDownload(canvas.toDataURL(mimeType, 0.95), filename);
+                }
+            }, mimeType, 0.95);
+        } else {
+            triggerDownload(canvas.toDataURL(mimeType, 0.95), filename);
+        }
         document.body.style.cursor = origCursor;
     }).catch(err => {
         console.error(err);
-        alert('Gagal mengunduh gambar: ' + err.message);
+        alert('Gagal mengunduh gambar slide: ' + err.message);
         document.body.style.cursor = origCursor;
     });
 }

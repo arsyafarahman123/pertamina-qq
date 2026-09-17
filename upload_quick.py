@@ -13,6 +13,7 @@ FTP_PASS = '21t0qsE3M6Oxork'
 files_to_upload = [
     'app/Services/DensityCorrectionService.php',
     'app/Services/FuelMaosService.php',
+    'resources/views/retain-sampel/index.blade.php',
     'resources/views/retain-sampel/form.blade.php',
     'resources/views/retain-sampel/_tutorial-modal.blade.php',
     'resources/views/retain-sampel/_slide-laporan.blade.php',

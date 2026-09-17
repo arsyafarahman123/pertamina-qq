@@ -140,13 +140,17 @@
             </div>
         </div>
 
-        @include('retain-sampel._slide-laporan', [
-            'tanggal' => $tanggal,
-            'sesiJam' => '06:00',
-            'rekap' => $rekap,
-            'fotoSesi' => $fotoSesi,
-            'produkList' => $produkList,
-        ])
+        <div class="w-full overflow-x-auto pb-4">
+            <div class="min-w-[1060px] max-w-[1240px] mx-auto">
+                @include('retain-sampel._slide-laporan', [
+                    'tanggal' => $tanggal,
+                    'sesiJam' => '06:00',
+                    'rekap' => $rekap,
+                    'fotoSesi' => $fotoSesi,
+                    'produkList' => $produkList,
+                ])
+            </div>
+        </div>
     </div>
 
     {{-- TAB 2: PUKUL 12.00 WIB --}}
@@ -165,13 +169,17 @@
             </div>
         </div>
 
-        @include('retain-sampel._slide-laporan', [
-            'tanggal' => $tanggal,
-            'sesiJam' => '12:00',
-            'rekap' => $rekap,
-            'fotoSesi' => $fotoSesi,
-            'produkList' => $produkList,
-        ])
+        <div class="w-full overflow-x-auto pb-4">
+            <div class="min-w-[1060px] max-w-[1240px] mx-auto">
+                @include('retain-sampel._slide-laporan', [
+                    'tanggal' => $tanggal,
+                    'sesiJam' => '12:00',
+                    'rekap' => $rekap,
+                    'fotoSesi' => $fotoSesi,
+                    'produkList' => $produkList,
+                ])
+            </div>
+        </div>
     </div>
 
     {{-- TAB 3: PUKUL 18.00 WIB --}}
@@ -190,13 +198,17 @@
             </div>
         </div>
 
-        @include('retain-sampel._slide-laporan', [
-            'tanggal' => $tanggal,
-            'sesiJam' => '18:00',
-            'rekap' => $rekap,
-            'fotoSesi' => $fotoSesi,
-            'produkList' => $produkList,
-        ])
+        <div class="w-full overflow-x-auto pb-4">
+            <div class="min-w-[1060px] max-w-[1240px] mx-auto">
+                @include('retain-sampel._slide-laporan', [
+                    'tanggal' => $tanggal,
+                    'sesiJam' => '18:00',
+                    'rekap' => $rekap,
+                    'fotoSesi' => $fotoSesi,
+                    'produkList' => $produkList,
+                ])
+            </div>
+        </div>
     </div>
 
     {{-- TAB 4: REKAP KESELURUHAN (06.00 - 18.00) --}}
@@ -215,13 +227,17 @@
             </div>
         </div>
 
-        @include('retain-sampel._slide-laporan', [
-            'tanggal' => $tanggal,
-            'sesiJam' => 'rekap-semua',
-            'rekap' => $rekap,
-            'fotoSesi' => $fotoSesi,
-            'produkList' => $produkList,
-        ])
+        <div class="w-full overflow-x-auto pb-4">
+            <div class="min-w-[1060px] max-w-[1240px] mx-auto">
+                @include('retain-sampel._slide-laporan', [
+                    'tanggal' => $tanggal,
+                    'sesiJam' => 'rekap-semua',
+                    'rekap' => $rekap,
+                    'fotoSesi' => $fotoSesi,
+                    'produkList' => $produkList,
+                ])
+            </div>
+        </div>
     </div>
 
     {{-- TAB 5: SEMUA SLIDE TERPISAH BERURUTAN --}}
@@ -242,13 +258,17 @@
                     </div>
                 </div>
 
-                @include('retain-sampel._slide-laporan', [
-                    'tanggal' => $tanggal,
-                    'sesiJam' => $jam,
-                    'rekap' => $rekap,
-                    'fotoSesi' => $fotoSesi,
-                    'produkList' => $produkList,
-                ])
+                <div class="w-full overflow-x-auto pb-4">
+                    <div class="min-w-[1060px] max-w-[1240px] mx-auto">
+                        @include('retain-sampel._slide-laporan', [
+                            'tanggal' => $tanggal,
+                            'sesiJam' => $jam,
+                            'rekap' => $rekap,
+                            'fotoSesi' => $fotoSesi,
+                            'produkList' => $produkList,
+                        ])
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>
@@ -258,45 +278,30 @@
 {{-- =========================================================================
      BAGIAN EDIT & INPUT DATA CEPAT (INLINE EDITOR PER SESI)
      ========================================================================= --}}
-<div class="mt-10 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card">
-    <div class="bg-[#0f3b66] px-6 py-4 text-white flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-white">
-                <i data-lucide="edit-3" class="h-4 w-4"></i>
-            </span>
-            <div>
-                <h3 class="text-sm sm:text-base font-bold text-white">Input & Edit Data Pengujian (06.00, 12.00, 18.00)</h3>
-                <p class="text-[11px] text-white/70">Density'15 dihitung otomatis oleh sistem ASTM Table 53 saat data disimpan.</p>
-            </div>
-        </div>
+<div class="mt-8 border-t border-slate-200 pt-6">
+    <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="edit-3" class="h-4 w-4 text-[#0f3861]"></i>
+            Input / Edit Cepat Data Retain Sampel Hari Ini ({{ $tanggalIndo }})
+        </h3>
+        <span class="text-xs text-slate-400 font-semibold">Tersimpan otomatis ke database</span>
     </div>
 
     @foreach ($jamKeys as $jam)
-        @php
-            $jamMeta = [
-                '06:00' => ['title' => 'Pukul 06.00 WIB — Data Awal Penyaluran', 'bg' => 'bg-blue-50', 'text' => 'text-blue-900', 'border' => 'border-blue-200'],
-                '12:00' => ['title' => 'Pukul 12.00 WIB — Retain / Pergantian Sampel', 'bg' => 'bg-amber-50', 'text' => 'text-amber-900', 'border' => 'border-amber-200'],
-                '18:00' => ['title' => 'Pukul 18.00 WIB — Retain / Pergantian Sampel', 'bg' => 'bg-indigo-50', 'text' => 'text-indigo-900', 'border' => 'border-indigo-200'],
-            ];
-            $meta = $jamMeta[$jam];
-            $entriesSesi = $rekap[$jam] ?? [];
-            $entriesSesiList = $entriesByJam[$jam] ?? collect();
-        @endphp
-
-        <div class="border-t-2 {{ $meta['border'] }}">
-            <div class="{{ $meta['bg'] }} px-6 py-3 flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider {{ $meta['text'] }}">{{ $meta['title'] }}</span>
-                <span class="text-xs font-bold {{ $meta['text'] }} bg-white/70 px-2.5 py-0.5 rounded-full border border-current/10">
-                    {{ $entriesSesiList->count() }} Data Sampel
+        <div class="mb-6 rounded-2xl bg-white p-5 border border-slate-200 shadow-sm">
+            <div class="mb-3 flex items-center justify-between border-b pb-2">
+                <span class="text-xs font-bold text-[#0f3861] uppercase tracking-wide">
+                    Sesi Pukul {{ str_replace(':', '.', $jam) }} WIB
                 </span>
+                <span class="text-[11px] text-slate-400 font-bold">Lengkap 8 Produk Penyaluran</span>
             </div>
-            <div class="overflow-x-auto p-2">
+
+            <div class="overflow-x-auto">
                 @include('retain-sampel._tabel-pivot-editable', [
-                    'produkList' => $produkList,
-                    'entries' => $entriesSesi,
-                    'entriesList' => $entriesSesiList,
                     'tanggal' => $tanggal,
                     'jamLabel' => $jam,
+                    'entries' => $rekap[$jam] ?? [],
+                    'produkList' => $produkList
                 ])
             </div>
         </div>
@@ -304,6 +309,7 @@
 </div>
 @endif
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 async function ensureHtml2Canvas() {
     if (window.html2canvas) return true;
@@ -316,10 +322,30 @@ async function ensureHtml2Canvas() {
     });
 }
 
+function triggerDownload(blobOrUrl, filename) {
+    const link = document.createElement('a');
+    link.download = filename;
+    if (typeof blobOrUrl === 'string') {
+        link.href = blobOrUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        const url = URL.createObjectURL(blobOrUrl);
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }, 2000);
+    }
+}
+
 async function unduhGambar(elementId, mimeType, filename) {
     const el = document.getElementById(elementId);
     if (!el) {
-        alert('Elemen tidak ditemukan');
+        alert('Elemen slide tidak ditemukan: ' + elementId);
         return;
     }
 
@@ -329,24 +355,45 @@ async function unduhGambar(elementId, mimeType, filename) {
     try {
         await ensureHtml2Canvas();
 
+        // Tunggu gambar di dalam slide selesai dimuat
+        const images = el.querySelectorAll('img');
+        const imagePromises = Array.from(images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        });
+        await Promise.all(imagePromises);
+
         const canvas = await html2canvas(el, {
             scale: 2,
             useCORS: true,
-            allowTaint: true,
+            allowTaint: false,
             backgroundColor: '#ffffff',
+            windowWidth: 1280,
+            scrollX: 0,
+            scrollY: 0,
             ignoreElements: function(element) {
                 return element.classList.contains('no-print');
             },
             logging: false
         });
 
-        const link = document.createElement('a');
-        link.download = filename;
-        link.href = canvas.toDataURL(mimeType, 0.95);
-        link.click();
+        if (canvas.toBlob) {
+            canvas.toBlob(function(blob) {
+                if (blob) {
+                    triggerDownload(blob, filename);
+                } else {
+                    triggerDownload(canvas.toDataURL(mimeType, 0.95), filename);
+                }
+            }, mimeType, 0.95);
+        } else {
+            triggerDownload(canvas.toDataURL(mimeType, 0.95), filename);
+        }
     } catch (err) {
         console.error(err);
-        alert('Gagal mengambil tangkapan layar: ' + err.message);
+        alert('Gagal mengambil tangkapan layar slide: ' + err.message);
     } finally {
         document.body.style.cursor = origCursor;
     }
