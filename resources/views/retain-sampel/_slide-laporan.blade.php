@@ -234,9 +234,9 @@
                         {{-- Gallery Foto 06.00: Retain + Visual 3 MT + Visual Tangki --}}
                         <div class="grid grid-cols-3 gap-2 mb-3">
                             <div class="rounded-xl border border-slate-200 bg-white p-1 text-center shadow-inner">
-                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-100 border border-slate-200/60">
+                                <div class="flex h-32 sm:h-36 items-center justify-center overflow-hidden rounded-lg bg-slate-50 border border-slate-200/80 p-1">
                                     @if ($foto06Retain)
-                                        <img src="{{ $foto06Retain->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 06.00" class="h-full w-full object-cover object-center">
+                                        <img src="{{ $foto06Retain->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 06.00" class="max-h-full max-w-full object-contain rounded">
                                     @else
                                         <span class="text-[9px] text-slate-400 font-bold">Botol Retain</span>
                                     @endif
@@ -245,9 +245,9 @@
                             </div>
 
                             <div class="rounded-xl border border-slate-200 bg-white p-1 text-center shadow-inner">
-                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-100 border border-slate-200/60">
+                                <div class="flex h-32 sm:h-36 items-center justify-center overflow-hidden rounded-lg bg-slate-50 border border-slate-200/80 p-1">
                                     @if ($foto06VisualMt)
-                                        <img src="{{ $foto06VisualMt->url() }}" loading="eager" crossorigin="anonymous" alt="3 MT 06.00" class="h-full w-full object-cover object-center">
+                                        <img src="{{ $foto06VisualMt->url() }}" loading="eager" crossorigin="anonymous" alt="3 MT 06.00" class="max-h-full max-w-full object-contain rounded">
                                     @else
                                         <span class="text-[9px] text-slate-400 font-bold">Visual 3 MT</span>
                                     @endif
@@ -256,9 +256,9 @@
                             </div>
 
                             <div class="rounded-xl border border-slate-200 bg-white p-1 text-center shadow-inner">
-                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-100 border border-slate-200/60">
+                                <div class="flex h-32 sm:h-36 items-center justify-center overflow-hidden rounded-lg bg-slate-50 border border-slate-200/80 p-1">
                                     @if ($foto06VisualTangki)
-                                        <img src="{{ $foto06VisualTangki->url() }}" loading="eager" crossorigin="anonymous" alt="Tangki 06.00" class="h-full w-full object-cover object-center">
+                                        <img src="{{ $foto06VisualTangki->url() }}" loading="eager" crossorigin="anonymous" alt="Tangki 06.00" class="max-h-full max-w-full object-contain rounded">
                                     @else
                                         <span class="text-[9px] text-slate-400 font-bold">Tangki Timbun</span>
                                     @endif
@@ -330,9 +330,9 @@
 
                         {{-- Foto Retain 12.00 --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-2 text-center shadow-inner mb-3">
-                            <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                            <div class="flex h-44 sm:h-48 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/80 p-1.5">
                                 @if ($foto12Retank)
-                                    <img src="{{ $foto12Retank->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 12.00" class="h-full w-full object-cover object-center">
+                                    <img src="{{ $foto12Retank->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 12.00" class="max-h-full max-w-full object-contain rounded-lg">
                                 @else
                                     <div class="p-3 text-center">
                                         <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -390,9 +390,9 @@
 
                         {{-- Foto Retain 18.00 --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-2 text-center shadow-inner mb-3">
-                            <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                            <div class="flex h-44 sm:h-48 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/80 p-1.5">
                                 @if ($foto18Retank)
-                                    <img src="{{ $foto18Retank->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 18.00" class="h-full w-full object-cover object-center">
+                                    <img src="{{ $foto18Retank->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 18.00" class="max-h-full max-w-full object-contain rounded-lg">
                                 @else
                                     <div class="p-3 text-center">
                                         <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -586,7 +586,7 @@
 
                     {{-- Foto Sampel Retain --}}
                     <div class="group relative mb-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                        <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                        <div class="flex h-64 sm:h-72 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/80 p-2">
                             @if ($fotoKiri && $fotoKiri->isPdf())
                                 <a href="{{ $fotoKiri->url() }}" target="_blank" class="flex flex-col items-center gap-2 text-brand-red">
                                     <svg class="h-10 w-10 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -596,7 +596,7 @@
                                     <span class="text-xs font-bold text-red-600">Dokumen PDF Sampel Retain</span>
                                 </a>
                             @elseif ($fotoKiri)
-                                <img src="{{ $fotoKiri->url() }}" loading="eager" crossorigin="anonymous" alt="Sampel Retain" class="h-full w-full object-cover object-center">
+                                <img src="{{ $fotoKiri->url() }}" loading="eager" crossorigin="anonymous" alt="Sampel Retain" class="max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-sm">
                             @else
                                 <div class="text-center p-4">
                                     <svg class="mx-auto h-8 w-8 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -773,9 +773,9 @@
                         <div class="mb-3 grid grid-cols-2 gap-3">
                             {{-- Foto 1: Visual Sales Penyaluran 3 MT --}}
                             <div class="rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                                <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                                <div class="flex h-64 sm:h-72 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/80 p-2">
                                     @if ($foto06VisualMt)
-                                        <img src="{{ $foto06VisualMt->url() }}" loading="eager" crossorigin="anonymous" alt="Visual 3 MT Pertama" class="h-full w-full object-cover object-center">
+                                        <img src="{{ $foto06VisualMt->url() }}" loading="eager" crossorigin="anonymous" alt="Visual 3 MT Pertama" class="max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-sm">
                                     @else
                                         <div class="text-center p-3">
                                             <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -806,9 +806,9 @@
 
                             {{-- Foto 2: Visual Tangki Timbun --}}
                             <div class="rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                                <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                                <div class="flex h-64 sm:h-72 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/80 p-2">
                                     @if ($foto06VisualTangki)
-                                        <img src="{{ $foto06VisualTangki->url() }}" loading="eager" crossorigin="anonymous" alt="Visual Tangki Timbun" class="h-full w-full object-cover object-center">
+                                        <img src="{{ $foto06VisualTangki->url() }}" loading="eager" crossorigin="anonymous" alt="Visual Tangki Timbun" class="max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-sm">
                                     @else
                                         <div class="text-center p-3">
                                             <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1084,7 +1084,7 @@
 
                         {{-- Foto Retain --}}
                         <div class="group relative mb-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                            <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
+                            <div class="flex h-64 sm:h-72 items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/80 p-2">
                                 @if ($fotoSesiKanan && $fotoSesiKanan->isPdf())
                                     <a href="{{ $fotoSesiKanan->url() }}" target="_blank" class="flex flex-col items-center gap-2 text-brand-red">
                                         <svg class="h-10 w-10 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1094,7 +1094,7 @@
                                         <span class="text-xs font-bold text-red-600">Dokumen PDF Retain</span>
                                     </a>
                                 @elseif ($fotoSesiKanan)
-                                    <img src="{{ $fotoSesiKanan->url() }}" loading="eager" crossorigin="anonymous" alt="Foto Retain {{ $sesiJam }}" class="h-full w-full object-cover object-center">
+                                    <img src="{{ $fotoSesiKanan->url() }}" loading="eager" crossorigin="anonymous" alt="Foto Retain {{ $sesiJam }}" class="max-h-full max-w-full w-auto h-auto object-contain rounded-lg shadow-sm">
                                 @else
                                     <div class="text-center p-4">
                                         <svg class="mx-auto h-8 w-8 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

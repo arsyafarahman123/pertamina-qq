@@ -63,7 +63,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 py-4 sm:py-6 px-2 sm:px-4 md:px-6 text-slate-800" x-data="{ modeTampil: 'rekap-semua' }" x-effect="if (window.lucide) $nextTick(() => lucide.createIcons())">
+<body class="bg-slate-900 py-4 sm:py-6 px-2 sm:px-4 md:px-6 text-slate-800" x-data="{ modeTampil: '{{ request('sesi', '06:00') }}' }" x-effect="if (window.lucide) $nextTick(() => lucide.createIcons())">
 
 {{-- NAVIGATION & ACTIONS TOP BAR (no-print) --}}
 <div class="no-print mx-auto mb-6 flex max-w-7xl flex-wrap items-center justify-between gap-3 bg-slate-800/95 backdrop-blur p-4 rounded-2xl border border-slate-700 shadow-xl">
