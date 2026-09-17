@@ -160,7 +160,7 @@
     $tangkiListDefault = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 @endphp
 
-<div id="{{ $slugSesi }}" class="relative overflow-hidden rounded-3xl bg-white p-6 sm:p-8 shadow-xl border border-slate-200 text-slate-800 transition-all font-sans">
+<div id="{{ $slugSesi }}" class="slide-container relative overflow-hidden rounded-3xl bg-white p-6 sm:p-8 shadow-xl border border-slate-200 text-slate-800 transition-all font-sans">
     
     {{-- Pertamina Official Bottom-Left Curved Swoosh Accent --}}
     <div class="pointer-events-none absolute -bottom-5 -left-5 z-0 h-28 w-48 opacity-90">
@@ -234,9 +234,9 @@
                         {{-- Gallery Foto 06.00: Retain + Visual 3 MT + Visual Tangki --}}
                         <div class="grid grid-cols-3 gap-2 mb-3">
                             <div class="rounded-xl border border-slate-200 bg-white p-1 text-center shadow-inner">
-                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-50">
+                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-100 border border-slate-200/60">
                                     @if ($foto06Retain)
-                                        <img src="{{ $foto06Retain->url() }}" crossorigin="anonymous" alt="Retain 06.00" class="h-full w-full object-contain">
+                                        <img src="{{ $foto06Retain->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 06.00" class="h-full w-full object-cover object-center">
                                     @else
                                         <span class="text-[9px] text-slate-400 font-bold">Botol Retain</span>
                                     @endif
@@ -245,9 +245,9 @@
                             </div>
 
                             <div class="rounded-xl border border-slate-200 bg-white p-1 text-center shadow-inner">
-                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-50">
+                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-100 border border-slate-200/60">
                                     @if ($foto06VisualMt)
-                                        <img src="{{ $foto06VisualMt->url() }}" crossorigin="anonymous" alt="3 MT 06.00" class="h-full w-full object-contain">
+                                        <img src="{{ $foto06VisualMt->url() }}" loading="eager" crossorigin="anonymous" alt="3 MT 06.00" class="h-full w-full object-cover object-center">
                                     @else
                                         <span class="text-[9px] text-slate-400 font-bold">Visual 3 MT</span>
                                     @endif
@@ -256,9 +256,9 @@
                             </div>
 
                             <div class="rounded-xl border border-slate-200 bg-white p-1 text-center shadow-inner">
-                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-50">
+                                <div class="flex h-24 sm:h-28 items-center justify-center overflow-hidden rounded-lg bg-slate-100 border border-slate-200/60">
                                     @if ($foto06VisualTangki)
-                                        <img src="{{ $foto06VisualTangki->url() }}" crossorigin="anonymous" alt="Tangki 06.00" class="h-full w-full object-contain">
+                                        <img src="{{ $foto06VisualTangki->url() }}" loading="eager" crossorigin="anonymous" alt="Tangki 06.00" class="h-full w-full object-cover object-center">
                                     @else
                                         <span class="text-[9px] text-slate-400 font-bold">Tangki Timbun</span>
                                     @endif
@@ -330,9 +330,9 @@
 
                         {{-- Foto Retain 12.00 --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-2 text-center shadow-inner mb-3">
-                            <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+                            <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
                                 @if ($foto12Retank)
-                                    <img src="{{ $foto12Retank->url() }}" crossorigin="anonymous" alt="Retain 12.00" class="h-full w-full object-contain">
+                                    <img src="{{ $foto12Retank->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 12.00" class="h-full w-full object-cover object-center">
                                 @else
                                     <div class="p-3 text-center">
                                         <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -390,9 +390,9 @@
 
                         {{-- Foto Retain 18.00 --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-2 text-center shadow-inner mb-3">
-                            <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+                            <div class="flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
                                 @if ($foto18Retank)
-                                    <img src="{{ $foto18Retank->url() }}" crossorigin="anonymous" alt="Retain 18.00" class="h-full w-full object-contain">
+                                    <img src="{{ $foto18Retank->url() }}" loading="eager" crossorigin="anonymous" alt="Retain 18.00" class="h-full w-full object-cover object-center">
                                 @else
                                     <div class="p-3 text-center">
                                         <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -562,7 +562,7 @@
             {{-- ========================================================
                  KOTAK KIRI: SAMPEL RETAIN (JAM 06.00 WIB — STAY TETAP)
                  ======================================================== --}}
-            <div class="flex flex-col justify-between rounded-3xl bg-[#f0f4f8]/80 p-5 sm:p-6 border border-slate-200/90 shadow-sm">
+            <div class="flex flex-col justify-between rounded-3xl bg-[#f0f4f8]/90 p-5 sm:p-6 border border-slate-200/90 shadow-sm">
                 <div>
                     {{-- Header Pill Kiri + Tombol Edit Cepat --}}
                     <div class="mb-4 flex items-center justify-between">
@@ -585,8 +585,8 @@
                     </div>
 
                     {{-- Foto Sampel Retain --}}
-                    <div class="group relative mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                        <div class="flex h-56 sm:h-64 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+                    <div class="group relative mb-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
+                        <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
                             @if ($fotoKiri && $fotoKiri->isPdf())
                                 <a href="{{ $fotoKiri->url() }}" target="_blank" class="flex flex-col items-center gap-2 text-brand-red">
                                     <svg class="h-10 w-10 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -596,7 +596,7 @@
                                     <span class="text-xs font-bold text-red-600">Dokumen PDF Sampel Retain</span>
                                 </a>
                             @elseif ($fotoKiri)
-                                <img src="{{ $fotoKiri->url() }}" crossorigin="anonymous" alt="Sampel Retain" class="h-full w-full object-contain">
+                                <img src="{{ $fotoKiri->url() }}" loading="eager" crossorigin="anonymous" alt="Sampel Retain" class="h-full w-full object-cover object-center">
                             @else
                                 <div class="text-center p-4">
                                     <svg class="mx-auto h-8 w-8 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -632,7 +632,7 @@
 
                     {{-- Teks Keterangan --}}
                     <div class="mb-3 space-y-0.5 text-xs sm:text-sm font-semibold text-slate-800">
-                        <p>Update hari ini <span class="font-bold">{{ $tanggalIndo }}</span></p>
+                        <p>Update hari ini <span class="font-bold text-[#0f3861]">{{ $tanggalIndo }}</span></p>
                         <p>Pukul 06.00 WIB adalah sebagai berikut :</p>
                     </div>
                 </div>
@@ -676,8 +676,8 @@
                     </div>
                 </div>
 
-                {{-- Tabel Data Sampel Retain Jam 06.00 --}}
-                <div class="overflow-x-auto rounded-xl border border-slate-300 bg-white shadow-sm">
+                {{-- Tabel Data Sampel Retain Jam 06.00 (5 Baris Standar) --}}
+                <div class="overflow-x-auto rounded-xl border border-slate-300 bg-white shadow-sm mt-auto">
                     @if (!empty($produk06Aktif))
                         <table class="w-full text-center text-xs border-collapse">
                             <thead>
@@ -718,7 +718,7 @@
                                     <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700">Temperatur</td>
                                     @foreach ($produk06Aktif as $p)
                                         @php $e = $produk06Entries[$p] ?? null; @endphp
-                                        <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-medium">{{ $e ? $formatSuhu($e->temperatur) : '-' }}</td>
+                                        <td class="border-r last:border-r-0 border-slate-200 px-2.5 py-1.5 font-medium">{{ $e ? $formatSuhu($e->temperatur) : '-' }}°C</td>
                                     @endforeach
                                 </tr>
                                 {{-- Tangki Timbun --}}
@@ -742,7 +742,7 @@
             {{-- ========================================================
                  KOTAK KANAN: KONDISIONAL (JAM 06.00 vs 12.00 vs 18.00)
                  ======================================================== --}}
-            <div class="flex flex-col justify-between rounded-3xl bg-[#f0f4f8]/80 p-5 sm:p-6 border border-slate-200/90 shadow-sm">
+            <div class="flex flex-col justify-between rounded-3xl bg-[#f0f4f8]/90 p-5 sm:p-6 border border-slate-200/90 shadow-sm">
                 @if ($sesiJam === '06:00')
                     {{-- ----------------------------------------------------
                          KOTAK KANAN JAM 06.00: 3 MT PERTAMA vs TANGKI TIMBUN
@@ -769,13 +769,13 @@
                             @endif
                         </div>
 
-                        {{-- Dua Foto Bersebelahan --}}
-                        <div class="mb-4 grid grid-cols-2 gap-3.5">
+                        {{-- Dua Foto Bersebelahan (Height Presisi & Sama dengan Kiri) --}}
+                        <div class="mb-3 grid grid-cols-2 gap-3">
                             {{-- Foto 1: Visual Sales Penyaluran 3 MT --}}
                             <div class="rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                                <div class="flex h-56 sm:h-64 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+                                <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
                                     @if ($foto06VisualMt)
-                                        <img src="{{ $foto06VisualMt->url() }}" crossorigin="anonymous" alt="Visual 3 MT Pertama" class="h-full w-full object-contain">
+                                        <img src="{{ $foto06VisualMt->url() }}" loading="eager" crossorigin="anonymous" alt="Visual 3 MT Pertama" class="h-full w-full object-cover object-center">
                                     @else
                                         <div class="text-center p-3">
                                             <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -806,9 +806,9 @@
 
                             {{-- Foto 2: Visual Tangki Timbun --}}
                             <div class="rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                                <div class="flex h-56 sm:h-64 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+                                <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
                                     @if ($foto06VisualTangki)
-                                        <img src="{{ $foto06VisualTangki->url() }}" crossorigin="anonymous" alt="Visual Tangki Timbun" class="h-full w-full object-contain">
+                                        <img src="{{ $foto06VisualTangki->url() }}" loading="eager" crossorigin="anonymous" alt="Visual Tangki Timbun" class="h-full w-full object-cover object-center">
                                     @else
                                         <div class="text-center p-3">
                                             <svg class="mx-auto h-7 w-7 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -839,6 +839,12 @@
                                     </form>
                                 </div>
                             </div>
+                        </div>
+
+                        {{-- Teks Keterangan Kanan (Matching Left Side!) --}}
+                        <div class="mb-3 space-y-0.5 text-xs sm:text-sm font-semibold text-slate-800">
+                            <p>Visual Penyaluran <span class="font-bold text-[#0f3861]">{{ $produk3MtUtama }} 3 MT</span> vs <span class="font-bold text-[#0f3861]">Tangki Timbun</span></p>
+                            <p>Pukul 06.00 WIB adalah sebagai berikut :</p>
                         </div>
                     </div>
 
@@ -1000,35 +1006,54 @@
                         @endforeach
                     </div>
 
-                    {{-- Keterangan Nopol 3 MT & Tangki Timbun (OTOMATIS DARI DATABASE & TAMPIL ELEGAN) --}}
-                    <div class="mt-2 grid grid-cols-2 gap-4 rounded-2xl bg-white p-4 border border-slate-200/90 shadow-sm text-xs sm:text-sm">
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <p class="font-bold text-slate-800">Visual Sales Penyaluran {{ $produk3MtUtama }} 3 MT :</p>
-                            </div>
-                            @if (!empty($nopols3Mt))
-                                <ol class="mt-1.5 space-y-1 font-bold text-slate-800">
-                                    @foreach ($nopols3Mt as $idx => $nopol)
-                                        <li class="flex items-center gap-1.5">
-                                            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-[#0f3861] text-[11px] font-black">
-                                                {{ $idx + 1 }}
+                    {{-- Tabel Visual 3 MT & Tangki Timbun (5 Baris Sempurna & Simetris dengan Kotak Kiri) --}}
+                    <div class="overflow-x-auto rounded-xl border border-slate-300 bg-white shadow-sm mt-auto">
+                        <table class="w-full text-center text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-[#6c8296] text-white">
+                                    <th class="border-r border-slate-400 px-2.5 py-2 text-left font-bold text-[11px] uppercase tracking-wider">Parameter</th>
+                                    <th class="border-r border-slate-400 px-2.5 py-2 font-bold text-[11px] uppercase tracking-wider">Visual 3 MT Pertama ({{ $produk3MtUtama }})</th>
+                                    <th class="px-2.5 py-2 font-bold text-[11px] uppercase tracking-wider">Visual Tangki Timbun</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-slate-800">
+                                <tr class="bg-slate-50/70 font-semibold">
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700">MT Pertama (1)</td>
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 font-bold text-[#0f3861]">{{ $nopols3Mt[0] ?? '-' }}</td>
+                                    <td rowspan="3" class="px-2.5 py-1.5 align-middle bg-blue-50/20">
+                                        <div class="flex flex-col items-center justify-center py-1">
+                                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Tangki Timbun</span>
+                                            <span class="inline-flex items-center justify-center rounded-xl bg-blue-100/90 border border-blue-300 px-3.5 py-1 text-sm sm:text-base font-black text-[#0f3b66] shadow-sm">
+                                                {{ $tangki3MtFormatted }}
                                             </span>
-                                            <span>{{ $nopol }}</span>
-                                        </li>
-                                    @endforeach
-                                </ol>
-                            @else
-                                <p class="mt-1 text-xs text-slate-400 italic">Belum ada input nopol MT</p>
-                            @endif
-                        </div>
-                        <div class="flex flex-col justify-start">
-                            <p class="font-bold text-slate-800">Visual Tangki Timbun :</p>
-                            <div class="mt-1 flex items-center gap-2">
-                                <span class="inline-flex items-center justify-center rounded-xl bg-blue-50 border border-blue-200 px-3 py-1 text-base sm:text-lg font-black text-[#0f3b66]">
-                                    {{ $tangki3MtFormatted }}
-                                </span>
-                            </div>
-                        </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700 bg-slate-50/70">MT Kedua (2)</td>
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 font-bold text-[#0f3861]">{{ $nopols3Mt[1] ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700 bg-slate-50/70">MT Ketiga (3)</td>
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 font-bold text-[#0f3861]">{{ $nopols3Mt[2] ?? '-' }}</td>
+                                </tr>
+                                <tr class="bg-blue-50/40 font-semibold">
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-[#0f3b66]">Kesesuaian Visual</td>
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 font-bold text-emerald-700">
+                                        <span class="inline-flex items-center gap-1 justify-center"><span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span> Jernih & Terang (Pass)</span>
+                                    </td>
+                                    <td class="px-2.5 py-1.5 font-bold text-emerald-700">
+                                        <span class="inline-flex items-center gap-1 justify-center"><span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span> Jernih & Terang (Pass)</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg-slate-50/70">
+                                    <td class="border-r border-slate-200 px-2.5 py-1.5 text-left font-bold text-slate-700">Status Penyaluran</td>
+                                    <td colspan="2" class="px-2.5 py-1.5 font-bold text-slate-700 text-center">
+                                        {{ count(array_filter($nopols3Mt)) > 0 ? count(array_filter($nopols3Mt)) . ' Unit MT Terverifikasi Siap Salur' : 'Menunggu Input Penyaluran MT' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 @else
@@ -1058,8 +1083,8 @@
                         </div>
 
                         {{-- Foto Retain --}}
-                        <div class="group relative mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
-                            <div class="flex h-56 sm:h-64 items-center justify-center overflow-hidden rounded-xl bg-slate-50">
+                        <div class="group relative mb-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-inner">
+                            <div class="flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 border border-slate-200/60">
                                 @if ($fotoSesiKanan && $fotoSesiKanan->isPdf())
                                     <a href="{{ $fotoSesiKanan->url() }}" target="_blank" class="flex flex-col items-center gap-2 text-brand-red">
                                         <svg class="h-10 w-10 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1069,7 +1094,7 @@
                                         <span class="text-xs font-bold text-red-600">Dokumen PDF Retain</span>
                                     </a>
                                 @elseif ($fotoSesiKanan)
-                                    <img src="{{ $fotoSesiKanan->url() }}" crossorigin="anonymous" alt="Foto Retain {{ $sesiJam }}" class="h-full w-full object-contain">
+                                    <img src="{{ $fotoSesiKanan->url() }}" loading="eager" crossorigin="anonymous" alt="Foto Retain {{ $sesiJam }}" class="h-full w-full object-cover object-center">
                                 @else
                                     <div class="text-center p-4">
                                         <svg class="mx-auto h-8 w-8 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
