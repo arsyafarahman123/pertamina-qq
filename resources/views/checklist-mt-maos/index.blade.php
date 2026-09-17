@@ -3,145 +3,165 @@
 
 @section('content')
 
-<!-- ===== Header aksi ===== -->
-<div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+<!-- ===== Header Aksi ===== -->
+<div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
     <div>
-        <p class="text-sm text-slate-500">Digitalisasi Form Pemeriksaan Mobil Tangki — Fuel Terminal Maos</p>
+        <p class="text-xs sm:text-sm text-slate-500 font-medium">Digitalisasi Form Pemeriksaan Mobil Tangki — Fuel Terminal Maos</p>
     </div>
-    <div class="flex flex-wrap items-center gap-2">
-        <button id="export-all-btn" onclick="triggerExport()"
-                class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
-            <i data-lucide="sheet" class="h-4 w-4 text-emerald-600"></i> <span id="export-btn-label">Export Excel Semua</span>
-        </button>
-        <button id="export-pdf-all-btn" onclick="triggerPdfExport()"
-                class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
-            <i data-lucide="file-text" class="h-4 w-4 text-[#006CB8]"></i> <span id="export-pdf-btn-label">Export PDF Semua</span>
-        </button>
+    
+    <!-- Tombol Aksi (Responsif HP & Laptop) -->
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+        <div class="grid grid-cols-2 sm:flex sm:items-center gap-2">
+            <button id="export-all-btn" onclick="triggerExport()"
+                    class="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-700 shadow-card transition hover:bg-slate-50 active:scale-[0.98]">
+                <i data-lucide="sheet" class="h-4 w-4 text-emerald-600 shrink-0"></i>
+                <span id="export-btn-label" class="truncate">Export Excel</span>
+            </button>
+            <button id="export-pdf-all-btn" onclick="triggerPdfExport()"
+                    class="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-700 shadow-card transition hover:bg-slate-50 active:scale-[0.98]">
+                <i data-lucide="file-text" class="h-4 w-4 text-[#006CB8] shrink-0"></i>
+                <span id="export-pdf-btn-label" class="truncate">Export PDF</span>
+            </button>
+        </div>
+
         @if (!auth()->user()->isSpbu())
             <a href="{{ route('checklist-mt-maos.create') }}"
-               class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark">
-                <i data-lucide="plus" class="h-4 w-4"></i> Tambah Data Checklist
+               class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-red px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark active:scale-[0.98]">
+                <i data-lucide="plus" class="h-4 w-4 shrink-0"></i>
+                <span>Tambah Data Checklist</span>
             </a>
         @endif
     </div>
 </div>
 
 <!-- ===== Bar Pilihan Export Terpilih (Muncul saat ada checkbox dicentang) ===== -->
-<div id="selection-bar" class="mb-5 hidden items-center justify-between gap-3 rounded-2xl border border-brand-blue/30 bg-gradient-to-r from-brand-blue/10 via-blue-50/80 to-brand-blue/5 p-4 shadow-card">
+<div id="selection-bar" class="mb-5 hidden flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-brand-blue/30 bg-gradient-to-r from-blue-50/90 via-white to-blue-50/80 p-4 shadow-card">
     <div class="flex items-center gap-3">
         <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-blue text-white shadow-sm">
             <i data-lucide="check-square" class="h-5 w-5"></i>
         </div>
         <div>
-            <p class="text-sm font-bold text-slate-800"><span id="selected-count" class="rounded-md bg-brand-blue px-2 py-0.5 text-xs text-white">0</span> Checklist Dipilih</p>
-            <p class="text-xs text-slate-500">Anda dapat mengekspor rekap hanya untuk armada yang Anda centang.</p>
+            <p class="text-sm font-bold text-slate-800">
+                <span id="selected-count" class="rounded-md bg-brand-blue px-2 py-0.5 text-xs text-white">0</span> Checklist Dipilih
+            </p>
+            <p class="text-xs text-slate-500">Mengekspor rekap khusus untuk armada yang Anda centang.</p>
         </div>
     </div>
     <div class="flex flex-wrap items-center gap-2">
-        <button type="button" onclick="exportSelected()" class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-emerald-600/20 transition hover:bg-emerald-700">
-            <i data-lucide="sheet" class="h-4 w-4"></i> Export Terpilih ke Excel
+        <button type="button" onclick="exportSelected()" class="inline-flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700">
+            <i data-lucide="sheet" class="h-4 w-4"></i> Excel
         </button>
-        <button type="button" onclick="exportSelectedPdf()" class="inline-flex items-center gap-1.5 rounded-xl bg-[#006CB8] px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700">
-            <i data-lucide="file-text" class="h-4 w-4"></i> Export Terpilih ke PDF
+        <button type="button" onclick="exportSelectedPdf()" class="inline-flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl bg-[#006CB8] px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-blue-700">
+            <i data-lucide="file-text" class="h-4 w-4"></i> PDF
         </button>
-        <button type="button" onclick="uncheckAll()" class="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 shadow-sm hover:bg-slate-50">
-            Batal Pilih
+        <button type="button" onclick="uncheckAll()" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 shadow-sm hover:bg-slate-50">
+            Batal
         </button>
     </div>
 </div>
 
-<!-- ===== Ringkasan ===== -->
-<div class="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
+<!-- ===== Ringkasan Statistik (Responsif HP: Grid 2-3-5) ===== -->
+<div class="mb-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
     <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'all'])) }}"
-       class="rounded-2xl border transition {{ ($filter ?? 'all') === 'all' ? 'border-brand-blue bg-blue-50/40 ring-2 ring-brand-blue/20' : 'border-slate-200 bg-white hover:border-slate-300' }} p-4 shadow-card">
-        <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total Checklist</p>
-        <p class="mt-1 text-2xl font-extrabold text-slate-800">{{ $stats['total'] }}</p>
+       class="rounded-2xl border transition p-3.5 sm:p-4 shadow-card {{ ($filter ?? 'all') === 'all' ? 'border-brand-blue bg-blue-50/50 ring-2 ring-brand-blue/20' : 'border-slate-200 bg-white hover:border-slate-300' }}">
+        <p class="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Checklist</p>
+        <p class="mt-1 text-xl sm:text-2xl font-black text-slate-800">{{ $stats['total'] }}</p>
     </a>
+    
     <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'today'])) }}"
-       class="rounded-2xl border transition {{ ($filter ?? 'all') === 'today' ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-500/20' : 'border-emerald-200/80 bg-gradient-to-br from-white to-emerald-50/30 hover:border-emerald-300' }} p-4 shadow-card">
+       class="rounded-2xl border transition p-3.5 sm:p-4 shadow-card {{ ($filter ?? 'all') === 'today' ? 'border-emerald-500 bg-emerald-50/60 ring-2 ring-emerald-500/20' : 'border-emerald-200/80 bg-gradient-to-br from-white to-emerald-50/30 hover:border-emerald-300' }}">
         <div class="flex items-center justify-between">
-            <p class="text-[11px] font-bold uppercase tracking-wide text-emerald-700">Diupload Hari Ini</p>
+            <p class="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-700 truncate">Diupload Hari Ini</p>
             @if ($stats['today'] > 0)
                 <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
             @endif
         </div>
-        <p class="mt-1 text-2xl font-extrabold text-emerald-600">{{ $stats['today'] }}</p>
+        <p class="mt-1 text-xl sm:text-2xl font-black text-emerald-600">{{ $stats['today'] }}</p>
     </a>
+
     <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'week'])) }}"
-       class="rounded-2xl border transition {{ ($filter ?? 'all') === 'week' ? 'border-brand-blue bg-blue-50/40 ring-2 ring-brand-blue/20' : 'border-slate-200 bg-white hover:border-slate-300' }} p-4 shadow-card">
-        <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">7 Hari Terakhir</p>
-        <p class="mt-1 text-2xl font-extrabold text-brand-blue">{{ $stats['this_week'] }}</p>
+       class="rounded-2xl border transition p-3.5 sm:p-4 shadow-card {{ ($filter ?? 'all') === 'week' ? 'border-brand-blue bg-blue-50/50 ring-2 ring-brand-blue/20' : 'border-slate-200 bg-white hover:border-slate-300' }}">
+        <p class="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400">7 Hari Terakhir</p>
+        <p class="mt-1 text-xl sm:text-2xl font-black text-brand-blue">{{ $stats['this_week'] }}</p>
     </a>
+
     <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'clean'])) }}"
-       class="rounded-2xl border transition {{ ($filter ?? 'all') === 'clean' ? 'border-emerald-500 bg-emerald-50/40 ring-2 ring-emerald-500/20' : 'border-slate-200 bg-white hover:border-slate-300' }} p-4 shadow-card">
-        <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Sesuai Standar</p>
-        <p class="mt-1 text-2xl font-extrabold text-emerald-600">{{ $stats['clean'] }}</p>
+       class="rounded-2xl border transition p-3.5 sm:p-4 shadow-card {{ ($filter ?? 'all') === 'clean' ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-500/20' : 'border-slate-200 bg-white hover:border-slate-300' }}">
+        <p class="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400">Sesuai Standar</p>
+        <p class="mt-1 text-xl sm:text-2xl font-black text-emerald-600">{{ $stats['clean'] }}</p>
     </a>
+
     <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'flagged'])) }}"
-       class="rounded-2xl border transition {{ ($filter ?? 'all') === 'flagged' ? 'border-rose-500 bg-rose-50/40 ring-2 ring-rose-500/20' : 'border-slate-200 bg-white hover:border-slate-300' }} p-4 shadow-card">
-        <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ada Temuan</p>
-        <p class="mt-1 text-2xl font-extrabold text-brand-red">{{ $stats['flagged'] }}</p>
+       class="col-span-2 sm:col-span-1 rounded-2xl border transition p-3.5 sm:p-4 shadow-card {{ ($filter ?? 'all') === 'flagged' ? 'border-rose-500 bg-rose-50/50 ring-2 ring-rose-500/20' : 'border-slate-200 bg-white hover:border-slate-300' }}">
+        <p class="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400">Ada Temuan</p>
+        <p class="mt-1 text-xl sm:text-2xl font-black text-brand-red">{{ $stats['flagged'] }}</p>
     </a>
 </div>
 
 <!-- ===== Pencarian & Quick Filter Chips ===== -->
-<div class="mb-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-card space-y-3">
-    <form method="GET" class="flex gap-3">
+<div class="mb-5 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-card space-y-3">
+    <form method="GET" class="flex gap-2">
         @if (request('filter') && request('filter') !== 'all')
             <input type="hidden" name="filter" value="{{ request('filter') }}">
         @endif
         <div class="relative flex-1">
             <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-                <i data-lucide="search" class="h-[18px] w-[18px]"></i>
+                <i data-lucide="search" class="h-4 w-4"></i>
             </span>
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nomor polisi atau pemilik / SPBU..."
-                   class="w-full rounded-xl border border-slate-200 bg-slate-50/60 py-2.5 pl-11 pr-3.5 text-sm transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nomor polisi / pemilik / SPBU..."
+                   class="w-full rounded-xl border border-slate-200 bg-slate-50/60 py-2.5 pl-10 pr-3.5 text-xs sm:text-sm transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
         </div>
         <button type="submit"
-                class="inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition hover:bg-brand-blueDark">
+                class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition hover:bg-brand-blueDark">
             <i data-lucide="search" class="h-4 w-4"></i>
+            <span class="hidden sm:inline">Cari</span>
         </button>
     </form>
 
-    <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-100 text-xs">
-        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Filter Cepat:</span>
+    <!-- Filter Cepat (Swipeable Horizontally di HP) -->
+    <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pt-2 border-t border-slate-100 text-xs whitespace-nowrap">
+        <span class="text-[10.5px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1 hidden sm:inline">Filter:</span>
         <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'all'])) }}"
-           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'all' ? 'bg-[#0f3861] text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
+           class="inline-flex shrink-0 items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'all' ? 'bg-[#0f3861] text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
             Semua ({{ $stats['total'] }})
         </a>
         <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'today'])) }}"
-           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'today' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' }}">
-            <span class="h-1.5 w-1.5 rounded-full {{ ($filter ?? 'all') === 'today' ? 'bg-white' : 'bg-emerald-500' }}"></span>
+           class="inline-flex shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'today' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' }}">
+            <span class="h-1.5 w-1.5 rounded-full {{ ($filter ?? 'all') === 'today' ? 'bg-white' : 'bg-emerald-500 animate-pulse' }}"></span>
             Diupload Hari Ini ({{ $stats['today'] }})
         </a>
         <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'week'])) }}"
-           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'week' ? 'bg-[#006CB8] text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
+           class="inline-flex shrink-0 items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'week' ? 'bg-[#006CB8] text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
             7 Hari Terakhir ({{ $stats['this_week'] }})
         </a>
         <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'clean'])) }}"
-           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'clean' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
+           class="inline-flex shrink-0 items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'clean' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
             Sesuai Standar ({{ $stats['clean'] }})
         </a>
         <a href="{{ route('checklist-mt-maos.index', array_merge(request()->except('filter'), ['filter' => 'flagged'])) }}"
-           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'flagged' ? 'bg-brand-red text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
+           class="inline-flex shrink-0 items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition {{ ($filter ?? 'all') === 'flagged' ? 'bg-brand-red text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
             Ada Temuan ({{ $stats['flagged'] }})
         </a>
     </div>
 </div>
 
-<!-- ===== Tabel ===== -->
-<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card">
-    <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-        <p class="text-sm font-semibold text-slate-700">
-            Ditemukan <span class="rounded-md bg-brand-blue/10 px-2 py-0.5 font-bold text-brand-blue">{{ $checklists->count() }}</span> checklist
+<!-- ===== KONTEN DATA CHECKLIST ===== -->
+<div class="rounded-2xl border border-slate-200 bg-white shadow-card overflow-hidden">
+    <!-- Subheader Jumlah Data -->
+    <div class="flex flex-wrap items-center justify-between border-b border-slate-200 px-4 sm:px-5 py-3.5 gap-2 bg-slate-50/50">
+        <p class="text-xs sm:text-sm font-semibold text-slate-700">
+            Ditemukan <span class="rounded-md bg-brand-blue/10 px-2 py-0.5 font-extrabold text-brand-blue">{{ $checklists->count() }}</span> checklist
             @if (($filter ?? 'all') === 'today')
-                <span class="ml-1 text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">• Filter Diupload Hari Ini</span>
+                <span class="ml-1 text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md">• Filter Diupload Hari Ini</span>
             @endif
         </p>
-        <span class="text-xs text-slate-400">Centang baris untuk mengekspor sebagian data</span>
+        <span class="text-[11px] text-slate-400 hidden sm:inline">Centang checklist untuk mengekspor sebagian data</span>
     </div>
 
-    <div class="overflow-x-auto">
+    <!-- ======================================================== -->
+    <!-- 1. TAMPILAN LAPTOP / DESKTOP (Tabel Lebar & Rapi)        -->
+    <!-- ======================================================== -->
+    <div class="hidden md:block overflow-x-auto">
         <table class="w-full min-w-[860px] text-left text-sm">
             <thead class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
                 <tr>
@@ -150,7 +170,7 @@
                                class="h-4 w-4 cursor-pointer rounded border-slate-300 text-brand-blue focus:ring-brand-blue/20">
                     </th>
                     <th class="px-4 py-3.5">Nomor Polisi</th>
-                    <th class="px-4 py-3.5">Pemilik</th>
+                    <th class="px-4 py-3.5">Pemilik / SPBU</th>
                     <th class="px-4 py-3.5">Tgl Periksa &amp; Waktu Upload</th>
                     <th class="px-4 py-3.5">Status</th>
                     <th class="px-4 py-3.5">Diperiksa Oleh</th>
@@ -163,10 +183,10 @@
                         <td class="w-12 px-4 py-4 text-center">
                             <input type="checkbox" value="{{ $c->id }}"
                                    class="row-checkbox h-4 w-4 cursor-pointer rounded border-slate-300 text-brand-blue focus:ring-brand-blue/20"
-                                   onchange="updateSelection()">
+                                   onchange="handleCheckboxChange(this)">
                         </td>
                         <td class="px-4 py-4">
-                            <span class="rounded-lg bg-brand-dark px-2.5 py-1 font-mono text-xs font-extrabold tracking-wide text-white">{{ $c->nomor_polisi }}</span>
+                            <span class="rounded-lg bg-brand-dark px-2.5 py-1 font-mono text-xs font-extrabold tracking-wide text-white shadow-sm border border-slate-700">{{ $c->nomor_polisi }}</span>
                         </td>
                         <td class="px-4 py-4 font-medium text-slate-700">{{ $c->pemilik ?: '-' }}</td>
                         <td class="px-4 py-4">
@@ -212,7 +232,7 @@
                             @endif
                         </td>
                         <td class="px-4 py-4 text-slate-500">{{ $c->created_by ?: '-' }}</td>
-                        <td class="px-4 py-4">
+                        <td class="px-4 py-4 text-right">
                             <div class="flex items-center justify-end gap-1 opacity-80 transition group-hover:opacity-100">
                                 <a href="{{ route('checklist-mt-maos.show', $c) }}" title="Lihat detail"
                                    class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-brand-blue transition hover:bg-brand-blue/10">
@@ -249,7 +269,7 @@
                             <p class="mt-4 text-sm font-semibold text-slate-600">Belum ada data checklist</p>
                             <p class="mt-1 text-xs text-slate-400">
                                 @if (!auth()->user()->isSpbu())
-                                    Mulai pemeriksaan pertama dengan tombol "Tambah Data Checklist" di atas.
+                                    Mulai pemeriksaan dengan tombol "Tambah Data Checklist" di atas.
                                 @else
                                     Hasil pemeriksaan mobil tangki akan muncul di sini.
                                 @endif
@@ -260,38 +280,181 @@
             </tbody>
         </table>
     </div>
+
+    <!-- ======================================================== -->
+    <!-- 2. TAMPILAN HP / SMARTPHONE (Daftar Card Sentuh Rapi)    -->
+    <!-- ======================================================== -->
+    <div class="block md:hidden divide-y divide-slate-100">
+        @forelse ($checklists as $c)
+            <div id="card-{{ $c->id }}" class="p-4 transition space-y-3 hover:bg-slate-50/80">
+                <!-- Header Card: Checkbox + Plat + Status -->
+                <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <input type="checkbox" value="{{ $c->id }}"
+                               class="row-checkbox h-4 w-4 cursor-pointer rounded border-slate-300 text-brand-blue focus:ring-brand-blue/20"
+                               onchange="handleCheckboxChange(this)">
+                        <span class="rounded-lg bg-brand-dark px-2.5 py-1 font-mono text-xs font-extrabold tracking-wide text-white border border-slate-700 shadow-sm">
+                            {{ $c->nomor_polisi }}
+                        </span>
+                    </div>
+
+                    <div>
+                        @if ($c->isFlagged())
+                            <span class="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wide text-brand-red ring-1 ring-inset ring-rose-200">
+                                <i data-lucide="triangle-alert" class="h-3 w-3"></i> {{ $c->flagCount() }} Temuan
+                            </span>
+                        @else
+                            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-inset ring-emerald-200">
+                                <i data-lucide="circle-check" class="h-3 w-3"></i> Sesuai
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Info Pemilik & Tanggal -->
+                <div class="space-y-1.5 pl-6 text-xs">
+                    <div class="font-bold text-slate-800 text-[13px] flex items-center gap-1.5">
+                        <i data-lucide="building-2" class="h-3.5 w-3.5 text-slate-400 shrink-0"></i>
+                        <span>{{ $c->pemilik ?: 'Pemilik Tidak Disebutkan' }}</span>
+                    </div>
+
+                    <div class="text-slate-500 flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <span class="flex items-center gap-1 font-medium">
+                            <i data-lucide="calendar" class="h-3.5 w-3.5 text-[#006CB8]"></i>
+                            {{ $c->tanggal_periksa->translatedFormat('d M Y') }}
+                        </span>
+
+                        @if ($c->created_at && $c->created_at->isToday())
+                            <span class="inline-flex items-center gap-1 rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-300">
+                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                                Diupload Hari Ini ({{ $c->created_at->format('H:i') }} WIB)
+                            </span>
+                        @elseif ($c->created_at)
+                            <span class="flex items-center gap-1 text-[11px] text-slate-400">
+                                <i data-lucide="clock" class="h-3 w-3"></i>
+                                Di-add: {{ $c->created_at->translatedFormat('d M Y, H:i') }} WIB
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Detail Temuan Mobile (Jika Ada) -->
+                @if ($c->isFlagged() && count($c->summaryTemuan()))
+                    <div class="ml-6 rounded-xl bg-rose-50/80 border border-rose-100 p-2.5 space-y-1 text-[11px]">
+                        <p class="font-bold text-brand-red text-[10px] uppercase tracking-wider">Rincian Temuan:</p>
+                        @foreach($c->summaryTemuan() as $st)
+                            <div class="flex items-start gap-1.5 text-slate-700 leading-snug">
+                                <span class="font-black text-brand-red shrink-0">•</span>
+                                <span>{{ $st }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+                <!-- Footer Card Mobile: Inspector & Action Buttons -->
+                <div class="flex items-center justify-between border-t border-slate-100 pt-2.5 pl-6">
+                    <div class="text-[11px] text-slate-400 truncate max-w-[140px]">
+                        Oleh: <span class="font-semibold text-slate-600">{{ $c->created_by ?: '-' }}</span>
+                    </div>
+
+                    <div class="flex items-center gap-1 shrink-0">
+                        <a href="{{ route('checklist-mt-maos.show', $c) }}"
+                           class="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1.5 text-xs font-bold text-brand-blue transition hover:bg-blue-100">
+                            <i data-lucide="eye" class="h-3.5 w-3.5"></i> Detail
+                        </a>
+                        @if (!auth()->user()->isSpbu())
+                            <a href="{{ route('checklist-mt-maos.edit', $c) }}"
+                               class="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-100">
+                                <i data-lucide="pencil" class="h-3.5 w-3.5"></i>
+                            </a>
+                            <form id="form-hapus-m-{{ $c->id }}" method="POST" action="{{ route('checklist-mt-maos.destroy', $c) }}" class="contents">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" title="Hapus checklist"
+                                        @click="window.__confirmDeleteModal.show(
+                                            document.getElementById('form-hapus-m-{{ $c->id }}'),
+                                            'Hapus Checklist Ini?',
+                                            'Checklist mobil tangki {{ $c->nomor_polisi }} akan dihapus permanen.'
+                                        )"
+                                        class="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-rose-200 text-rose-600 transition hover:bg-rose-50">
+                                    <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="p-10 text-center">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50">
+                    <i data-lucide="truck" class="h-7 w-7 text-slate-300"></i>
+                </div>
+                <p class="mt-3 text-sm font-semibold text-slate-600">Belum ada data checklist</p>
+                <p class="mt-1 text-xs text-slate-400">
+                    @if (!auth()->user()->isSpbu())
+                        Mulai pemeriksaan dengan tombol "Tambah Data Checklist".
+                    @else
+                        Hasil pemeriksaan mobil tangki akan muncul di sini.
+                    @endif
+                </p>
+            </div>
+        @endforelse
+    </div>
 </div>
 
 <script>
 function getSelectedIds() {
-    return Array.from(document.querySelectorAll('.row-checkbox:checked')).map(cb => cb.value);
+    const checked = document.querySelectorAll('.row-checkbox:checked');
+    const ids = Array.from(checked).map(cb => cb.value);
+    return Array.from(new Set(ids));
+}
+
+function handleCheckboxChange(sourceCb) {
+    const val = sourceCb.value;
+    const isChecked = sourceCb.checked;
+    
+    // Sinkronkan checkbox versi desktop dan mobile untuk ID yang sama
+    document.querySelectorAll('.row-checkbox[value="' + val + '"]').forEach(cb => {
+        cb.checked = isChecked;
+    });
+
+    updateSelection();
 }
 
 function updateSelection() {
     const selected = getSelectedIds();
     const count = selected.length;
-    const allCbs = document.querySelectorAll('.row-checkbox');
     const checkAll = document.getElementById('check-all');
     const selectionBar = document.getElementById('selection-bar');
     const countLabel = document.getElementById('selected-count');
     const exportBtnLabel = document.getElementById('export-btn-label');
     const exportPdfBtnLabel = document.getElementById('export-pdf-btn-label');
 
-    // Update baris terpilih
-    allCbs.forEach(cb => {
-        const tr = document.getElementById('row-' + cb.value);
+    // Total unique items
+    const allUniqueIds = Array.from(new Set(Array.from(document.querySelectorAll('.row-checkbox')).map(cb => cb.value)));
+
+    // Highlight row dan card terpilih
+    allUniqueIds.forEach(id => {
+        const isSel = selected.includes(id);
+        const tr = document.getElementById('row-' + id);
+        const card = document.getElementById('card-' + id);
+        
         if (tr) {
-            if (cb.checked) {
-                tr.classList.add('bg-blue-50/60');
+            if (isSel) tr.classList.add('bg-blue-50/60');
+            else tr.classList.remove('bg-blue-50/60');
+        }
+        if (card) {
+            if (isSel) {
+                card.classList.add('bg-blue-50/50', 'ring-2', 'ring-brand-blue/30');
             } else {
-                tr.classList.remove('bg-blue-50/60');
+                card.classList.remove('bg-blue-50/50', 'ring-2', 'ring-brand-blue/30');
             }
         }
     });
 
     if (checkAll) {
-        checkAll.checked = (allCbs.length > 0 && selected.length === allCbs.length);
-        checkAll.indeterminate = (selected.length > 0 && selected.length < allCbs.length);
+        checkAll.checked = (allUniqueIds.length > 0 && count === allUniqueIds.length);
+        checkAll.indeterminate = (count > 0 && count < allUniqueIds.length);
     }
 
     if (count > 0) {
@@ -300,15 +463,15 @@ function updateSelection() {
             selectionBar.classList.add('flex');
         }
         if (countLabel) countLabel.textContent = count;
-        if (exportBtnLabel) exportBtnLabel.textContent = 'Export Excel (' + count + ' Terpilih)';
-        if (exportPdfBtnLabel) exportPdfBtnLabel.textContent = 'Export PDF (' + count + ' Terpilih)';
+        if (exportBtnLabel) exportBtnLabel.textContent = 'Export Excel (' + count + ')';
+        if (exportPdfBtnLabel) exportPdfBtnLabel.textContent = 'Export PDF (' + count + ')';
     } else {
         if (selectionBar) {
             selectionBar.classList.add('hidden');
             selectionBar.classList.remove('flex');
         }
-        if (exportBtnLabel) exportBtnLabel.textContent = 'Export Excel Semua';
-        if (exportPdfBtnLabel) exportPdfBtnLabel.textContent = 'Export PDF Semua';
+        if (exportBtnLabel) exportBtnLabel.textContent = 'Export Excel';
+        if (exportPdfBtnLabel) exportPdfBtnLabel.textContent = 'Export PDF';
     }
 
     if (window.lucide) lucide.createIcons();

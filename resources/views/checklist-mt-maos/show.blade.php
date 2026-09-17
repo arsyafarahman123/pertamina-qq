@@ -4,23 +4,23 @@
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-<div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+<div class="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
     <a href="{{ route('checklist-mt-maos.index') }}"
-       class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
+       class="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
         <i data-lucide="arrow-left" class="h-4 w-4"></i> Kembali
     </a>
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap items-center gap-2">
         <button id="export-btn"
-                class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
-            <i data-lucide="sheet" class="h-4 w-4"></i> Excel
+                class="inline-flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 shadow-card transition hover:bg-slate-50">
+            <i data-lucide="sheet" class="h-4 w-4 text-emerald-600"></i> Excel
         </button>
         <a href="{{ route('checklist-mt-maos.cetak', $checklist) }}" target="_blank"
-           class="inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition hover:bg-brand-blueDark">
-            <i data-lucide="printer" class="h-4 w-4"></i> Cetak / PDF / PNG
+           class="inline-flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-blue/25 transition hover:bg-brand-blueDark">
+            <i data-lucide="printer" class="h-4 w-4"></i> Cetak / PDF
         </a>
         @if (!auth()->user()->isSpbu())
             <a href="{{ route('checklist-mt-maos.edit', $checklist) }}"
-               class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:bg-brand-redDark">
+               class="inline-flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:bg-brand-redDark">
                 <i data-lucide="pencil" class="h-4 w-4"></i> Edit
             </a>
         @endif
