@@ -11,12 +11,21 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
+    'app/Models/RetainSampelMt.php',
     'app/Services/DensityCorrectionService.php',
     'app/Services/FuelMaosService.php',
+    'app/Http/Controllers/ChecklistMtMaosController.php',
+    'resources/views/checklist-mt-maos/index.blade.php',
+    'resources/views/checklist-mt-maos/show.blade.php',
     'resources/views/retain-sampel/index.blade.php',
     'resources/views/retain-sampel/form.blade.php',
     'resources/views/retain-sampel/_tutorial-modal.blade.php',
     'resources/views/retain-sampel/_slide-laporan.blade.php',
+    'resources/views/retain-sampel/_tabel-pivot.blade.php',
+    'resources/views/retain-sampel/_tabel-pivot-editable.blade.php',
+    'resources/views/retain-sampel/semua.blade.php',
+    'resources/views/retain-sampel/export-excel.blade.php',
+    'resources/views/retain-sampel/export-excel-all.blade.php',
     'resources/views/retain-sampel/cetak.blade.php',
     'resources/views/dashboard/index.blade.php',
     'resources/views/auth/login.blade.php',

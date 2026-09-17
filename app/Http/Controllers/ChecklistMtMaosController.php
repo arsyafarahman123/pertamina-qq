@@ -16,6 +16,10 @@ class ChecklistMtMaosController extends Controller
 
         $query = ChecklistMtMaos::query()->latest('tanggal_periksa')->latest('id');
 
+        if ($user->isSpbu()) {
+            $query->where('pemilik', 'like', '%' . $user->spbu_name . '%');
+        }
+
         if ($search = $request->query('q')) {
             $query->where(function ($q) use ($search) {
                 $q->where('nomor_polisi', 'like', "%{$search}%")
@@ -23,16 +27,35 @@ class ChecklistMtMaosController extends Controller
             });
         }
 
-        $checklists = $query->get();
+        $allChecklists = $query->get();
+
+        $todayCount = $allChecklists->filter(fn ($c) => ($c->created_at && $c->created_at->isToday()) || $c->tanggal_periksa->isToday())->count();
+        $thisWeekCount = $allChecklists->filter(fn ($c) => $c->tanggal_periksa->diffInDays(now()) <= 7)->count();
+        $flaggedCount = $allChecklists->filter(fn ($c) => $c->isFlagged())->count();
+        $cleanCount = $allChecklists->count() - $flaggedCount;
 
         $stats = [
-            'total' => $checklists->count(),
-            'this_week' => $checklists->filter(fn ($c) => $c->tanggal_periksa->diffInDays(now()) <= 7)->count(),
-            'flagged' => $checklists->filter(fn ($c) => $c->isFlagged())->count(),
+            'total' => $allChecklists->count(),
+            'today' => $todayCount,
+            'this_week' => $thisWeekCount,
+            'flagged' => $flaggedCount,
+            'clean' => $cleanCount,
         ];
-        $stats['clean'] = $stats['total'] - $stats['flagged'];
 
-        return view('checklist-mt-maos.index', compact('checklists', 'stats'));
+        $filter = $request->query('filter', 'all');
+        if ($filter === 'today') {
+            $checklists = $allChecklists->filter(fn ($c) => ($c->created_at && $c->created_at->isToday()) || $c->tanggal_periksa->isToday());
+        } elseif ($filter === 'week') {
+            $checklists = $allChecklists->filter(fn ($c) => $c->tanggal_periksa->diffInDays(now()) <= 7);
+        } elseif ($filter === 'flagged') {
+            $checklists = $allChecklists->filter(fn ($c) => $c->isFlagged());
+        } elseif ($filter === 'clean') {
+            $checklists = $allChecklists->filter(fn ($c) => !$c->isFlagged());
+        } else {
+            $checklists = $allChecklists;
+        }
+
+        return view('checklist-mt-maos.index', compact('checklists', 'stats', 'filter'));
     }
 
     public function create()

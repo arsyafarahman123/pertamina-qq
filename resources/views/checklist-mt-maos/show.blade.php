@@ -61,6 +61,13 @@
         <p class="mt-1 font-bold text-slate-700">{{ $checklist->tanggal_exp ?: '-' }}</p>
     </div>
     <div>
+        <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Waktu Diupload / Di-add</p>
+        <p class="mt-1 font-bold text-slate-700 flex items-center gap-1.5">
+            <i data-lucide="clock" class="h-3.5 w-3.5 text-[#006CB8]"></i>
+            {{ $checklist->created_at ? $checklist->created_at->translatedFormat('d F Y, H:i') . ' WIB' : $checklist->tanggal_periksa->translatedFormat('d F Y') }}
+        </p>
+    </div>
+    <div>
         <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Diperiksa Oleh</p>
         <p class="mt-1 font-bold text-slate-700">{{ $checklist->created_by ?: '-' }}</p>
     </div>
