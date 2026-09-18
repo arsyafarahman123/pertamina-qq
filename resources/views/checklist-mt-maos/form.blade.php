@@ -53,6 +53,22 @@
             </div>
         @endif
 
+        <!-- Banner Peringatan Kelengkapan Isian Real-Time -->
+        <div id="incomplete-banner" class="mb-5 flex items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50/95 px-5 py-3.5 text-amber-900 shadow-sm transition-all">
+            <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white shadow-sm">
+                    <i data-lucide="alert-triangle" class="h-5 w-5"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-extrabold" id="incomplete-banner-title">Peringatan: Form Belum Selesai Diisi (<span id="incomplete-count-text">23</span> Item Belum Dipilih)</p>
+                    <p class="text-xs text-amber-700" id="incomplete-banner-desc">Harap tentukan status setiap item (Sesuai, Temuan, atau Diperbaiki) sebelum menyimpan checklist.</p>
+                </div>
+            </div>
+            <button type="button" onclick="lengkapiItemPertama()" class="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 px-3.5 py-2 text-xs font-black text-white shadow-sm transition">
+                <i data-lucide="arrow-down" class="h-4 w-4"></i> Lengkapi
+            </button>
+        </div>
+
         @if ($errors->any())
             <div class="mb-5 flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800 shadow-card">
                 <i data-lucide="circle-alert" class="mt-0.5 h-5 w-5 shrink-0"></i>
@@ -493,6 +509,8 @@ function updateProgressChecklist() {
         }
     });
 
+    const unfilledCount = total - filled;
+
     const badgeEl = document.getElementById('checklist-progress-badge');
     const textEl = document.getElementById('checklist-progress-text');
     if (textEl && badgeEl) {
@@ -501,7 +519,19 @@ function updateProgressChecklist() {
             badgeEl.className = 'inline-flex items-center gap-1.5 rounded-full bg-emerald-100 border border-emerald-300 px-3 py-1 text-xs font-black text-emerald-800 transition-all';
             textEl.innerHTML = `✓ ${filled} / ${total} Lengkap`;
         } else {
-            badgeEl.className = 'inline-flex items-center gap-1.5 rounded-full bg-amber-100 border border-amber-300 px-3 py-1 text-xs font-black text-amber-800 transition-all';
+            badgeEl.className = 'inline-flex items-center gap-1.5 rounded-full bg-amber-100 border border-amber-300 px-3 py-1 text-xs font-black text-amber-800 transition-all animate-pulse';
+        }
+    }
+
+    // Update real-time banner notifikasi di atas form
+    const banner = document.getElementById('incomplete-banner');
+    const countText = document.getElementById('incomplete-count-text');
+    if (banner && countText) {
+        if (filled === total) {
+            banner.className = 'mb-5 hidden items-center justify-between gap-3 rounded-2xl border border-emerald-300 bg-emerald-50/95 px-5 py-3.5 text-emerald-900 shadow-sm transition-all';
+        } else {
+            banner.className = 'mb-5 flex items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50/95 px-5 py-3.5 text-amber-900 shadow-sm transition-all';
+            countText.textContent = unfilledCount;
         }
     }
 }
@@ -722,6 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const unfilled = getUnfilledItems();
                 if (unfilled.length > 0) {
                     e.preventDefault();
+                    e.stopPropagation();
                     bukaModalUnfilled(unfilled);
                     return false;
                 }
@@ -732,6 +763,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem(DRAFT_KEY);
             } catch (err) {}
         });
+
+        const btnSubmit = document.getElementById('btn-submit-checklist');
+        if (btnSubmit) {
+            btnSubmit.addEventListener('click', (e) => {
+                if (!forceSubmitAllowed) {
+                    const unfilled = getUnfilledItems();
+                    if (unfilled.length > 0) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        bukaModalUnfilled(unfilled);
+                        return false;
+                    }
+                }
+            });
+        }
     }
 
     window.addEventListener('beforeunload', () => {

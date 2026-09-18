@@ -122,6 +122,40 @@ class ChecklistMtMaos extends Model
         return $this->flagCount() > 0;
     }
 
+    /** Jumlah item pemeriksaan yang belum diisi sama sekali (dari total 23 item). */
+    public function incompleteCount(): int
+    {
+        $flat = \App\Support\ChecklistMtMaosItems::flat();
+        $totalExpected = count($flat);
+        $filled = 0;
+        $results = $this->results ?? [];
+        foreach ($flat as $k => $item) {
+            if (isset($results[$k]) && in_array($results[$k], ['ok', 'bad', 'repaired'], true)) {
+                $filled++;
+            }
+        }
+        return max(0, $totalExpected - $filled);
+    }
+
+    public function isIncomplete(): bool
+    {
+        return $this->incompleteCount() > 0;
+    }
+
+    /** Daftar nama item yang belum ditentukan statusnya (belum selesai diisi). */
+    public function summaryIncomplete(): array
+    {
+        $flat = \App\Support\ChecklistMtMaosItems::flat();
+        $unfilled = [];
+        $results = $this->results ?? [];
+        foreach ($flat as $k => $item) {
+            if (!isset($results[$k]) || !in_array($results[$k], ['ok', 'bad', 'repaired'], true)) {
+                $unfilled[] = $item['label'] ?? "Item {$k}";
+            }
+        }
+        return $unfilled;
+    }
+
     /** Mengecek apakah armada ini memiliki riwayat perbaikan yang telah diselesaikan. */
     public function hasPerbaikan(): bool
     {
