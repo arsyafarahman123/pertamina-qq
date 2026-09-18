@@ -83,18 +83,20 @@
 
             @if (auth()->user()->isSpbu())
                 {{-- Navigasi Khusus User Viewer (SPBU / Tamu) — Fokus Rekapitulasi & Read-Only --}}
-                <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Laporan &amp; Rekapitulasi</p>
-                <div class="space-y-1">
+                <div class="mb-4">
                     <a href="{{ route('dashboard') }}"
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ $route === 'dashboard' ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="layout-grid" class="h-5 w-5 shrink-0"></i>
                         Dashboard Rekap
                     </a>
+                </div>
 
-                    <a href="{{ route('riwayat.index') }}"
-                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'riwayat.') ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
-                        <i data-lucide="file-check" class="h-5 w-5 shrink-0"></i>
-                        Rekap Hasil Uji BBM
+                <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Checklist Lapangan</p>
+                <div class="space-y-1 mb-5">
+                    <a href="{{ route('checklist-mt-maos.index') }}"
+                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'checklist-mt-maos.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
+                        <i data-lucide="truck" class="h-5 w-5 shrink-0"></i>
+                        Rekap Checklist MT
                     </a>
 
                     <a href="{{ route('retain-sampel.index') }}"
@@ -102,11 +104,14 @@
                         <i data-lucide="droplets" class="h-5 w-5 shrink-0"></i>
                         Rekap Retain Sampel MT
                     </a>
+                </div>
 
-                    <a href="{{ route('checklist-mt-maos.index') }}"
-                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'checklist-mt-maos.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
-                        <i data-lucide="truck" class="h-5 w-5 shrink-0"></i>
-                        Rekap Checklist MT
+                <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Laboratorium &amp; QC BBM</p>
+                <div class="space-y-1">
+                    <a href="{{ route('riwayat.index') }}"
+                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'riwayat.') ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
+                        <i data-lucide="file-check" class="h-5 w-5 shrink-0"></i>
+                        Rekap Hasil Uji BBM
                     </a>
 
                     <a href="{{ route('fuelmaos.halaman') }}"
@@ -117,14 +122,31 @@
                 </div>
             @else
                 {{-- Navigasi Penuh Staf Laboratorium (Admin & Petugas QC) --}}
-                <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Menu Utama</p>
-                <div class="space-y-1">
+                <div class="mb-4">
                     <a href="{{ route('dashboard') }}"
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ $route === 'dashboard' ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="layout-grid" class="h-5 w-5 shrink-0"></i>
                         Dashboard
                     </a>
+                </div>
 
+                <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Checklist Lapangan</p>
+                <div class="space-y-1 mb-5">
+                    <a href="{{ route('checklist-mt-maos.index') }}"
+                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'checklist-mt-maos.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
+                        <i data-lucide="truck" class="h-5 w-5 shrink-0"></i>
+                        Checklist MT Maos
+                    </a>
+
+                    <a href="{{ route('retain-sampel.index') }}"
+                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'retain-sampel.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
+                        <i data-lucide="droplets" class="h-5 w-5 shrink-0"></i>
+                        Retain Sampel MT
+                    </a>
+                </div>
+
+                <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Laboratorium &amp; Pengujian BBM</p>
+                <div class="space-y-1">
                     <a href="{{ route('ujibbm.index') }}"
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'ujibbm.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="clipboard-check" class="h-5 w-5 shrink-0"></i>
@@ -147,21 +169,6 @@
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ $route === 'fuelmaos.halaman' ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="bot" class="h-5 w-5 shrink-0"></i>
                         Asisten Cek Hasil Uji
-                    </a>
-                </div>
-
-                <p class="mb-2 mt-6 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Checklist Lapangan</p>
-                <div class="space-y-1">
-                    <a href="{{ route('checklist-mt-maos.index') }}"
-                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'checklist-mt-maos.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
-                        <i data-lucide="truck" class="h-5 w-5 shrink-0"></i>
-                        Checklist MT Maos
-                    </a>
-
-                    <a href="{{ route('retain-sampel.index') }}"
-                       class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'retain-sampel.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
-                        <i data-lucide="droplets" class="h-5 w-5 shrink-0"></i>
-                        Retain Sampel MT
                     </a>
                 </div>
             @endif
