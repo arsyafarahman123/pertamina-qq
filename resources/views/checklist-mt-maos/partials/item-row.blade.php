@@ -2,7 +2,7 @@
     $current = old("results.$key", $checklist->results[$key] ?? null);
     $note = old("notes.$key", $checklist->notes[$key] ?? '');
 @endphp
-<div class="flex flex-col sm:grid sm:grid-cols-[28px_1fr_210px] lg:grid-cols-[28px_1fr_240px] items-start gap-2.5 sm:gap-3 py-4 border-b border-slate-100 last:border-b-0">
+<div id="item-row-{{ $key }}" data-item-key="{{ $key }}" data-item-label="{{ $label }}" data-item-idx="{{ $idxLabel }}" class="item-check-row flex flex-col sm:grid sm:grid-cols-[28px_1fr_210px] lg:grid-cols-[28px_1fr_240px] items-start gap-2.5 sm:gap-3 py-4 border-b border-slate-100 last:border-b-0 transition-all">
     <div class="flex items-center justify-between sm:block w-full sm:w-auto">
         <div class="pt-0.5 text-xs font-extrabold text-slate-400">{{ $idxLabel }}</div>
         

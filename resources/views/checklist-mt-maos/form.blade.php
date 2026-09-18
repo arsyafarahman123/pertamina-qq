@@ -220,23 +220,66 @@
         <!-- ===== Aksi sticky ===== -->
         <div class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-6px_16px_rgba(15,23,42,0.06)] backdrop-blur lg:pl-[19rem]">
             <div class="mx-auto flex max-w-7xl items-center justify-between gap-2.5 px-0 lg:px-4">
-                <div class="flex items-center gap-2 text-xs text-slate-500">
-                    <span class="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="hidden sm:inline">Tersimpan otomatis di perangkat</span>
+                <div class="flex items-center gap-3">
+                    <span id="checklist-progress-badge" class="inline-flex items-center gap-1.5 rounded-full bg-amber-100 border border-amber-300 px-3 py-1 text-xs font-black text-amber-800 transition-all">
+                        <i data-lucide="list-checks" class="h-3.5 w-3.5"></i>
+                        <span id="checklist-progress-text">0 / 23 Item Terisi</span>
+                    </span>
+                    <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
+                        <span class="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Auto-Save Aktif</span>
+                    </div>
                 </div>
+
                 <div class="flex items-center gap-2.5">
                     <a href="{{ $isEdit ? route('checklist-mt-maos.show', $checklist) : route('checklist-mt-maos.index') }}"
                        class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50">
                         Batal
                     </a>
-                    <button type="submit"
-                            class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark">
+                    <button type="submit" id="btn-submit-checklist"
+                            class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 hover:bg-brand-redDark active:scale-95">
                         <i data-lucide="save" class="h-4 w-4"></i> Simpan Checklist
                     </button>
                 </div>
             </div>
         </div>
     </form>
+</div>
+
+{{-- MODAL NOTIFIKASI ITEM BELUM SELESAI DIISI --}}
+<div id="modal-unfilled" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl space-y-4">
+        <div class="flex items-start gap-3">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
+                <i data-lucide="alert-triangle" class="h-6 w-6"></i>
+            </div>
+            <div>
+                <h3 class="text-base font-extrabold text-slate-800">Pemeriksaan Belum Selesai Diisi!</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Ada <span id="unfilled-count-badge" class="font-bold text-amber-700">0</span> item pemeriksaan fisik yang belum Anda tentukan statusnya (Sesuai / Temuan / Diperbaiki).</p>
+            </div>
+        </div>
+
+        <div class="rounded-2xl bg-amber-50/90 border border-amber-200 p-4">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-amber-900 mb-2">
+                Daftar Item yang Belum Dipilih:
+            </p>
+            <div id="unfilled-list-container" class="max-h-48 overflow-y-auto space-y-1.5 text-xs text-slate-800 pr-1">
+                <!-- Diisi via JavaScript -->
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-2 pt-2 border-t border-slate-100">
+            <button type="button" onclick="tutupModalUnfilled()" class="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100">
+                Tutup
+            </button>
+            <button type="button" onclick="lengkapiItemPertama()" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-xs font-bold text-white shadow-md hover:bg-brand-blueDark">
+                <i data-lucide="arrow-down" class="h-4 w-4"></i> Lengkapi Sekarang
+            </button>
+            <button type="button" onclick="submitPaksa()" class="w-full sm:w-auto rounded-xl border border-amber-300 bg-amber-100 hover:bg-amber-200 px-4 py-2.5 text-xs font-bold text-amber-900">
+                Tetap Simpan
+            </button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -338,6 +381,116 @@ function hitungSelisihTera(i) {
     }
 }
 
+let forceSubmitAllowed = false;
+
+// Update Live Progress Checklist
+function updateProgressChecklist() {
+    const rows = document.querySelectorAll('.item-check-row');
+    const total = rows.length || 23;
+    let filled = 0;
+
+    rows.forEach(r => {
+        const hidden = r.querySelector('input[type=hidden]');
+        if (hidden && (hidden.value === 'ok' || hidden.value === 'bad' || hidden.value === 'repaired')) {
+            filled++;
+            r.classList.remove('ring-2', 'ring-amber-400', 'bg-amber-50/50', 'rounded-2xl', 'p-2');
+        }
+    });
+
+    const badgeEl = document.getElementById('checklist-progress-badge');
+    const textEl = document.getElementById('checklist-progress-text');
+    if (textEl && badgeEl) {
+        textEl.innerText = `${filled} / ${total} Item Terisi`;
+        if (filled === total) {
+            badgeEl.className = 'inline-flex items-center gap-1.5 rounded-full bg-emerald-100 border border-emerald-300 px-3 py-1 text-xs font-black text-emerald-800 transition-all';
+            textEl.innerHTML = `✓ ${filled} / ${total} Lengkap`;
+        } else {
+            badgeEl.className = 'inline-flex items-center gap-1.5 rounded-full bg-amber-100 border border-amber-300 px-3 py-1 text-xs font-black text-amber-800 transition-all';
+        }
+    }
+}
+
+// Cari seluruh item yang belum dipilih
+function getUnfilledItems() {
+    const unfilled = [];
+    document.querySelectorAll('.item-check-row').forEach(row => {
+        const hidden = row.querySelector('input[type=hidden]');
+        if (!hidden || !hidden.value || (hidden.value !== 'ok' && hidden.value !== 'bad' && hidden.value !== 'repaired')) {
+            const idx = row.dataset.itemIdx || '';
+            const label = row.dataset.itemLabel || '';
+            unfilled.push({ row, idx, label, id: row.id });
+            row.classList.add('ring-2', 'ring-amber-400', 'bg-amber-50/50', 'rounded-2xl', 'p-2');
+        } else {
+            row.classList.remove('ring-2', 'ring-amber-400', 'bg-amber-50/50', 'rounded-2xl', 'p-2');
+        }
+    });
+    return unfilled;
+}
+
+// Buka Modal Notifikasi Belum Lengkap
+function bukaModalUnfilled(unfilled) {
+    const modal = document.getElementById('modal-unfilled');
+    const countBadge = document.getElementById('unfilled-count-badge');
+    const container = document.getElementById('unfilled-list-container');
+    if (!modal) return;
+
+    if (countBadge) countBadge.innerText = unfilled.length;
+    if (container) {
+        container.innerHTML = unfilled.map(u => `
+            <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-amber-200/80 shadow-xs">
+                <div class="flex items-center gap-2 truncate">
+                    <span class="rounded-md bg-amber-200/60 px-1.5 py-0.5 text-[10px] font-black text-amber-900">${u.idx}</span>
+                    <span class="font-bold text-slate-800 truncate">${u.label}</span>
+                </div>
+                <button type="button" onclick="scrollToItem('${u.id}')"
+                        class="shrink-0 inline-flex items-center gap-1 rounded-lg bg-brand-blue/10 hover:bg-brand-blue hover:text-white px-2.5 py-1 text-[11px] font-bold text-brand-blue transition">
+                    Isi <i data-lucide="arrow-right" class="h-3 w-3"></i>
+                </button>
+            </div>
+        `).join('');
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+}
+
+function tutupModalUnfilled() {
+    const modal = document.getElementById('modal-unfilled');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+function scrollToItem(rowId) {
+    tutupModalUnfilled();
+    const el = document.getElementById(rowId);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('ring-4', 'ring-brand-blue', 'bg-blue-50/60', 'rounded-2xl', 'p-2');
+        setTimeout(() => {
+            el.classList.remove('ring-4', 'ring-brand-blue', 'bg-blue-50/60');
+        }, 3000);
+    }
+}
+
+function lengkapiItemPertama() {
+    const unfilled = getUnfilledItems();
+    if (unfilled.length > 0) {
+        scrollToItem(unfilled[0].id);
+    } else {
+        tutupModalUnfilled();
+    }
+}
+
+function submitPaksa() {
+    forceSubmitAllowed = true;
+    tutupModalUnfilled();
+    const form = document.getElementById('checklist-form');
+    if (form) form.submit();
+}
+
 document.querySelectorAll('[data-toggle-group]').forEach(group => {
     const hidden = group.querySelector('input[type=hidden]');
     group.querySelectorAll('.tbtn').forEach(btn => {
@@ -345,6 +498,7 @@ document.querySelectorAll('[data-toggle-group]').forEach(group => {
             const val = btn.dataset.val;
             const isSame = hidden.value === val;
             applyToggleState(group, isSame ? '' : val);
+            updateProgressChecklist();
             saveDraft();
         });
     });
@@ -440,19 +594,36 @@ function resetDraftForm() {
     }
 }
 
-// Event listeners for real-time auto save
+// Event listeners for real-time auto save & submission validation
 document.addEventListener('DOMContentLoaded', () => {
     restoreDraft();
+    updateProgressChecklist();
 
     const form = document.getElementById('checklist-form');
     if (form) {
-        form.addEventListener('input', () => saveDraft());
-        form.addEventListener('change', () => saveDraft());
-        form.addEventListener('submit', () => {
+        form.addEventListener('input', () => {
+            saveDraft();
+            updateProgressChecklist();
+        });
+        form.addEventListener('change', () => {
+            saveDraft();
+            updateProgressChecklist();
+        });
+
+        form.addEventListener('submit', (e) => {
+            if (!forceSubmitAllowed) {
+                const unfilled = getUnfilledItems();
+                if (unfilled.length > 0) {
+                    e.preventDefault();
+                    bukaModalUnfilled(unfilled);
+                    return false;
+                }
+            }
+
             // Bersihkan draft saat berhasil submit
             try {
                 localStorage.removeItem(DRAFT_KEY);
-            } catch (e) {}
+            } catch (err) {}
         });
     }
 
