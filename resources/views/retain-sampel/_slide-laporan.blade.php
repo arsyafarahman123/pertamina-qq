@@ -441,118 +441,139 @@
             </div>
 
             {{-- DRAWER FORM EDIT CEPAT SESI 06.00, 12.00, 18.00 (Toggled) --}}
-            <div id="form-edit-rekap-0600-{{ $slugSesi }}" class="hidden no-print rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
-                <div class="mb-3 flex items-center justify-between border-b pb-2">
-                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Penyaluran (Pukul 06.00 WIB)</span>
-                    <button type="button" onclick="document.getElementById('form-edit-rekap-0600-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
+            <div id="form-edit-rekap-0600-{{ $slugSesi }}" class="hidden no-print rounded-3xl bg-white p-5 border-2 border-blue-200 shadow-xl">
+                <div class="mb-4 flex items-center justify-between border-b pb-3">
+                    <div>
+                        <h4 class="text-sm font-black text-[#0f3861] uppercase">Edit Cepat Seluruh Produk — Pukul 06.00 WIB</h4>
+                        <p class="text-[11px] text-slate-400 font-semibold">Isi data produk, lalu tekan tombol Simpan di bawah.</p>
+                    </div>
+                    <button type="button" onclick="document.getElementById('form-edit-rekap-0600-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg transition"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                 </div>
-                <div class="space-y-3">
-                    @foreach ($produkList as $p)
-                        @php $e = $produk06Entries[$p] ?? null; @endphp
-                        <form method="POST" action="{{ $e ? route('retain-sampel.update', $e) : route('retain-sampel.store') }}" class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-end border-b pb-2 last:border-b-0">
-                            @csrf
-                            @if ($e) @method('PUT') @endif
-                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                            <input type="hidden" name="jam_label" value="06:00">
-                            <input type="hidden" name="produk" value="{{ $p }}">
-                            <div>
-                                <span class="text-[10px] font-bold text-[#0f3861] block mb-1">{{ $p }}</span>
-                                <input type="text" name="mt_nopol" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
+                <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
+                    @csrf
+                    <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                    <input type="hidden" name="jam_label" value="06:00">
+                    <div class="space-y-2">
+                        @foreach ($produkList as $idx => $p)
+                            @php $e = $produk06Entries[$p] ?? null; @endphp
+                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center bg-slate-50/70 p-2 rounded-xl border border-slate-200/80">
+                                <input type="hidden" name="items[{{ $idx }}][produk]" value="{{ $p }}">
+                                @if ($e) <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $e->id }}"> @endif
+                                <div>
+                                    <span class="text-xs font-black text-[#0f3861] block">{{ $p }}</span>
+                                </div>
+                                <div>
+                                    <input type="text" name="items[{{ $idx }}][mt_nopol]" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                </div>
+                                <div>
+                                    <input type="text" name="items[{{ $idx }}][tangki_timbun]" value="{{ $e?->tangki_timbun }}" placeholder="Tangki (cth: 09)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                </div>
+                                <div>
+                                    <input type="number" step="0.0001" name="items[{{ $idx }}][density_obs]" value="{{ $e?->density_obs }}" placeholder="Density Obs" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                </div>
+                                <div>
+                                    <input type="number" step="0.1" name="items[{{ $idx }}][temperatur]" value="{{ $e?->temperatur }}" placeholder="Suhu (°C)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                </div>
                             </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Density Obs</span>
-                                <input type="number" step="0.0001" name="density_obs" value="{{ $e?->density_obs }}" placeholder="0.7420" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Suhu (°C)</span>
-                                <input type="number" step="0.1" name="temperatur" value="{{ $e?->temperatur }}" placeholder="24" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Tangki</span>
-                                <input type="text" name="tangki_timbun" value="{{ $e?->tangki_timbun }}" placeholder="9" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <button type="submit" class="w-full rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white px-2 py-1 text-xs font-bold transition">Simpan</button>
-                            </div>
-                        </form>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                    <div class="pt-2 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">ASTM Table 53B otomatis dihitung saat disimpan.</span>
+                        <button type="submit" class="rounded-xl bg-brand-red hover:bg-brand-redDark text-white px-5 py-2.5 text-xs font-black shadow transition flex items-center gap-1.5">
+                            <i data-lucide="save" class="h-4 w-4"></i> Simpan Semua Data 06.00 WIB
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div id="form-edit-rekap-1200-{{ $slugSesi }}" class="hidden no-print rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
-                <div class="mb-3 flex items-center justify-between border-b pb-2">
-                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Retain Siang (Pukul 12.00 WIB)</span>
-                    <button type="button" onclick="document.getElementById('form-edit-rekap-1200-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
+            <div id="form-edit-rekap-1200-{{ $slugSesi }}" class="hidden no-print rounded-3xl bg-white p-5 border-2 border-blue-200 shadow-xl">
+                <div class="mb-4 flex items-center justify-between border-b pb-3">
+                    <div>
+                        <h4 class="text-sm font-black text-[#0f3861] uppercase">Edit Cepat Seluruh Produk — Pukul 12.00 WIB (Retain Siang)</h4>
+                        <p class="text-[11px] text-slate-400 font-semibold">Isi data produk, lalu tekan tombol Simpan di bawah.</p>
+                    </div>
+                    <button type="button" onclick="document.getElementById('form-edit-rekap-1200-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg transition"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                 </div>
-                <div class="space-y-3">
-                    @foreach ($produkList as $p)
-                        @php $e = $produk12Entries[$p] ?? null; @endphp
-                        <form method="POST" action="{{ $e ? route('retain-sampel.update', $e) : route('retain-sampel.store') }}" class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-end border-b pb-2 last:border-b-0">
-                            @csrf
-                            @if ($e) @method('PUT') @endif
-                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                            <input type="hidden" name="jam_label" value="12:00">
-                            <input type="hidden" name="produk" value="{{ $p }}">
-                            <div>
-                                <span class="text-[10px] font-bold text-[#0f3861] block mb-1">{{ $p }}</span>
-                                <input type="text" name="mt_nopol" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
+                <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
+                    @csrf
+                    <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                    <input type="hidden" name="jam_label" value="12:00">
+                    <div class="space-y-2">
+                        @foreach ($produkList as $idx => $p)
+                            @php $e = $produk12Entries[$p] ?? null; @endphp
+                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center bg-slate-50/70 p-2 rounded-xl border border-slate-200/80">
+                                <input type="hidden" name="items[{{ $idx }}][produk]" value="{{ $p }}">
+                                @if ($e) <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $e->id }}"> @endif
+                                <div>
+                                    <span class="text-xs font-black text-[#0f3861] block">{{ $p }}</span>
+                                </div>
+                                <div>
+                                    <input type="text" name="items[{{ $idx }}][mt_nopol]" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                </div>
+                                <div>
+                                    <input type="text" name="items[{{ $idx }}][tangki_timbun]" value="{{ $e?->tangki_timbun }}" placeholder="Tangki (cth: 09)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                </div>
+                                <div>
+                                    <input type="number" step="0.0001" name="items[{{ $idx }}][density_obs]" value="{{ $e?->density_obs }}" placeholder="Density Obs" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                </div>
+                                <div>
+                                    <input type="number" step="0.1" name="items[{{ $idx }}][temperatur]" value="{{ $e?->temperatur }}" placeholder="Suhu (°C)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                </div>
                             </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Density Obs</span>
-                                <input type="number" step="0.0001" name="density_obs" value="{{ $e?->density_obs }}" placeholder="0.7420" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Suhu (°C)</span>
-                                <input type="number" step="0.1" name="temperatur" value="{{ $e?->temperatur }}" placeholder="24" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Tangki</span>
-                                <input type="text" name="tangki_timbun" value="{{ $e?->tangki_timbun }}" placeholder="9" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <button type="submit" class="w-full rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white px-2 py-1 text-xs font-bold transition">Simpan</button>
-                            </div>
-                        </form>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                    <div class="pt-2 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">ASTM Table 53B otomatis dihitung saat disimpan.</span>
+                        <button type="submit" class="rounded-xl bg-brand-red hover:bg-brand-redDark text-white px-5 py-2.5 text-xs font-black shadow transition flex items-center gap-1.5">
+                            <i data-lucide="save" class="h-4 w-4"></i> Simpan Semua Data 12.00 WIB
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div id="form-edit-rekap-1800-{{ $slugSesi }}" class="hidden no-print rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
-                <div class="mb-3 flex items-center justify-between border-b pb-2">
-                    <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Retain Sore (Pukul 18.00 WIB)</span>
-                    <button type="button" onclick="document.getElementById('form-edit-rekap-1800-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
+            <div id="form-edit-rekap-1800-{{ $slugSesi }}" class="hidden no-print rounded-3xl bg-white p-5 border-2 border-blue-200 shadow-xl">
+                <div class="mb-4 flex items-center justify-between border-b pb-3">
+                    <div>
+                        <h4 class="text-sm font-black text-[#0f3861] uppercase">Edit Cepat Seluruh Produk — Pukul 18.00 WIB (Retain Sore)</h4>
+                        <p class="text-[11px] text-slate-400 font-semibold">Isi data produk, lalu tekan tombol Simpan di bawah.</p>
+                    </div>
+                    <button type="button" onclick="document.getElementById('form-edit-rekap-1800-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg transition"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                 </div>
-                <div class="space-y-3">
-                    @foreach ($produkList as $p)
-                        @php $e = $produk18Entries[$p] ?? null; @endphp
-                        <form method="POST" action="{{ $e ? route('retain-sampel.update', $e) : route('retain-sampel.store') }}" class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-end border-b pb-2 last:border-b-0">
-                            @csrf
-                            @if ($e) @method('PUT') @endif
-                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                            <input type="hidden" name="jam_label" value="18:00">
-                            <input type="hidden" name="produk" value="{{ $p }}">
-                            <div>
-                                <span class="text-[10px] font-bold text-[#0f3861] block mb-1">{{ $p }}</span>
-                                <input type="text" name="mt_nopol" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
+                <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
+                    @csrf
+                    <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                    <input type="hidden" name="jam_label" value="18:00">
+                    <div class="space-y-2">
+                        @foreach ($produkList as $idx => $p)
+                            @php $e = $produk18Entries[$p] ?? null; @endphp
+                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center bg-slate-50/70 p-2 rounded-xl border border-slate-200/80">
+                                <input type="hidden" name="items[{{ $idx }}][produk]" value="{{ $p }}">
+                                @if ($e) <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $e->id }}"> @endif
+                                <div>
+                                    <span class="text-xs font-black text-[#0f3861] block">{{ $p }}</span>
+                                </div>
+                                <div>
+                                    <input type="text" name="items[{{ $idx }}][mt_nopol]" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                </div>
+                                <div>
+                                    <input type="text" name="items[{{ $idx }}][tangki_timbun]" value="{{ $e?->tangki_timbun }}" placeholder="Tangki (cth: 09)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                </div>
+                                <div>
+                                    <input type="number" step="0.0001" name="items[{{ $idx }}][density_obs]" value="{{ $e?->density_obs }}" placeholder="Density Obs" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                </div>
+                                <div>
+                                    <input type="number" step="0.1" name="items[{{ $idx }}][temperatur]" value="{{ $e?->temperatur }}" placeholder="Suhu (°C)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                </div>
                             </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Density Obs</span>
-                                <input type="number" step="0.0001" name="density_obs" value="{{ $e?->density_obs }}" placeholder="0.7420" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Suhu (°C)</span>
-                                <input type="number" step="0.1" name="temperatur" value="{{ $e?->temperatur }}" placeholder="24" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <span class="text-[9px] font-bold text-slate-400 block mb-1">Tangki</span>
-                                <input type="text" name="tangki_timbun" value="{{ $e?->tangki_timbun }}" placeholder="9" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                            </div>
-                            <div>
-                                <button type="submit" class="w-full rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white px-2 py-1 text-xs font-bold transition">Simpan</button>
-                            </div>
-                        </form>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                    <div class="pt-2 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400">ASTM Table 53B otomatis dihitung saat disimpan.</span>
+                        <button type="submit" class="rounded-xl bg-brand-red hover:bg-brand-redDark text-white px-5 py-2.5 text-xs font-black shadow transition flex items-center gap-1.5">
+                            <i data-lucide="save" class="h-4 w-4"></i> Simpan Semua Data 18.00 WIB
+                        </button>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -642,42 +663,49 @@
                 </div>
 
                 {{-- Form Edit Inline (Toggled) --}}
-                <div id="form-edit-kiri-{{ $slugSesi }}" class="hidden no-print mb-4 rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
-                    <div class="mb-3 flex items-center justify-between border-b pb-2">
-                        <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Sampel Retain (Jam 06.00)</span>
-                        <button type="button" onclick="document.getElementById('form-edit-kiri-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
+                <div id="form-edit-kiri-{{ $slugSesi }}" class="hidden no-print mb-4 rounded-3xl bg-white p-5 border-2 border-blue-200 shadow-xl">
+                    <div class="mb-4 flex items-center justify-between border-b pb-3">
+                        <div>
+                            <h4 class="text-sm font-black text-[#0f3861] uppercase">Edit Cepat Sampel Retain (Jam 06.00 WIB)</h4>
+                            <p class="text-[11px] text-slate-400 font-semibold">Isi data produk, lalu klik Simpan di bawah.</p>
+                        </div>
+                        <button type="button" onclick="document.getElementById('form-edit-kiri-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg transition"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                     </div>
-                    <div class="space-y-4">
-                        @foreach ($produkList as $p)
-                            @php $e = $produk06Entries[$p] ?? null; @endphp
-                            <form method="POST" action="{{ $e ? route('retain-sampel.update', $e) : route('retain-sampel.store') }}" class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-end border-b pb-2 last:border-b-0">
-                                @csrf
-                                @if ($e) @method('PUT') @endif
-                                <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                                <input type="hidden" name="jam_label" value="06:00">
-                                <input type="hidden" name="produk" value="{{ $p }}">
-                                <div>
-                                    <span class="text-[10px] font-bold text-[#0f3861] block mb-1">{{ $p }}</span>
-                                    <input type="text" name="mt_nopol" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
+                    <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
+                        @csrf
+                        <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                        <input type="hidden" name="jam_label" value="06:00">
+                        <div class="space-y-2">
+                            @foreach ($produkList as $idx => $p)
+                                @php $e = $produk06Entries[$p] ?? null; @endphp
+                                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center bg-slate-50/70 p-2 rounded-xl border border-slate-200/80">
+                                    <input type="hidden" name="items[{{ $idx }}][produk]" value="{{ $p }}">
+                                    @if ($e) <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $e->id }}"> @endif
+                                    <div>
+                                        <span class="text-xs font-black text-[#0f3861] block">{{ $p }}</span>
+                                    </div>
+                                    <div>
+                                        <input type="text" name="items[{{ $idx }}][mt_nopol]" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                    </div>
+                                    <div>
+                                        <input type="text" name="items[{{ $idx }}][tangki_timbun]" value="{{ $e?->tangki_timbun }}" placeholder="Tangki (cth: 09)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                    </div>
+                                    <div>
+                                        <input type="number" step="0.0001" name="items[{{ $idx }}][density_obs]" value="{{ $e?->density_obs }}" placeholder="Density Obs" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                    </div>
+                                    <div>
+                                        <input type="number" step="0.1" name="items[{{ $idx }}][temperatur]" value="{{ $e?->temperatur }}" placeholder="Suhu (°C)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="text-[9px] font-bold text-slate-400 block mb-1">Density Obs</span>
-                                    <input type="number" step="0.0001" name="density_obs" value="{{ $e?->density_obs }}" placeholder="0.7420" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                                </div>
-                                <div>
-                                    <span class="text-[9px] font-bold text-slate-400 block mb-1">Suhu (°C)</span>
-                                    <input type="number" step="0.1" name="temperatur" value="{{ $e?->temperatur }}" placeholder="24" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                                </div>
-                                <div>
-                                    <span class="text-[9px] font-bold text-slate-400 block mb-1">Tangki</span>
-                                    <input type="text" name="tangki_timbun" value="{{ $e?->tangki_timbun }}" placeholder="9" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                                </div>
-                                <div>
-                                    <button type="submit" class="w-full rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white px-2 py-1 text-xs font-bold transition">Simpan</button>
-                                </div>
-                            </form>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                        <div class="pt-2 flex items-center justify-between">
+                            <span class="text-[11px] text-slate-400">ASTM Table 53B otomatis dikalkulasi saat disimpan.</span>
+                            <button type="submit" class="rounded-xl bg-brand-red hover:bg-brand-redDark text-white px-5 py-2.5 text-xs font-black shadow transition flex items-center gap-1.5">
+                                <i data-lucide="save" class="h-4 w-4"></i> Simpan Semua Data 06.00 WIB
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 {{-- Tabel Data Sampel Retain Jam 06.00 (5 Baris Standar) --}}
@@ -1143,42 +1171,49 @@
                     </div>
 
                     {{-- Form Edit Cepat Retain (Toggled) --}}
-                    <div id="form-edit-retank-{{ $slugSesi }}" class="hidden no-print mb-4 rounded-2xl bg-white p-4 border border-blue-200 shadow-md">
-                        <div class="mb-3 flex items-center justify-between border-b pb-2">
-                            <span class="text-xs font-bold text-[#0f3861] uppercase">Edit Data Retain (Pukul {{ str_replace(':', '.', $sesiJam) }} WIB)</span>
-                            <button type="button" onclick="document.getElementById('form-edit-retank-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
+                    <div id="form-edit-retank-{{ $slugSesi }}" class="hidden no-print mb-4 rounded-3xl bg-white p-5 border-2 border-blue-200 shadow-xl">
+                        <div class="mb-4 flex items-center justify-between border-b pb-3">
+                            <div>
+                                <h4 class="text-sm font-black text-[#0f3861] uppercase">Edit Cepat Retain (Pukul {{ str_replace(':', '.', $sesiJam) }} WIB)</h4>
+                                <p class="text-[11px] text-slate-400 font-semibold">Isi data produk, lalu klik Simpan di bawah.</p>
+                            </div>
+                            <button type="button" onclick="document.getElementById('form-edit-retank-{{ $slugSesi }}').classList.add('hidden')" class="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg transition"><i data-lucide="x" class="h-3.5 w-3.5"></i> Tutup</button>
                         </div>
-                        <div class="space-y-4">
-                            @foreach ($produkList as $p)
-                                @php $e = $produkKananEntries[$p] ?? null; @endphp
-                                <form method="POST" action="{{ $e ? route('retain-sampel.update', $e) : route('retain-sampel.store') }}" class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-end border-b pb-2 last:border-b-0">
-                                    @csrf
-                                    @if ($e) @method('PUT') @endif
-                                    <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                                    <input type="hidden" name="jam_label" value="{{ $sesiJam }}">
-                                    <input type="hidden" name="produk" value="{{ $p }}">
-                                    <div>
-                                        <span class="text-[10px] font-bold text-[#0f3861] block mb-1">{{ $p }}</span>
-                                        <input type="text" name="mt_nopol" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
+                        <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
+                            @csrf
+                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                            <input type="hidden" name="jam_label" value="{{ $sesiJam }}">
+                            <div class="space-y-2">
+                                @foreach ($produkList as $idx => $p)
+                                    @php $e = $produkKananEntries[$p] ?? null; @endphp
+                                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center bg-slate-50/70 p-2 rounded-xl border border-slate-200/80">
+                                        <input type="hidden" name="items[{{ $idx }}][produk]" value="{{ $p }}">
+                                        @if ($e) <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $e->id }}"> @endif
+                                        <div>
+                                            <span class="text-xs font-black text-[#0f3861] block">{{ $p }}</span>
+                                        </div>
+                                        <div>
+                                            <input type="text" name="items[{{ $idx }}][mt_nopol]" value="{{ $e?->mt_nopol }}" placeholder="Nopol MT" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                        </div>
+                                        <div>
+                                            <input type="text" name="items[{{ $idx }}][tangki_timbun]" value="{{ $e?->tangki_timbun }}" placeholder="Tangki (cth: 09)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold">
+                                        </div>
+                                        <div>
+                                            <input type="number" step="0.0001" name="items[{{ $idx }}][density_obs]" value="{{ $e?->density_obs }}" placeholder="Density Obs" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                        </div>
+                                        <div>
+                                            <input type="number" step="0.1" name="items[{{ $idx }}][temperatur]" value="{{ $e?->temperatur }}" placeholder="Suhu (°C)" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold">
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-[9px] font-bold text-slate-400 block mb-1">Density Obs</span>
-                                        <input type="number" step="0.0001" name="density_obs" value="{{ $e?->density_obs }}" placeholder="0.7420" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                                    </div>
-                                    <div>
-                                        <span class="text-[9px] font-bold text-slate-400 block mb-1">Suhu (°C)</span>
-                                        <input type="number" step="0.1" name="temperatur" value="{{ $e?->temperatur }}" placeholder="24" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                                    </div>
-                                    <div>
-                                        <span class="text-[9px] font-bold text-slate-400 block mb-1">Tangki</span>
-                                        <input type="text" name="tangki_timbun" value="{{ $e?->tangki_timbun }}" placeholder="9" class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs">
-                                    </div>
-                                    <div>
-                                        <button type="submit" class="w-full rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white px-2 py-1 text-xs font-bold transition">Simpan</button>
-                                    </div>
-                                </form>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
+                            <div class="pt-2 flex items-center justify-between">
+                                <span class="text-[11px] text-slate-400">ASTM Table 53B otomatis dikalkulasi saat disimpan.</span>
+                                <button type="submit" class="rounded-xl bg-brand-red hover:bg-brand-redDark text-white px-5 py-2.5 text-xs font-black shadow transition flex items-center gap-1.5">
+                                    <i data-lucide="save" class="h-4 w-4"></i> Simpan Semua Data {{ str_replace(':', '.', $sesiJam) }} WIB
+                                </button>
+                            </div>
+                        </form>
                     </div>
 
                     {{-- Tabel Data Re-Tank --}}

@@ -41,7 +41,7 @@
             <i data-lucide="printer" class="h-4 w-4"></i> Cetak / Unduh Banner
         </a>
         @if (!auth()->user()->isSpbu())
-            <a href="{{ route('retain-sampel.create') }}"
+            <a href="{{ route('retain-sampel.create', ['tanggal' => $tanggal]) }}"
                class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-3.5 py-2 text-xs sm:text-sm font-bold text-white shadow-md shadow-brand-red/25 transition hover:bg-brand-redDark">
                 <i data-lucide="plus" class="h-4 w-4"></i> Tambah Data
             </a>

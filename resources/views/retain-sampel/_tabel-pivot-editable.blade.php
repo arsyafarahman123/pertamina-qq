@@ -1,7 +1,7 @@
 {{--
-    Tabel rekap per-sesi yang bisa diisi/diedit LANGSUNG di halaman ini (gak perlu pindah halaman).
-    Mendukung multiple sampel untuk produk yang sama (misal 2x Pertalite) & produk kustom.
-    Semua icon menggunakan icon Lucide SVG profesional (bukan emoji).
+    Tabel rekap per-sesi multi-input langsung (Sekali Simpan di Bawah).
+    Petugas cukup mengisi kolom Nopol, Tangki, Density Obs, dan Suhu untuk produk yang disalurkan,
+    lalu menekan SATU tombol Simpan di bagian paling bawah.
 
     Vars: $produkList (array produk standar), $entries (array [produk => entry]),
           $entriesList (Collection seluruh record RetainSampelMt di sesi ini),
@@ -9,233 +9,188 @@
 --}}
 @php
     $actualEntries = isset($entriesList) && $entriesList->isNotEmpty() ? $entriesList : collect(array_values($entries ?? []));
-    $existingProductNames = $actualEntries->pluck('produk')->all();
-    $unfilledStandardProducts = array_diff($produkList, $existingProductNames);
-    $newRowId = 'frm-new-' . str_replace([':', ' '], '', $jamLabel);
+    $existingByProduct = [];
+    foreach ($actualEntries as $e) {
+        $existingByProduct[$e->produk] = $e;
+    }
+    $formSesiId = 'form-bulk-sesi-' . str_replace([':', ' '], '', $jamLabel);
 @endphp
 
-<div class="space-y-3">
-    <table class="w-full min-w-[700px] border-collapse text-xs sm:text-sm">
-        <thead>
-            <tr class="bg-slate-50 text-left uppercase tracking-wide text-slate-500">
-                <th class="border-b border-slate-200 px-3 py-2.5 font-bold">Produk</th>
-                <th class="border-b border-slate-200 px-3 py-2.5 font-bold">MT Nopol</th>
-                <th class="border-b border-slate-200 px-3 py-2.5 font-bold">Density Obs</th>
-                <th class="border-b border-slate-200 px-3 py-2.5 font-bold">Density'15 <span class="normal-case text-[10px] text-slate-400 font-normal">(otomatis)</span></th>
-                <th class="border-b border-slate-200 px-3 py-2.5 font-bold">Suhu</th>
-                <th class="border-b border-slate-200 px-3 py-2.5 font-bold">Tangki Timbun</th>
-                <th class="border-b border-slate-200 px-3 py-2.5 text-right font-bold">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100">
-            {{-- 1. DAFTAR SELURUH DATA YANG SUDAH TERINPUT (TERMASUK JIKA ADA 2X PERTALITE DLL) --}}
-            @foreach ($actualEntries as $index => $e)
-                @php
-                    $rowId = 'frm-edit-' . $e->id;
-                @endphp
-                <tr class="hover:bg-slate-50/70 transition">
-                    <td class="px-3 py-2.5 font-bold text-slate-700 flex items-center gap-1.5">
-                        <span class="inline-block h-2 w-2 rounded-full bg-brand-blue"></span>
-                        <span>{{ $e->produk }}</span>
-                        @if ($actualEntries->where('produk', $e->produk)->count() > 1)
-                            <span class="rounded-full bg-amber-100 px-1.5 py-0.2 text-[10px] font-extrabold text-amber-800">#{{ $loop->iteration }}</span>
-                        @endif
-                    </td>
-                    <td class="px-3 py-2.5 font-semibold text-slate-700">{{ $e->mt_nopol ?: '-' }}</td>
-                    <td class="px-3 py-2.5 text-slate-700 font-medium">{{ number_format($e->density_obs, 4) }}</td>
-                    <td class="px-3 py-2.5 font-black text-brand-blue">{{ number_format($e->density_15, 4) }}</td>
-                    <td class="px-3 py-2.5 text-slate-700">{{ rtrim(rtrim(number_format($e->temperatur, 2), '0'), '.') }}°C</td>
-                    <td class="px-3 py-2.5 font-semibold text-slate-700">{{ $e->tangki_timbun ?: '-' }}</td>
-                    <td class="px-3 py-2.5 text-right">
-                        <div class="inline-flex items-center gap-1">
-                            <button type="button" onclick="document.getElementById('{{ $rowId }}').classList.toggle('hidden')"
-                                    class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600 shadow-sm transition">
-                                <i data-lucide="pencil" class="h-3 w-3 text-slate-500"></i> Edit
-                            </button>
-                            <form method="POST" action="{{ route('retain-sampel.destroy', $e) }}" onsubmit="return confirm('Hapus data sampel {{ $e->produk }} ini?')" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="inline-flex items-center gap-1 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 px-2 py-1 text-[11px] font-bold text-red-600 transition" title="Hapus baris ini">
-                                    <i data-lucide="trash-2" class="h-3 w-3"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
+<form method="POST" action="{{ route('retain-sampel.store') }}" id="{{ $formSesiId }}" class="space-y-4">
+    @csrf
+    <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+    <input type="hidden" name="jam_label" value="{{ $jamLabel }}">
+
+    <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table class="w-full min-w-[760px] border-collapse text-xs sm:text-sm">
+            <thead>
+                <tr class="bg-gradient-to-r from-[#0f3861] to-[#1e5083] text-white text-left uppercase tracking-wider text-[11px]">
+                    <th class="px-3.5 py-3 font-bold rounded-tl-2xl">Produk Penyaluran</th>
+                    <th class="px-3 py-3 font-bold">MT Nopol</th>
+                    <th class="px-3 py-3 font-bold">Tangki Timbun</th>
+                    <th class="px-3 py-3 font-bold">Density Obs</th>
+                    <th class="px-3 py-3 font-bold">Suhu (°C)</th>
+                    <th class="px-3 py-3 font-bold">Density '15 <span class="normal-case text-[9px] text-emerald-300 font-normal">(ASTM Otomatis)</span></th>
+                    <th class="px-3 py-3 font-bold text-center rounded-tr-2xl">Status</th>
                 </tr>
-
-                {{-- FORM EDIT INLINE --}}
-                <tr id="{{ $rowId }}" class="hidden">
-                    <td colspan="7" class="bg-blue-50/40 p-4 border-y border-blue-100">
-                        <form method="POST" action="{{ route('retain-sampel.update', $e) }}" enctype="multipart/form-data" class="space-y-3">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                            <input type="hidden" name="jam_label" value="{{ $jamLabel }}">
-
-                            <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Produk</label>
-                                    <select name="produk" required class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700">
-                                        @foreach ($produkList as $p)
-                                            <option value="{{ $p }}" @selected($e->produk === $p)>{{ $p }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">MT Nopol</label>
-                                    <input type="text" name="mt_nopol" value="{{ $e->mt_nopol }}" placeholder="contoh: R 9675 B" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Tangki Timbun</label>
-                                    <input type="text" name="tangki_timbun" value="{{ $e->tangki_timbun }}" placeholder="contoh: 09 atau T.09" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Density Obs</label>
-                                    <input type="number" step="0.0001" name="density_obs" value="{{ $e->density_obs }}" required class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-800">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Suhu (°C)</label>
-                                    <input type="number" step="0.1" name="temperatur" value="{{ $e->temperatur }}" required class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-800">
-                                </div>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                @php $idx = 0; @endphp
+                @foreach ($produkList as $p)
+                    @php
+                        $e = $existingByProduct[$p] ?? null;
+                        $hasData = ($e && $e->density_obs !== null);
+                        $rowIdx = $idx++;
+                    @endphp
+                    <tr class="hover:bg-blue-50/30 transition {{ $hasData ? 'bg-emerald-50/20' : '' }}">
+                        {{-- Nama Produk --}}
+                        <td class="px-3.5 py-3 font-black text-slate-800 whitespace-nowrap">
+                            <input type="hidden" name="items[{{ $rowIdx }}][produk]" value="{{ $p }}">
+                            @if ($e)
+                                <input type="hidden" name="items[{{ $rowIdx }}][id]" value="{{ $e->id }}">
+                            @endif
+                            <div class="flex items-center gap-2">
+                                <span class="inline-block h-2.5 w-2.5 rounded-full {{ $hasData ? 'bg-emerald-500 ring-2 ring-emerald-200' : 'bg-slate-300' }}"></span>
+                                <span class="font-bold text-[#0f3861]">{{ $p }}</span>
                             </div>
+                        </td>
 
-                            <div class="flex items-center gap-2 pt-1">
-                                <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-brand-blue px-3.5 py-1.5 text-xs font-bold text-white hover:bg-brand-blueDark shadow-sm">
-                                    <i data-lucide="check" class="h-3.5 w-3.5"></i> Simpan Perubahan
-                                </button>
-                                <button type="button" onclick="document.getElementById('{{ $rowId }}').classList.add('hidden')" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50">
-                                    Batal
-                                </button>
-                                <span class="text-[10px] text-slate-400">Density'15 dikalkulasi ulang otomatis oleh sistem.</span>
+                        {{-- MT Nopol --}}
+                        <td class="px-2 py-2">
+                            <input type="text" name="items[{{ $rowIdx }}][mt_nopol]" 
+                                   value="{{ old("items.$rowIdx.mt_nopol", $e?->mt_nopol) }}" 
+                                   placeholder="cth: R 9675 B" 
+                                   class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-1.5 text-xs font-semibold text-slate-700 transition focus:border-[#0f3861] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0f3861]/10">
+                        </td>
+
+                        {{-- Tangki Timbun --}}
+                        <td class="px-2 py-2">
+                            <input type="text" name="items[{{ $rowIdx }}][tangki_timbun]" 
+                                   value="{{ old("items.$rowIdx.tangki_timbun", $e?->tangki_timbun) }}" 
+                                   placeholder="cth: 09 / T.09" 
+                                   class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-1.5 text-xs font-semibold text-slate-700 transition focus:border-[#0f3861] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0f3861]/10">
+                        </td>
+
+                        {{-- Density Obs --}}
+                        <td class="px-2 py-2">
+                            <input type="number" step="0.0001" name="items[{{ $rowIdx }}][density_obs]" 
+                                   id="inline_obs_{{ $jamLabel }}_{{ $rowIdx }}"
+                                   value="{{ old("items.$rowIdx.density_obs", $e?->density_obs) }}" 
+                                   placeholder="0.7420" 
+                                   oninput="hitungInlineDensity15('{{ $jamLabel }}', {{ $rowIdx }})"
+                                   class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-1.5 text-xs font-bold text-slate-800 transition focus:border-[#0f3861] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0f3861]/10">
+                        </td>
+
+                        {{-- Suhu --}}
+                        <td class="px-2 py-2">
+                            <input type="number" step="0.1" name="items[{{ $rowIdx }}][temperatur]" 
+                                   id="inline_temp_{{ $jamLabel }}_{{ $rowIdx }}"
+                                   value="{{ old("items.$rowIdx.temperatur", $e?->temperatur) }}" 
+                                   placeholder="29.5" 
+                                   oninput="hitungInlineDensity15('{{ $jamLabel }}', {{ $rowIdx }})"
+                                   class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-1.5 text-xs font-bold text-slate-800 transition focus:border-[#0f3861] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0f3861]/10">
+                        </td>
+
+                        {{-- Density 15 Otomatis --}}
+                        <td class="px-3 py-2 whitespace-nowrap">
+                            <div class="inline-flex items-center justify-center rounded-xl bg-blue-50 border border-blue-200/80 px-3 py-1 text-xs font-black text-[#0f3861] min-w-[76px]"
+                                 id="inline_d15_{{ $jamLabel }}_{{ $rowIdx }}">
+                                @if ($e && $e->density_15)
+                                    {{ number_format($e->density_15, 4) }}
+                                @else
+                                    —
+                                @endif
                             </div>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+                        </td>
 
-            {{-- 2. PRODUK STANDAR YANG BELUM DIINPUT DI SESI INI --}}
-            @foreach ($unfilledStandardProducts as $prodUnfilled)
-                @php
-                    $rowUnfilledId = 'frm-unfilled-' . str_replace([':', ' '], '', $jamLabel) . '-' . \Illuminate\Support\Str::slug($prodUnfilled);
-                @endphp
-                <tr class="hover:bg-slate-50/50">
-                    <td class="px-3 py-2.5 font-bold text-slate-400 flex items-center gap-1.5">
-                        <span class="inline-block h-2 w-2 rounded-full bg-slate-200"></span>
-                        <span>{{ $prodUnfilled }}</span>
-                    </td>
-                    <td colspan="5" class="px-3 py-2.5 italic text-slate-300">Belum ada data</td>
-                    <td class="px-3 py-2.5 text-right">
-                        <button type="button" onclick="document.getElementById('{{ $rowUnfilledId }}').classList.toggle('hidden')"
-                                class="inline-flex items-center gap-1 rounded-lg bg-brand-red/10 px-2.5 py-1 text-[11px] font-bold text-brand-red hover:bg-brand-red/20 transition">
-                            <i data-lucide="plus" class="h-3 w-3"></i> Isi Data
-                        </button>
-                    </td>
-                </tr>
-
-                {{-- FORM ISI CEPAT PRODUK BELUM ADA --}}
-                <tr id="{{ $rowUnfilledId }}" class="hidden">
-                    <td colspan="7" class="bg-slate-50 p-4 border-y border-slate-200">
-                        <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
-                            @csrf
-                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                            <input type="hidden" name="jam_label" value="{{ $jamLabel }}">
-                            <input type="hidden" name="produk" value="{{ $prodUnfilled }}">
-
-                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">MT Nopol</label>
-                                    <input type="text" name="mt_nopol" placeholder="contoh: R 9675 B" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Tangki Timbun</label>
-                                    <input type="text" name="tangki_timbun" placeholder="contoh: 09 atau T.09" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Density Obs</label>
-                                    <input type="number" step="0.0001" name="density_obs" required placeholder="0.7420" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-800">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Suhu (°C)</label>
-                                    <input type="number" step="0.1" name="temperatur" required placeholder="29.5" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-800">
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-2 pt-1">
-                                <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-brand-red px-3.5 py-1.5 text-xs font-bold text-white hover:bg-brand-redDark shadow-sm">
-                                    <i data-lucide="save" class="h-3.5 w-3.5"></i> Simpan Data {{ $prodUnfilled }}
-                                </button>
-                                <button type="button" onclick="document.getElementById('{{ $rowUnfilledId }}').classList.add('hidden')" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50">
-                                    Batal
-                                </button>
-                                <span class="text-[10px] text-slate-400">Density'15 dikalkulasi otomatis.</span>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    {{-- 3. TOMBOL TAMBAH SAMPEL KUSTOM / DUPLIKAT BARU DI SESI INI & INPUT SEKALIGUS --}}
-    <div class="pt-2 flex flex-wrap items-center gap-2">
-        <a href="{{ route('retain-sampel.create', ['tanggal' => $tanggal, 'jam_label' => $jamLabel]) }}"
-           class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-brand-redDark transition">
-            <i data-lucide="layers" class="h-3.5 w-3.5"></i> Input Semua Produk Sekaligus (Pukul {{ $jamLabel }} WIB)
-        </a>
-        <button type="button" onclick="document.getElementById('{{ $newRowId }}').classList.toggle('hidden')"
-                class="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-brand-blue hover:border-brand-blue shadow-sm transition">
-            <i data-lucide="plus" class="h-3.5 w-3.5 text-slate-500"></i> + Sampel Tambahan (Satuan)
-        </button>
+                        {{-- Status & Reset --}}
+                        <td class="px-2 py-2 text-center whitespace-nowrap">
+                            @if ($hasData)
+                                <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-extrabold">
+                                    ✓ Terisi
+                                </span>
+                            @else
+                                <span class="text-[10px] font-semibold text-slate-400">
+                                    Belum diisi
+                                </span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
-    {{-- FORM TAMBAH SAMPEL LAIN / DOUBLE PRODUK --}}
-    <div id="{{ $newRowId }}" class="hidden mt-3 rounded-2xl bg-slate-50 p-4 border border-slate-200">
-        <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
-            <i data-lucide="plus" class="h-4 w-4 text-brand-blue"></i>
-            Input Sampel Baru Sesi {{ $jamLabel }} WIB
-        </h4>
-        <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
-            @csrf
-                <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                <input type="hidden" name="jam_label" value="{{ $jamLabel }}">
+    {{-- BAR TOMBOL SIMPAN SEKALIGUS DI PALING BAWAH --}}
+    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex items-center gap-2 text-xs text-slate-500 font-medium">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 text-[#0f3861] font-bold text-[10px]">i</span>
+            <span>Cukup isi baris produk yang disalurkan. Baris kosong akan otomatis dilewati.</span>
+        </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Produk</label>
-                        <select name="produk" required class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-700">
-                            @foreach ($produkList as $p)
-                                <option value="{{ $p }}">{{ $p }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">MT Nopol</label>
-                        <input type="text" name="mt_nopol" placeholder="contoh: R 9675 B" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Tangki Timbun</label>
-                        <input type="text" name="tangki_timbun" placeholder="contoh: 09 atau T.09" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Density Obs</label>
-                        <input type="number" step="0.0001" name="density_obs" required placeholder="0.7420" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-800">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wide text-slate-500 mb-1">Suhu (°C)</label>
-                        <input type="number" step="0.1" name="temperatur" required placeholder="29.5" class="w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-slate-800">
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-2 pt-1">
-                    <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-brand-red px-3.5 py-1.5 text-xs font-bold text-white hover:bg-brand-redDark shadow-sm">
-                        <i data-lucide="save" class="h-3.5 w-3.5"></i> Simpan Sampel
-                    </button>
-                    <button type="button" onclick="document.getElementById('{{ $newRowId }}').classList.add('hidden')" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50">
-                        Batal
-                    </button>
-                    <span class="text-[10px] text-slate-400">Density'15 dikalkulasi otomatis.</span>
-                </div>
-            </form>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('retain-sampel.create', ['tanggal' => $tanggal, 'jam_label' => $jamLabel]) }}"
+               class="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-[#0f3861] transition shadow-sm">
+                <i data-lucide="maximize-2" class="h-3.5 w-3.5 text-slate-400"></i> Form Layar Penuh
+            </a>
+            <button type="submit"
+                    class="inline-flex items-center gap-2 rounded-xl bg-brand-red hover:bg-brand-redDark px-5 py-2 text-xs sm:text-sm font-extrabold text-white shadow-md shadow-brand-red/25 transition hover:-translate-y-0.5 active:scale-95">
+                <i data-lucide="save" class="h-4 w-4"></i>
+                Simpan Semua Data (Pukul {{ str_replace(':', '.', $jamLabel) }} WIB)
+            </button>
         </div>
     </div>
-</div>
+</form>
+
+<script>
+// Fungsi kalkulasi ASTM 53B realtime pada inline table
+if (typeof window.hitungInlineDensity15 !== 'function') {
+    window.hitungInlineDensity15 = function(jam, rowIdx) {
+        var obsEl = document.getElementById('inline_obs_' + jam + '_' + rowIdx);
+        var tempEl = document.getElementById('inline_temp_' + jam + '_' + rowIdx);
+        var previewEl = document.getElementById('inline_d15_' + jam + '_' + rowIdx);
+        if (!obsEl || !tempEl || !previewEl) return;
+
+        var obs = parseFloat(obsEl.value);
+        var temp = parseFloat(tempEl.value);
+
+        if (isNaN(obs) || isNaN(temp) || obs <= 0) {
+            previewEl.textContent = '—';
+            return;
+        }
+
+        // Normalisasi basis kg/m3
+        var rhoT = obs > 10.0 ? obs : (obs * 1000.0);
+        if (rhoT < 100.0 || rhoT > 2000.0) {
+            previewEl.textContent = (obs > 10.0 ? (obs / 1000.0).toFixed(4) : obs.toFixed(4));
+            return;
+        }
+
+        var dT = temp - 15.0;
+        var anchors = [
+            [690.0, 0.8636], [700.0, 0.8500], [710.0, 0.8364], [720.0, 0.8182],
+            [730.0, 0.8091], [733.0, 0.8000], [740.0, 0.7909], [743.0, 0.7909],
+            [750.0, 0.7727], [759.0, 0.7636], [800.0, 0.7000], [810.0, 0.6909],
+            [815.0, 0.6818], [820.0, 0.6818], [830.0, 0.6727], [839.0, 0.6636],
+            [840.0, 0.6636], [850.0, 0.6545], [860.0, 0.6545], [869.0, 0.6455]
+        ];
+
+        var slope = 0.75;
+        if (rhoT <= anchors[0][0]) slope = anchors[0][1];
+        else if (rhoT >= anchors[anchors.length - 1][0]) slope = anchors[anchors.length - 1][1];
+        else {
+            for (var i = 0; i < anchors.length - 1; i++) {
+                if (rhoT >= anchors[i][0] && rhoT <= anchors[i + 1][0]) {
+                    var frac = (rhoT - anchors[i][0]) / (anchors[i + 1][0] - anchors[i][0]);
+                    slope = anchors[i][1] + frac * (anchors[i + 1][1] - anchors[i][1]);
+                    break;
+                }
+            }
+        }
+
+        var rho15 = rhoT + (slope * dT);
+        var d15 = (rho15 / 1000.0).toFixed(4);
+        previewEl.textContent = d15;
+    };
+}
+</script>
