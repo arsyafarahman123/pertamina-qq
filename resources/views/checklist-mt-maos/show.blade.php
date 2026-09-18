@@ -77,6 +77,10 @@
             <span class="mt-1 inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-brand-red ring-1 ring-inset ring-red-200">
                 <i data-lucide="triangle-alert" class="h-3.5 w-3.5"></i> {{ $checklist->flagCount() }} Temuan
             </span>
+        @elseif ($checklist->hasPerbaikan())
+            <span class="mt-1 inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-300">
+                <i data-lucide="check-check" class="h-3.5 w-3.5 text-emerald-600"></i> Selesai Perbaikan
+            </span>
         @else
             <span class="mt-1 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-inset ring-emerald-200">
                 <i data-lucide="circle-check" class="h-3.5 w-3.5"></i> Sesuai Standar
@@ -85,6 +89,23 @@
     </div>
     </div>
 </div>
+
+@if ($checklist->hasPerbaikan() && count($checklist->summaryPerbaikan()))
+    <div class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50/90 p-5 shadow-card">
+        <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="wrench" class="h-4 w-4 text-emerald-700"></i>
+            <p class="text-xs font-bold uppercase tracking-wide text-emerald-900">Catatan Perbaikan Selesai (Display Hijau):</p>
+        </div>
+        <ul class="space-y-1.5 text-xs text-emerald-950 font-medium pl-1">
+            @foreach($checklist->summaryPerbaikan() as $sp)
+                <li class="flex items-start gap-2">
+                    <span class="font-black text-emerald-600 shrink-0">✓</span>
+                    <span>{{ $sp }}</span>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <!-- ===== Masa Sertifikat Tera ===== -->
 <p class="mb-2 mt-2 px-1 text-xs font-extrabold uppercase tracking-wider text-brand-blueDark">1–2 · Masa Sertifikat Tera</p>
@@ -136,6 +157,7 @@
                             $key = $sec['no'] . '-' . $i;
                             $res = $checklist->results[$key] ?? null;
                             $note = trim($checklist->notes[$key] ?? '');
+                            $isRep = $res === 'repaired' || ($note && $checklist->isRepairNote($note));
                         @endphp
                         <tr>
                             <td class="px-4 py-3 text-center text-slate-400">{{ $i + 1 }}</td>
@@ -144,6 +166,7 @@
                             <td class="px-4 py-3 text-slate-500">{{ $s['disp'] }}</td>
                             <td class="px-4 py-3">
                                 @if($res === 'ok') <span class="inline-flex items-center gap-1 font-bold text-emerald-600"><i data-lucide="check" class="h-4 w-4"></i> Sesuai</span>
+                                @elseif($res === 'repaired') <span class="inline-flex items-center gap-1 font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200"><i data-lucide="wrench" class="h-3.5 w-3.5"></i> Diperbaiki</span>
                                 @elseif($res === 'bad') <span class="inline-flex items-center gap-1 font-bold text-brand-red"><i data-lucide="x" class="h-4 w-4"></i> Temuan</span>
                                 @else <span class="text-slate-300">—</span>
                                 @endif
@@ -151,7 +174,7 @@
                             <td class="px-4 py-3 leading-relaxed text-slate-600">
                                 {{ $s['ket'] }}
                                 @if($note)
-                                    <br><span class="italic text-amber-700">Catatan: {{ $note }}</span>
+                                    <br><span class="{{ $isRep ? 'font-bold text-teal-800' : 'italic text-amber-700' }}">Catatan: {{ $note }}</span>
                                 @endif
                             </td>
                         </tr>
@@ -161,6 +184,7 @@
                         $key = $sec['no'];
                         $res = $checklist->results[$key] ?? null;
                         $note = trim($checklist->notes[$key] ?? '');
+                        $isRep = $res === 'repaired' || ($note && $checklist->isRepairNote($note));
                     @endphp
                     <tr>
                         <td class="px-4 py-3 text-center font-semibold text-slate-500">{{ $sec['no'] }}</td>
@@ -169,6 +193,7 @@
                         <td class="px-4 py-3 text-slate-500">{{ $sec['disp'] }}</td>
                         <td class="px-4 py-3">
                             @if($res === 'ok') <span class="inline-flex items-center gap-1 font-bold text-emerald-600"><i data-lucide="check" class="h-4 w-4"></i> Sesuai</span>
+                            @elseif($res === 'repaired') <span class="inline-flex items-center gap-1 font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200"><i data-lucide="wrench" class="h-3.5 w-3.5"></i> Diperbaiki</span>
                             @elseif($res === 'bad') <span class="inline-flex items-center gap-1 font-bold text-brand-red"><i data-lucide="x" class="h-4 w-4"></i> Temuan</span>
                             @else <span class="text-slate-300">—</span>
                             @endif
@@ -176,7 +201,7 @@
                         <td class="px-4 py-3 leading-relaxed text-slate-600">
                             {{ $sec['ket'] }}
                             @if($note)
-                                <br><span class="italic text-amber-700">Catatan: {{ $note }}</span>
+                                <br><span class="{{ $isRep ? 'font-bold text-teal-800' : 'italic text-amber-700' }}">Catatan: {{ $note }}</span>
                             @endif
                         </td>
                     </tr>

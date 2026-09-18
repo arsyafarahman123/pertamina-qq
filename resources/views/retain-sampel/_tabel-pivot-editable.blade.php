@@ -176,21 +176,26 @@
         </tbody>
     </table>
 
-    {{-- 3. TOMBOL TAMBAH SAMPEL KUSTOM / DUPLIKAT BARU DI SESI INI --}}
-    <div class="pt-2">
+    {{-- 3. TOMBOL TAMBAH SAMPEL KUSTOM / DUPLIKAT BARU DI SESI INI & INPUT SEKALIGUS --}}
+    <div class="pt-2 flex flex-wrap items-center gap-2">
+        <a href="{{ route('retain-sampel.create', ['tanggal' => $tanggal, 'jam_label' => $jamLabel]) }}"
+           class="inline-flex items-center gap-1.5 rounded-xl bg-brand-red px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-brand-redDark transition">
+            <i data-lucide="layers" class="h-3.5 w-3.5"></i> Input Semua Produk Sekaligus (Pukul {{ $jamLabel }} WIB)
+        </a>
         <button type="button" onclick="document.getElementById('{{ $newRowId }}').classList.toggle('hidden')"
                 class="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-brand-blue hover:border-brand-blue shadow-sm transition">
-            <i data-lucide="plus" class="h-3.5 w-3.5 text-slate-500"></i> Tambah Sampel Produk (Sesi {{ $jamLabel }} WIB)
+            <i data-lucide="plus" class="h-3.5 w-3.5 text-slate-500"></i> + Sampel Tambahan (Satuan)
         </button>
+    </div>
 
-        {{-- FORM TAMBAH SAMPEL LAIN / DOUBLE PRODUK --}}
-        <div id="{{ $newRowId }}" class="hidden mt-3 rounded-2xl bg-slate-50 p-4 border border-slate-200">
-            <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
-                <i data-lucide="plus" class="h-4 w-4 text-brand-blue"></i>
-                Input Sampel Baru Sesi {{ $jamLabel }} WIB
-            </h4>
-            <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
-                @csrf
+    {{-- FORM TAMBAH SAMPEL LAIN / DOUBLE PRODUK --}}
+    <div id="{{ $newRowId }}" class="hidden mt-3 rounded-2xl bg-slate-50 p-4 border border-slate-200">
+        <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+            <i data-lucide="plus" class="h-4 w-4 text-brand-blue"></i>
+            Input Sampel Baru Sesi {{ $jamLabel }} WIB
+        </h4>
+        <form method="POST" action="{{ route('retain-sampel.store') }}" class="space-y-3">
+            @csrf
                 <input type="hidden" name="tanggal" value="{{ $tanggal }}">
                 <input type="hidden" name="jam_label" value="{{ $jamLabel }}">
 

@@ -36,6 +36,23 @@
             </div>
         </div>
 
+        @if($isEdit && ($checklist->isFlagged() || $checklist->hasPerbaikan()))
+            <div class="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-teal-200 bg-teal-50/80 p-4 shadow-card">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white shadow-sm">
+                        <i data-lucide="wrench" class="h-5 w-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-teal-900">Pembaruan Riwayat Perbaikan (Langsung Hijau)</p>
+                        <p class="text-xs text-teal-700">Tandai temuan yang sudah diperbaiki agar status di riwayat langsung berubah menjadi <b>HIJAU (Selesai Perbaikan)</b>.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tandaiSemuaDiperbaiki()" class="inline-flex items-center gap-1.5 rounded-xl bg-teal-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-teal-700 transition shrink-0">
+                    <i data-lucide="check-check" class="h-4 w-4"></i> Tandai Semua Selesai Diperbaiki
+                </button>
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="mb-5 flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800 shadow-card">
                 <i data-lucide="circle-alert" class="mt-0.5 h-5 w-5 shrink-0"></i>
@@ -197,12 +214,12 @@ const isEditMode = @json($isEdit);
 const checklistId = @json($checklist->id ?? 0);
 const DRAFT_KEY = isEditMode ? ('draft_checklist_mt_maos_edit_' + checklistId) : 'draft_checklist_mt_maos_create';
 
-// Toggle Sesuai/Temuan: tiap pasangan tombol berbagi satu hidden input results[key]
+// Toggle Sesuai/Temuan/Diperbaiki: tiap grup tombol berbagi satu hidden input results[key]
 function applyToggleState(group, val) {
     const hidden = group.querySelector('input[type=hidden]');
     hidden.value = val || '';
     group.querySelectorAll('.tbtn').forEach(b => {
-        b.classList.remove('bg-emerald-500', 'border-emerald-500', 'text-white', 'bg-brand-red', 'border-brand-red');
+        b.classList.remove('bg-emerald-500', 'border-emerald-500', 'text-white', 'bg-brand-red', 'border-brand-red', 'bg-teal-600', 'border-teal-600');
         b.classList.add('text-slate-400', 'border-slate-200');
     });
     if (val === 'ok') {
@@ -217,7 +234,54 @@ function applyToggleState(group, val) {
             btnBad.classList.remove('text-slate-400', 'border-slate-200');
             btnBad.classList.add('bg-brand-red', 'border-brand-red', 'text-white');
         }
+    } else if (val === 'repaired') {
+        const btnRep = group.querySelector('.tbtn[data-val="repaired"]');
+        if (btnRep) {
+            btnRep.classList.remove('text-slate-400', 'border-slate-200');
+            btnRep.classList.add('bg-teal-600', 'border-teal-600', 'text-white');
+        }
     }
+}
+
+// Pintasan isi catatan perbaikan otomatis
+function isiCatatanPerbaikan(noteId, text, btn) {
+    const textarea = document.getElementById(noteId);
+    if (!textarea) return;
+    const curVal = textarea.value.trim();
+    if (curVal === '') {
+        textarea.value = text;
+    } else if (!curVal.includes(text)) {
+        textarea.value = curVal + ' | ' + text;
+    }
+    
+    // Otomatis ubah tombol status baris ini menjadi "Diperbaiki" (repaired) jika sebelumnya Temuan/kosong
+    const row = textarea.closest('.flex-col');
+    if (row) {
+        const group = row.querySelector('[data-toggle-group]');
+        if (group) {
+            applyToggleState(group, 'repaired');
+        }
+    }
+    saveDraft();
+}
+
+// Tindakan cepat: tandai semua temuan sebagai selesai diperbaiki
+function tandaiSemuaDiperbaiki() {
+    document.querySelectorAll('[data-toggle-group]').forEach(group => {
+        const hidden = group.querySelector('input[type=hidden]');
+        if (hidden && hidden.value === 'bad') {
+            applyToggleState(group, 'repaired');
+            const row = group.closest('.flex-col');
+            if (row) {
+                const txt = row.querySelector('textarea');
+                if (txt && txt.value.trim() === '') {
+                    txt.value = 'Telah diperbaiki & normal saat pemeriksaan ulang.';
+                }
+            }
+        }
+    });
+    saveDraft();
+    alert('Seluruh item temuan telah diubah menjadi status "Diperbaiki". Silakan klik "Simpan Checklist" untuk memperbarui status menjadi HIJAU di riwayat.');
 }
 
 document.querySelectorAll('[data-toggle-group]').forEach(group => {

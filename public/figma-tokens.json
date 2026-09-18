@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "name": "Pertamina Fuel Maos QC Design System",
+  "color": {
+    "brand": {
+      "red": {
+        "value": "#ED1B2F",
+        "type": "color",
+        "description": "Pertamina Primary Red - Header, Primary CTA, Critical Verdict"
+      },
+      "red-dark": {
+        "value": "#B3101F",
+        "type": "color",
+        "description": "Pertamina Red Dark - Hover State"
+      },
+      "blue": {
+        "value": "#006CB8",
+        "type": "color",
+        "description": "Pertamina Primary Blue - Secondary Accent, Badges, Links"
+      },
+      "blue-dark": {
+        "value": "#003D78",
+        "type": "color",
+        "description": "Pertamina Blue Dark - Dark Navigation & Gradients"
+      },
+      "green": {
+        "value": "#ACC42A",
+        "type": "color",
+        "description": "Pertamina Energy Green - Accent & Highlights"
+      },
+      "gold": {
+        "value": "#F2A900",
+        "type": "color",
+        "description": "Pertamina Gold - Warning & Marginal Verdict"
+      },
+      "dark": {
+        "value": "#071B33",
+        "type": "color",
+        "description": "Deep Navy Slate - Sidebar & Dark UI"
+      }
+    },
+    "status": {
+      "pass": {
+        "value": "#10B981",
+        "type": "color",
+        "description": "Status Sesuai Spesifikasi (Green)"
+      },
+      "marginal": {
+        "value": "#F59E0B",
+        "type": "color",
+        "description": "Status Toleransi Tipis / Marginal (Amber)"
+      },
+      "fail": {
+        "value": "#EF4444",
+        "type": "color",
+        "description": "Status Tidak Sesuai / Out of Spec (Red)"
+      }
+    },
+    "neutral": {
+      "slate-50": { "value": "#F8FAFC", "type": "color" },
+      "slate-100": { "value": "#F1F5F9", "type": "color" },
+      "slate-200": { "value": "#E2E8F0", "type": "color" },
+      "slate-300": { "value": "#CBD5E1", "type": "color" },
+      "slate-400": { "value": "#94A3B8", "type": "color" },
+      "slate-500": { "value": "#64748B", "type": "color" },
+      "slate-600": { "value": "#475569", "type": "color" },
+      "slate-700": { "value": "#334155", "type": "color" },
+      "slate-800": { "value": "#1E293B", "type": "color" },
+      "slate-900": { "value": "#0F172A", "type": "color" }
+    }
+  },
+  "typography": {
+    "fontFamilies": {
+      "display": { "value": "Plus Jakarta Sans, sans-serif", "type": "fontFamilies" },
+      "body": { "value": "Inter, sans-serif", "type": "fontFamilies" },
+      "mono": { "value": "JetBrains Mono, monospace", "type": "fontFamilies" }
+    },
+    "fontSize": {
+      "xs": { "value": "12px", "type": "fontSizes" },
+      "sm": { "value": "14px", "type": "fontSizes" },
+      "base": { "value": "16px", "type": "fontSizes" },
+      "lg": { "value": "18px", "type": "fontSizes" },
+      "xl": { "value": "20px", "type": "fontSizes" },
+      "2xl": { "value": "24px", "type": "fontSizes" },
+      "3xl": { "value": "30px", "type": "fontSizes" },
+      "4xl": { "value": "36px", "type": "fontSizes" }
+    },
+    "fontWeight": {
+      "regular": { "value": "400", "type": "fontWeights" },
+      "medium": { "value": "500", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" },
+      "extrabold": { "value": "800", "type": "fontWeights" }
+    }
+  },
+  "spacing": {
+    "1": { "value": "4px", "type": "spacing" },
+    "2": { "value": "8px", "type": "spacing" },
+    "3": { "value": "12px", "type": "spacing" },
+    "4": { "value": "16px", "type": "spacing" },
+    "5": { "value": "20px", "type": "spacing" },
+    "6": { "value": "24px", "type": "spacing" },
+    "8": { "value": "32px", "type": "spacing" },
+    "10": { "value": "40px", "type": "spacing" },
+    "12": { "value": "48px", "type": "spacing" }
+  },
+  "borderRadius": {
+    "sm": { "value": "6px", "type": "borderRadius" },
+    "md": { "value": "8px", "type": "borderRadius" },
+    "lg": { "value": "12px", "type": "borderRadius" },
+    "xl": { "value": "16px", "type": "borderRadius" },
+    "2xl": { "value": "20px", "type": "borderRadius" },
+    "3xl": { "value": "24px", "type": "borderRadius" },
+    "full": { "value": "9999px", "type": "borderRadius" }
+  },
+  "boxShadow": {
+    "card": {
+      "value": "0 1px 2px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.08)",
+      "type": "boxShadow"
+    },
+    "lift": {
+      "value": "0 10px 30px -10px rgba(15,23,42,0.25)",
+      "type": "boxShadow"
+    },
+    "brandRed": {
+      "value": "0 10px 25px -5px rgba(237,27,47,0.3)",
+      "type": "boxShadow"
+    },
+    "brandBlue": {
+      "value": "0 10px 25px -5px rgba(0,108,184,0.3)",
+      "type": "boxShadow"
+    }
+  }
+}

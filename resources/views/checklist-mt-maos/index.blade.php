@@ -225,6 +225,23 @@
                                         @endforeach
                                     </div>
                                 </div>
+                            @elseif ($c->hasPerbaikan())
+                                <div class="space-y-1">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-300">
+                                        <i data-lucide="check-check" class="h-3.5 w-3.5 text-emerald-600"></i> Selesai Perbaikan
+                                    </span>
+                                    <div class="mt-1 rounded-xl bg-emerald-50/90 border border-emerald-200 p-2 space-y-0.5 text-[11px] leading-tight">
+                                        <p class="font-extrabold text-emerald-900 text-[10.5px] uppercase tracking-wider flex items-center gap-1">
+                                            <i data-lucide="wrench" class="h-3 w-3 text-emerald-600"></i> Catatan Perbaikan:
+                                        </p>
+                                        @foreach($c->summaryPerbaikan() as $sp)
+                                            <div class="flex items-start gap-1 text-emerald-950 font-medium">
+                                                <span class="font-black text-emerald-600 shrink-0">✓</span>
+                                                <span>{{ $sp }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @else
                                 <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-inset ring-emerald-200">
                                     <i data-lucide="circle-check" class="h-3.5 w-3.5"></i> Sesuai
@@ -286,7 +303,7 @@
     <!-- ======================================================== -->
     <div class="block md:hidden divide-y divide-slate-100">
         @forelse ($checklists as $c)
-            <div id="card-{{ $c->id }}" class="p-4 transition space-y-3 hover:bg-slate-50/80">
+            <div id="card-{{ $c->id }}" class="p-4 transition space-y-3 {{ $c->hasPerbaikan() && !$c->isFlagged() ? 'bg-emerald-50/30 border-l-4 border-l-emerald-500' : 'hover:bg-slate-50/80' }}">
                 <!-- Header Card: Checkbox + Plat + Status -->
                 <div class="flex items-start justify-between gap-2">
                     <div class="flex items-center gap-2.5">
@@ -302,6 +319,10 @@
                         @if ($c->isFlagged())
                             <span class="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wide text-brand-red ring-1 ring-inset ring-rose-200">
                                 <i data-lucide="triangle-alert" class="h-3 w-3"></i> {{ $c->flagCount() }} Temuan
+                            </span>
+                        @elseif ($c->hasPerbaikan())
+                            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-300">
+                                <i data-lucide="check-check" class="h-3 w-3 text-emerald-600"></i> Selesai Perbaikan
                             </span>
                         @else
                             <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-inset ring-emerald-200">
@@ -346,6 +367,21 @@
                             <div class="flex items-start gap-1.5 text-slate-700 leading-snug">
                                 <span class="font-black text-brand-red shrink-0">•</span>
                                 <span>{{ $st }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+                <!-- Detail Catatan Perbaikan Mobile (Jika Ada) -->
+                @if ($c->hasPerbaikan() && count($c->summaryPerbaikan()))
+                    <div class="ml-6 rounded-xl bg-emerald-50/90 border border-emerald-200 p-2.5 space-y-1 text-[11px]">
+                        <p class="font-extrabold text-emerald-900 text-[10.5px] uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="wrench" class="h-3.5 w-3.5 text-emerald-600"></i> Catatan Perbaikan Selesai:
+                        </p>
+                        @foreach($c->summaryPerbaikan() as $sp)
+                            <div class="flex items-start gap-1.5 text-emerald-950 leading-snug font-medium">
+                                <span class="font-black text-emerald-600 shrink-0">✓</span>
+                                <span>{{ $sp }}</span>
                             </div>
                         @endforeach
                     </div>

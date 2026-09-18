@@ -11,12 +11,17 @@ FTP_USER = 'if0_42910768'
 FTP_PASS = '21t0qsE3M6Oxork'
 
 files_to_upload = [
+    'app/Models/ChecklistMtMaos.php',
     'app/Models/RetainSampelMt.php',
     'app/Services/DensityCorrectionService.php',
     'app/Services/FuelMaosService.php',
     'app/Http/Controllers/ChecklistMtMaosController.php',
+    'app/Http/Controllers/RetainSampelMtController.php',
     'resources/views/checklist-mt-maos/index.blade.php',
     'resources/views/checklist-mt-maos/show.blade.php',
+    'resources/views/checklist-mt-maos/form.blade.php',
+    'resources/views/checklist-mt-maos/partials/item-row.blade.php',
+    'resources/views/layouts/app.blade.php',
     'resources/views/retain-sampel/index.blade.php',
     'resources/views/retain-sampel/form.blade.php',
     'resources/views/retain-sampel/_tutorial-modal.blade.php',

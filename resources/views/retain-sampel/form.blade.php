@@ -1,13 +1,17 @@
 @extends('layouts.app')
-@section('title', $entry ? 'Edit Rekap Retain Sampel' : 'Input Retain Sampel Penyaluran MT')
+@section('title', $entry ? 'Edit Rekap Retain Sampel' : 'Input Retain Sampel Penyaluran MT (Multi-Produk)')
 
 @section('content')
-<div class="mx-auto max-w-2xl">
+<div class="mx-auto max-w-5xl">
     {{-- Top Navigation --}}
-    <div class="mb-4">
-        <a href="{{ route('retain-sampel.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-brand-blue transition">
-            <i data-lucide="arrow-left" class="h-4 w-4"></i> Kembali ke rekap
+    <div class="mb-4 flex items-center justify-between">
+        <a href="{{ route('retain-sampel.index', ['tanggal' => $entry ? $entry->tanggal->toDateString() : ($defaultTanggal ?? now()->toDateString())]) }}" 
+           class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-500 hover:text-brand-blue transition">
+            <i data-lucide="arrow-left" class="h-4 w-4"></i> Kembali ke Rekap Retain
         </a>
+        <span class="text-xs font-semibold text-slate-400">
+            {{ $entry ? 'Mode Edit Data' : 'Mode Input Sekaligus (Multi-Produk)' }}
+        </span>
     </div>
 
     @if ($errors->any())
@@ -23,140 +27,304 @@
         </div>
     @endif
 
-    {{-- KARTU FORM INPUT UTAMA (TAMPILAN ASLI COMPACT) --}}
-    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-card">
-        <div class="mb-6 border-b border-slate-100 pb-4">
-            <h1 class="text-xl font-extrabold text-slate-800">
-                {{ $entry ? 'Edit Retain Sampel Penyaluran MT' : 'Input Retain Sampel Penyaluran MT' }}
-            </h1>
-            <p class="text-xs text-slate-500 mt-1">
-                Isi Density Obs & Suhu — Density '15 dihitung otomatis oleh sistem (rumus koreksi ASTM Tabel 53/54), tidak perlu buka tabel manual.
-            </p>
-            @if($entry)
-                <p class="text-[11px] text-slate-400 mt-1">
-                    Data pertama kali diinput: <b class="text-slate-600">{{ $entry->created_at->translatedFormat('d M Y, H:i') }} WIB</b>@if($entry->user) oleh <b class="text-slate-600">{{ $entry->user->name }}</b>@endif.
+    @if ($entry)
+        {{-- ========================================================================= --}}
+        {{-- MODE EDIT SINGLE ENTRY                                                    --}}
+        {{-- ========================================================================= --}}
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-card">
+            <div class="mb-6 border-b border-slate-100 pb-4">
+                <h1 class="text-xl font-extrabold text-slate-800">
+                    Edit Retain Sampel Penyaluran MT — {{ $entry->produk }}
+                </h1>
+                <p class="text-xs text-slate-500 mt-1">
+                    Isi Density Obs & Suhu — Density '15 dihitung otomatis oleh sistem (rumus ASTM Tabel 53B).
                 </p>
-            @endif
+                <p class="text-[11px] text-slate-400 mt-1">
+                    Data diinput: <b class="text-slate-600">{{ $entry->created_at->translatedFormat('d M Y, H:i') }} WIB</b>@if($entry->user) oleh <b class="text-slate-600">{{ $entry->user->name }}</b>@endif.
+                </p>
+            </div>
+
+            <form method="POST" action="{{ route('retain-sampel.update', $entry) }}" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                @method('PUT')
+
+                {{-- Baris 1: Tanggal & Jam Observasi --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Tanggal</label>
+                        <input type="date" name="tanggal" required value="{{ old('tanggal', $entry->tanggal->toDateString()) }}"
+                               class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Jam Observasi</label>
+                        <input list="jam-list" name="jam_label" required value="{{ old('jam_label', $entry->jam_label) }}" placeholder="06:00"
+                               class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                        <datalist id="jam-list">
+                            @foreach ($jamStandar as $j)
+                                <option value="{{ $j }}"></option>
+                            @endforeach
+                        </datalist>
+                    </div>
+                </div>
+
+                {{-- Baris 2: Produk --}}
+                <div>
+                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Produk</label>
+                    <select name="produk" required
+                            class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                        @foreach ($produkList as $p)
+                            <option value="{{ $p }}" @selected(old('produk', $entry->produk) === $p)>{{ $p }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Baris 3: MT Nopol & Tangki Timbun --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">MT Nopol</label>
+                        <input type="text" name="mt_nopol" value="{{ old('mt_nopol', $entry->mt_nopol) }}" placeholder="contoh: R 9675 B"
+                               class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Tangki Timbun</label>
+                        <input type="text" name="tangki_timbun" value="{{ old('tangki_timbun', $entry->tangki_timbun) }}" placeholder="contoh: T1 / 09"
+                               class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                    </div>
+                </div>
+
+                {{-- Baris 4: Density Obs & Temperatur --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Density Obs</label>
+                        <input type="number" step="0.0001" id="single-density-obs" name="density_obs" required value="{{ old('density_obs', $entry->density_obs) }}" placeholder="contoh: 735.0 atau 0.7350"
+                               class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Temperatur (°C)</label>
+                        <input type="number" step="0.1" id="single-temp" name="temperatur" required value="{{ old('temperatur', $entry->temperatur) }}" placeholder="contoh: 29.5"
+                               class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                    </div>
+                </div>
+
+                {{-- Baris 5: Foto Botol Sampel --}}
+                <div>
+                    <label class="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Foto Botol Sampel / Dokumen (Opsional)</label>
+                    @if ($entry->fotoUrl())
+                        <div class="mb-2 flex items-center gap-2">
+                            <img src="{{ $entry->fotoUrl() }}" class="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-200">
+                            <span class="text-xs text-slate-400">Foto tersimpan. Upload jika ingin mengganti.</span>
+                        </div>
+                    @endif
+                    <div class="flex items-center gap-2">
+                        <input type="file" name="foto" accept="image/*,application/pdf" class="text-xs text-slate-600">
+                    </div>
+                </div>
+
+                {{-- Baris 6: Kotak Density'15 Otomatis --}}
+                <div class="rounded-2xl border border-blue-200 bg-blue-50/60 p-4 text-center">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-brand-blue">DENSITY '15 (OTOMATIS ASTM 53B)</span>
+                    <span id="single-preview-density-15" class="my-1 block text-2xl font-black text-brand-blue">
+                        {{ number_format($entry->density_15, 4) }}
+                    </span>
+                    <span class="block text-[10.5px] text-slate-500">Dihitung otomatis realtime dari Density Obs & Suhu.</span>
+                </div>
+
+                {{-- Baris 7: Tombol Simpan --}}
+                <div class="pt-3">
+                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red py-3.5 px-4 text-sm font-bold text-white shadow-lg shadow-brand-red/25 transition hover:bg-brand-redDark">
+                        <i data-lucide="save" class="h-4 w-4"></i> Simpan Perubahan
+                    </button>
+                </div>
+            </form>
         </div>
 
-        <form method="POST" action="{{ $entry ? route('retain-sampel.update', $entry) : route('retain-sampel.store') }}" enctype="multipart/form-data" class="space-y-4">
+    @else
+        {{-- ========================================================================= --}}
+        {{-- MODE INPUT SEKALIGUS (MULTI-PRODUK DENGAN SIMPAN DI PALING BAWAH)          --}}
+        {{-- ========================================================================= --}}
+        <form method="POST" action="{{ route('retain-sampel.store') }}" enctype="multipart/form-data" id="bulk-retain-form" class="space-y-6">
             @csrf
-            @if($entry)
-                @method('PUT')
-            @endif
 
-            {{-- Baris 1: Tanggal & Jam Observasi --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Tanggal</label>
-                    <input type="date" name="tanggal" required value="{{ old('tanggal', $entry ? $entry->tanggal->toDateString() : now()->toDateString()) }}"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                </div>
-                <div>
-                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Jam Observasi</label>
-                    <input list="jam-list" name="jam_label" required value="{{ old('jam_label', $entry ? $entry->jam_label : '06:00') }}" placeholder="06:00"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                    <datalist id="jam-list">
-                        @foreach ($jamStandar as $j)
-                            <option value="{{ $j }}"></option>
-                        @endforeach
-                    </datalist>
-                    <span class="mt-1 block text-[10.5px] text-slate-400">Pilih jam sesi observasi 06:00 (bisa awal), 12:00 (retain siang), atau 18:00 (retain sore).</span>
-                </div>
-            </div>
-
-            {{-- Baris 2: Produk --}}
-            <div>
-                <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Produk</label>
-                <select name="produk" required
-                        class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                    @foreach ($produkList as $p)
-                        <option value="{{ $p }}" @selected(old('produk', $entry ? $entry->produk : 'Pertalite') === $p)>{{ $p }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            {{-- Baris 3: MT Nopol & Tangki Timbun --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">MT Nopol</label>
-                    <input type="text" name="mt_nopol" value="{{ old('mt_nopol', $entry ? $entry->mt_nopol : '') }}" placeholder="contoh: N 9435 UH"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                </div>
-                <div>
-                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Tangki Timbun</label>
-                    <input type="text" name="tangki_timbun" value="{{ old('tangki_timbun', $entry ? $entry->tangki_timbun : '') }}" placeholder="contoh: T1"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                </div>
-            </div>
-
-            {{-- Baris 4: Density Obs & Temperatur --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Density Obs</label>
-                    <input type="number" step="0.0001" id="density_obs" name="density_obs" required value="{{ old('density_obs', $entry ? $entry->density_obs : '') }}" placeholder="contoh: 735.0"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                </div>
-                <div>
-                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Temperatur (°C)</label>
-                    <input type="number" step="0.1" id="temperatur" name="temperatur" required value="{{ old('temperatur', $entry ? $entry->temperatur : '') }}" placeholder="contoh: 29.5"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
-                </div>
-            </div>
-
-            {{-- Baris 5: Foto Botol Sampel --}}
-            <div>
-                <label class="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Foto (Dokumen / Botol Sampel) (Opsional)</label>
-                
-                @if ($entry && $entry->fotoUrl())
-                    <div class="mb-2 flex items-center gap-2">
-                        @if ($entry->fotoIsPdf())
-                            <a href="{{ $entry->fotoUrl() }}" target="_blank" class="flex h-12 w-12 items-center justify-center rounded-lg bg-red-50 ring-1 ring-slate-200">
-                                <i data-lucide="file-text" class="h-6 w-6 text-brand-red"></i>
-                            </a>
-                        @else
-                            <img src="{{ $entry->fotoUrl() }}" class="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-200">
-                        @endif
-                        <span class="text-xs text-slate-400">File sudah ada. Upload baru jika ingin mengganti.</span>
+            {{-- 1. KARTU HEADER SESI (TANGGAL & JAM) --}}
+            <div class="rounded-3xl border border-slate-200 bg-gradient-to-r from-slate-900 via-brand-dark to-brand-blueDark p-6 sm:p-7 text-white shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-red px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+                            <i data-lucide="layers" class="h-3.5 w-3.5"></i> Form Input Multi-Produk
+                        </span>
+                        <h1 class="mt-2 text-xl sm:text-2xl font-black text-white tracking-tight">
+                            Input Retain Sampel Penyaluran MT
+                        </h1>
+                        <p class="text-xs sm:text-sm text-slate-300 mt-1">
+                            Isi semua produk yang diuji pada sesi ini, lalu klik <b class="text-amber-300">Simpan Semua Data Sampel</b> di paling bawah.
+                        </p>
                     </div>
-                @endif
 
-                <div class="flex flex-wrap items-center gap-2">
-                    <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-100">
-                        <i data-lucide="upload" class="h-3.5 w-3.5 text-slate-500"></i> Pilih File (JPG/PNG/PDF)
-                        <input type="file" name="foto" id="input-foto" accept="image/*,application/pdf" class="hidden" onchange="previewFileNama(this)">
-                    </label>
-                    <button type="button" onclick="bukaKamera()"
-                            class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-100">
-                        <i data-lucide="camera" class="h-3.5 w-3.5 text-slate-500"></i> Jepret Foto
-                    </button>
-                    <span id="label-foto-terpilih" class="text-xs text-slate-500 italic hidden"></span>
+                    <div class="flex items-center gap-2 bg-white/10 rounded-2xl p-2.5 backdrop-blur">
+                        <div class="text-right px-2">
+                            <span class="block text-[10px] uppercase font-bold text-slate-300 tracking-wider">Metode Hitung</span>
+                            <span class="text-xs font-black text-emerald-300">ASTM Table 53B Otomatis</span>
+                        </div>
+                    </div>
                 </div>
-                <span class="mt-1 block text-[10.5px] text-slate-400">Foto/dokumen botol sampel khusus buat baris/produk ini tersimpan permanen bareng data ini. Format JPG, PNG, WEBP, atau PDF, maks 10 MB.</span>
+
+                {{-- Input Tanggal & Jam Sesi --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                    <div>
+                        <label class="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-300">Tanggal Observasi</label>
+                        <input type="date" name="tanggal" required value="{{ old('tanggal', $defaultTanggal ?? now()->toDateString()) }}"
+                               class="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-bold text-white placeholder-white/40 backdrop-blur transition focus:border-brand-red focus:bg-white/20 focus:outline-none focus:ring-4 focus:ring-brand-red/20">
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-300">Sesi Jam Observasi</label>
+                        <div class="flex items-center gap-2">
+                            <select name="jam_label" id="select-jam-label" required onchange="handleJamChange(this)"
+                                    class="w-full rounded-2xl border border-white/20 bg-slate-800 text-white px-4 py-3 text-sm font-bold transition focus:border-brand-red focus:outline-none focus:ring-4 focus:ring-brand-red/20">
+                                @foreach ($jamStandar as $j)
+                                    <option value="{{ $j }}" @selected(old('jam_label', $defaultJamLabel ?? '06:00') === $j)>
+                                        Pukul {{ $j }} WIB {{ $j === '06:00' ? '(Awal Penyaluran)' : ($j === '12:00' ? '(Retain Siang)' : '(Retain Sore)') }}
+                                    </option>
+                                @endforeach
+                                <option value="custom">-- Jam Lainnya (Kustom) --</option>
+                            </select>
+                            <input type="text" id="custom-jam-input" placeholder="00:00" class="hidden w-32 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-bold text-white">
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {{-- Baris 6: Kotak Density'15 Otomatis --}}
-            <div class="rounded-2xl border border-blue-200 bg-blue-50/60 p-4 text-center">
-                <span class="block text-[11px] font-bold uppercase tracking-wider text-brand-blue">DENSITY '15 (OTOMATIS)</span>
-                <span id="preview-density-15" class="my-1 block text-2xl font-black text-brand-blue">
-                    {{ $entry ? number_format($entry->density_15, 4) : '—' }}
-                </span>
-                <span class="block text-[10.5px] text-slate-500">
-                    Dihitung otomatis begitu Density Obs & Temperatur diisi — tersimpan otomatis saat form disubmit.
-                </span>
+            {{-- 2. DAFTAR KARTU PRODUK-PRODUK --}}
+            <div class="space-y-4" id="produk-cards-container">
+                @php
+                    $colors = [
+                        'Pertalite' => ['border' => 'border-emerald-200', 'badge' => 'bg-emerald-600 text-white', 'light' => 'bg-emerald-50/50'],
+                        'Pertamax' => ['border' => 'border-blue-200', 'badge' => 'bg-blue-600 text-white', 'light' => 'bg-blue-50/50'],
+                        'Pertamax Turbo' => ['border' => 'border-rose-200', 'badge' => 'bg-rose-700 text-white', 'light' => 'bg-rose-50/50'],
+                        'Biosolar B50' => ['border' => 'border-amber-200', 'badge' => 'bg-amber-600 text-white', 'light' => 'bg-amber-50/50'],
+                        'Dexlite' => ['border' => 'border-teal-200', 'badge' => 'bg-teal-700 text-white', 'light' => 'bg-teal-50/50'],
+                        'Pertadex' => ['border' => 'border-purple-200', 'badge' => 'bg-purple-700 text-white', 'light' => 'bg-purple-50/50'],
+                    ];
+                @endphp
+
+                @foreach ($produkList as $index => $prod)
+                    @php
+                        $style = $colors[$prod] ?? ['border' => 'border-slate-200', 'badge' => 'bg-slate-700 text-white', 'light' => 'bg-slate-50/50'];
+                    @endphp
+                    <div class="product-card rounded-3xl border {{ $style['border'] }} bg-white p-5 sm:p-6 shadow-card transition hover:shadow-md" data-index="{{ $index }}">
+                        {{-- Header Baris Produk --}}
+                        <div class="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                            <div class="flex items-center gap-2.5">
+                                <span class="rounded-xl {{ $style['badge'] }} px-3 py-1 text-xs font-black shadow-sm">
+                                    {{ $prod }}
+                                </span>
+                                <span class="text-xs font-semibold text-slate-400">Produk #{{ $index + 1 }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[11px] font-bold text-slate-400">Kosongkan jika produk ini tidak disalurkan</span>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="items[{{ $index }}][produk]" value="{{ $prod }}">
+
+                        {{-- Input Grid Form --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-start">
+                            <div>
+                                <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">MT Nopol</label>
+                                <input type="text" name="items[{{ $index }}][mt_nopol]" placeholder="cth: R 9675 B"
+                                       class="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                            </div>
+
+                            <div>
+                                <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Tangki Timbun</label>
+                                <input type="text" name="items[{{ $index }}][tangki_timbun]" placeholder="cth: 09 / T.09"
+                                       class="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                            </div>
+
+                            <div>
+                                <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Density Obs</label>
+                                <input type="number" step="0.0001" name="items[{{ $index }}][density_obs]" placeholder="cth: 735.0"
+                                       data-type="obs" data-target="preview-{{ $index }}"
+                                       class="bulk-density-input w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                            </div>
+
+                            <div>
+                                <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Temperatur (°C)</label>
+                                <input type="number" step="0.1" name="items[{{ $index }}][temperatur]" placeholder="cth: 29.5"
+                                       data-type="temp" data-target="preview-{{ $index }}"
+                                       class="bulk-temp-input w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-blue/10">
+                            </div>
+
+                            {{-- Live Calculated Density'15 Box --}}
+                            <div class="rounded-2xl border border-blue-200 bg-blue-50/60 p-2.5 text-center">
+                                <span class="block text-[10px] font-extrabold uppercase tracking-wider text-brand-blue">DENSITY '15</span>
+                                <span id="preview-{{ $index }}" class="density-preview-val my-0.5 block text-lg font-black text-brand-blue">
+                                    —
+                                </span>
+                                <span class="block text-[9.5px] font-medium text-slate-500">ASTM Table 53B</span>
+                            </div>
+                        </div>
+
+                        {{-- Upload Foto Opsional --}}
+                        <div class="mt-3.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3">
+                            <div class="flex items-center gap-2">
+                                <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100">
+                                    <i data-lucide="upload" class="h-3.5 w-3.5 text-slate-500"></i> Upload Foto Botol
+                                    <input type="file" name="items[{{ $index }}][foto]" accept="image/*,application/pdf" class="hidden" onchange="previewItemFoto(this, {{ $index }})">
+                                </label>
+                                <button type="button" onclick="bukaKameraItem({{ $index }})"
+                                        class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100">
+                                    <i data-lucide="camera" class="h-3.5 w-3.5 text-slate-500"></i> Kamera
+                                </button>
+                                <span id="label-foto-{{ $index }}" class="text-xs text-slate-500 italic hidden"></span>
+                            </div>
+                            <span class="text-[10.5px] text-slate-400">Opsional • Foto botol retain {{ $prod }}</span>
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
-            {{-- Baris 7: Tombol Simpan --}}
-            <div class="pt-2">
-                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red py-3.5 px-4 text-sm font-bold text-white shadow-lg shadow-brand-red/25 transition hover:bg-brand-redDark">
-                    <i data-lucide="save" class="h-4 w-4"></i> Simpan Rekap
+            {{-- 3. TOMBOL TAMBAH PRODUK LAIN / DUPLIKAT --}}
+            <div class="flex items-center justify-between">
+                <button type="button" onclick="tambahBarisProduk()"
+                        class="inline-flex items-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 bg-white hover:bg-slate-50 px-5 py-3 text-xs sm:text-sm font-bold text-slate-700 hover:border-brand-blue hover:text-brand-blue shadow-sm transition">
+                    <i data-lucide="plus-circle" class="h-4 w-4 text-brand-blue"></i>
+                    Tambah Produk Lain / Duplikat Sampel (misal 2x Pertalite)
                 </button>
             </div>
+
+            {{-- 4. STICKY BOTTOM BAR (TOMBOL SIMPAN PALING BAWAH) --}}
+            <div class="sticky bottom-0 z-30 rounded-3xl border border-slate-200 bg-white/95 p-4 sm:p-5 shadow-2xl backdrop-blur">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand-blue text-white shadow-md shadow-brand-blue/20">
+                            <i data-lucide="check-circle-2" class="h-6 w-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-extrabold text-slate-800">
+                                <span id="count-terisi" class="text-brand-blue font-black text-base">0</span> Produk Terisi
+                            </p>
+                            <p class="text-xs text-slate-500">Semua baris terisi akan disimpan permanen dalam sekali submit.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('retain-sampel.index') }}"
+                           class="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-xs sm:text-sm font-bold text-slate-600 transition hover:bg-slate-100">
+                            Batal
+                        </a>
+                        <button type="submit"
+                                class="inline-flex flex-1 sm:flex-initial items-center justify-center gap-2 rounded-2xl bg-brand-red hover:bg-brand-redDark px-7 py-3.5 text-sm sm:text-base font-extrabold text-white shadow-lg shadow-brand-red/30 transition hover:-translate-y-0.5 active:scale-95">
+                            <i data-lucide="save" class="h-5 w-5"></i>
+                            Simpan Semua Data Sampel
+                        </button>
+                    </div>
+                </div>
+            </div>
         </form>
-    </div>
+    @endif
 </div>
 
-{{-- MODAL KAMERA INTERAKTIF --}}
+{{-- MODAL KAMERA --}}
 <div id="modal-kamera" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
     <div class="w-full max-w-lg rounded-3xl bg-white p-5 shadow-2xl">
         <div class="mb-3 flex items-center justify-between">
@@ -184,28 +352,13 @@
 </div>
 
 <script>
-// Live Table 53B Calculation on-the-fly (Baku Tabel 53B Generalized Products)
+// ASTM 53B live calculation lookup table
 const tabel53bAnchorsJS = [
-    [690.0, 0.8636],
-    [700.0, 0.8500],
-    [710.0, 0.8364],
-    [720.0, 0.8182],
-    [730.0, 0.8091],
-    [733.0, 0.8000],
-    [740.0, 0.7909],
-    [743.0, 0.7909],
-    [750.0, 0.7727],
-    [759.0, 0.7636],
-    [800.0, 0.7000],
-    [810.0, 0.6909],
-    [815.0, 0.6818],
-    [820.0, 0.6818],
-    [830.0, 0.6727],
-    [839.0, 0.6636],
-    [840.0, 0.6636],
-    [850.0, 0.6545],
-    [860.0, 0.6545],
-    [869.0, 0.6455]
+    [690.0, 0.8636], [700.0, 0.8500], [710.0, 0.8364], [720.0, 0.8182],
+    [730.0, 0.8091], [733.0, 0.8000], [740.0, 0.7909], [743.0, 0.7909],
+    [750.0, 0.7727], [759.0, 0.7636], [800.0, 0.7000], [810.0, 0.6909],
+    [815.0, 0.6818], [820.0, 0.6818], [830.0, 0.6727], [839.0, 0.6636],
+    [840.0, 0.6636], [850.0, 0.6545], [860.0, 0.6545], [869.0, 0.6455]
 ];
 
 function hitungSlope53BJS(rho) {
@@ -243,41 +396,164 @@ function hitungDensity15JS(obs, temp) {
 
     const slope = hitungSlope53BJS(rhoObs);
     const rho15 = rhoObs + (slope * deltaT);
-
     return rho15 / 1000.0;
 }
 
-function updateDensityPreview() {
-    const obsVal = document.getElementById('density_obs')?.value;
-    const tempVal = document.getElementById('temperatur')?.value;
-    const previewEl = document.getElementById('preview-density-15');
-    if (!previewEl) return;
+// Update single edit preview
+function updateSinglePreview() {
+    const obsEl = document.getElementById('single-density-obs');
+    const tempEl = document.getElementById('single-temp');
+    const prevEl = document.getElementById('single-preview-density-15');
+    if (!obsEl || !tempEl || !prevEl) return;
 
-    const hasil = hitungDensity15JS(obsVal, tempVal);
-    if (hasil !== null) {
-        previewEl.innerText = hasil.toFixed(4);
+    const res = hitungDensity15JS(obsEl.value, tempEl.value);
+    prevEl.innerText = res !== null ? res.toFixed(4) : '—';
+}
+document.getElementById('single-density-obs')?.addEventListener('input', updateSinglePreview);
+document.getElementById('single-temp')?.addEventListener('input', updateSinglePreview);
+
+// Recalculate row & summary count
+function recalculateAll() {
+    let filledCount = 0;
+    const cards = document.querySelectorAll('.product-card');
+
+    cards.forEach(card => {
+        const obsInput = card.querySelector('input[data-type="obs"]');
+        const tempInput = card.querySelector('input[data-type="temp"]');
+        const previewEl = card.querySelector('.density-preview-val');
+
+        if (obsInput && tempInput && previewEl) {
+            const valObs = obsInput.value.trim();
+            const valTemp = tempInput.value.trim();
+
+            if (valObs !== '' && valTemp !== '') {
+                const hasil = hitungDensity15JS(valObs, valTemp);
+                if (hasil !== null) {
+                    previewEl.innerText = hasil.toFixed(4);
+                    filledCount++;
+                } else {
+                    previewEl.innerText = '—';
+                }
+            } else {
+                previewEl.innerText = '—';
+            }
+        }
+    });
+
+    const countEl = document.getElementById('count-terisi');
+    if (countEl) countEl.innerText = filledCount;
+}
+
+// Attach live event delegation
+document.addEventListener('input', (e) => {
+    if (e.target.classList.contains('bulk-density-input') || e.target.classList.contains('bulk-temp-input')) {
+        recalculateAll();
+    }
+});
+
+// Custom Jam Handler
+function handleJamChange(select) {
+    const customInput = document.getElementById('custom-jam-input');
+    if (select.value === 'custom') {
+        customInput.classList.remove('hidden');
+        customInput.focus();
+        customInput.oninput = () => { select.name = ''; customInput.name = 'jam_label'; };
     } else {
-        previewEl.innerText = '—';
+        customInput.classList.add('hidden');
+        select.name = 'jam_label';
+        customInput.name = '';
     }
 }
 
-document.getElementById('density_obs')?.addEventListener('input', updateDensityPreview);
-document.getElementById('temperatur')?.addEventListener('input', updateDensityPreview);
+// Tambah Baris Produk Dinamis
+let nextCardIndex = 100;
+const daftarPilihanProduk = @json($produkList);
 
-// Preview File Nama
-function previewFileNama(input) {
-    const labelEl = document.getElementById('label-foto-terpilih');
-    if (input.files && input.files[0]) {
+function tambahBarisProduk() {
+    const container = document.getElementById('produk-cards-container');
+    const idx = nextCardIndex++;
+
+    const optionsHtml = daftarPilihanProduk.map(p => `<option value="${p}">${p}</option>`).join('');
+
+    const cardHtml = `
+        <div class="product-card rounded-3xl border border-indigo-200 bg-indigo-50/20 p-5 sm:p-6 shadow-card transition" data-index="${idx}">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-indigo-100 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <span class="rounded-xl bg-indigo-600 text-white px-3 py-1 text-xs font-black shadow-sm">
+                        Produk Tambahan
+                    </span>
+                    <select name="items[${idx}][produk]" class="rounded-xl border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-slate-700">
+                        ${optionsHtml}
+                    </select>
+                </div>
+                <button type="button" onclick="this.closest('.product-card').remove(); recalculateAll();"
+                        class="inline-flex items-center gap-1 text-xs font-bold text-rose-500 hover:text-rose-700">
+                    <i data-lucide="trash-2" class="h-3.5 w-3.5"></i> Hapus Baris
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-start">
+                <div>
+                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">MT Nopol</label>
+                    <input type="text" name="items[${idx}][mt_nopol]" placeholder="cth: R 9675 B"
+                           class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700">
+                </div>
+                <div>
+                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Tangki Timbun</label>
+                    <input type="text" name="items[${idx}][tangki_timbun]" placeholder="cth: 09 / T.09"
+                           class="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700">
+                </div>
+                <div>
+                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Density Obs</label>
+                    <input type="number" step="0.0001" name="items[${idx}][density_obs]" placeholder="cth: 735.0"
+                           data-type="obs" data-target="preview-${idx}"
+                           class="bulk-density-input w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800">
+                </div>
+                <div>
+                    <label class="mb-1 block text-[11px] font-bold uppercase tracking-wide text-slate-500">Temperatur (°C)</label>
+                    <input type="number" step="0.1" name="items[${idx}][temperatur]" placeholder="cth: 29.5"
+                           data-type="temp" data-target="preview-${idx}"
+                           class="bulk-temp-input w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800">
+                </div>
+                <div class="rounded-2xl border border-blue-200 bg-blue-50/60 p-2.5 text-center">
+                    <span class="block text-[10px] font-extrabold uppercase tracking-wider text-brand-blue">DENSITY '15</span>
+                    <span id="preview-${idx}" class="density-preview-val my-0.5 block text-lg font-black text-brand-blue">—</span>
+                    <span class="block text-[9.5px] font-medium text-slate-500">ASTM Table 53B</span>
+                </div>
+            </div>
+
+            <div class="mt-3.5 flex items-center justify-between border-t border-slate-100 pt-3">
+                <div class="flex items-center gap-2">
+                    <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100">
+                        <i data-lucide="upload" class="h-3.5 w-3.5 text-slate-500"></i> Upload Foto
+                        <input type="file" name="items[${idx}][foto]" accept="image/*,application/pdf" class="hidden" onchange="previewItemFoto(this, ${idx})">
+                    </label>
+                    <span id="label-foto-${idx}" class="text-xs text-slate-500 italic hidden"></span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', cardHtml);
+    if (window.lucide) lucide.createIcons();
+    recalculateAll();
+}
+
+// Foto preview label
+function previewItemFoto(input, idx) {
+    const labelEl = document.getElementById(`label-foto-${idx}`);
+    if (labelEl && input.files && input.files[0]) {
         labelEl.innerText = input.files[0].name;
         labelEl.classList.remove('hidden');
-    } else {
-        labelEl.classList.add('hidden');
     }
 }
 
-// Camera stream handler
+// Camera Handling
+let currentCameraTargetIdx = null;
 let mediaStream = null;
-function bukaKamera() {
+
+function bukaKameraItem(idx) {
+    currentCameraTargetIdx = idx;
     const modal = document.getElementById('modal-kamera');
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -297,7 +573,6 @@ function tutupKamera() {
     const modal = document.getElementById('modal-kamera');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
-
     if (mediaStream) {
         mediaStream.getTracks().forEach(track => track.stop());
         mediaStream = null;
@@ -316,16 +591,22 @@ function ambilGambar() {
         const file = new File([blob], "foto-sampel-" + Date.now() + ".jpg", { type: "image/jpeg" });
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(file);
-        const input = document.getElementById('input-foto');
-        input.files = dataTransfer.files;
-        previewFileNama(input);
+        
+        if (currentCameraTargetIdx !== null) {
+            const input = document.querySelector(`input[name="items[${currentCameraTargetIdx}][foto]"]`);
+            if (input) {
+                input.files = dataTransfer.files;
+                previewItemFoto(input, currentCameraTargetIdx);
+            }
+        }
         tutupKamera();
     }, 'image/jpeg', 0.9);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     if (window.lucide) lucide.createIcons();
-    updateDensityPreview();
+    recalculateAll();
+    updateSinglePreview();
 });
 </script>
 @endsection

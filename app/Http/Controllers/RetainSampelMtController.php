@@ -230,12 +230,17 @@ class RetainSampelMtController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $tanggal = $request->query('tanggal', now()->toDateString());
+        $jamLabel = $request->query('jam_label', '06:00');
+
         return view('retain-sampel.form', [
             'produkList' => RetainSampelMt::daftarProduk(),
             'jamStandar' => RetainSampelMt::jamStandar(),
             'entry' => null,
+            'defaultTanggal' => $tanggal,
+            'defaultJamLabel' => $jamLabel,
         ]);
     }
 
@@ -287,8 +292,8 @@ class RetainSampelMtController extends Controller
                 'items.*.produk' => 'required|string|max:50',
                 'items.*.mt_nopol' => 'nullable|string|max:50',
                 'items.*.tangki_timbun' => 'nullable|string|max:50',
-                'items.*.density_obs' => 'required|numeric|min:0.0001',
-                'items.*.temperatur' => 'required|numeric',
+                'items.*.density_obs' => 'nullable|numeric|min:0.0001',
+                'items.*.temperatur' => 'nullable|numeric',
                 'items.*.foto' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:10240',
             ]);
 
@@ -300,7 +305,8 @@ class RetainSampelMtController extends Controller
             $produkNames = [];
 
             foreach ($items as $idx => $item) {
-                if (empty($item['produk']) || !isset($item['density_obs']) || !isset($item['temperatur'])) {
+                // Lewati baris yang density_obs atau temperatur-nya kosong (tidak diisi user)
+                if (empty($item['produk']) || !isset($item['density_obs']) || $item['density_obs'] === '' || !isset($item['temperatur']) || $item['temperatur'] === '') {
                     continue;
                 }
 
@@ -343,10 +349,18 @@ class RetainSampelMtController extends Controller
                 $produkNames[] = $item['produk'];
             }
 
+            if ($savedCount === 0) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors(['items' => 'Silakan isi setidaknya satu baris produk (Density Obs & Temperatur) sebelum menyimpan.']);
+            }
+
             $tglIndo = \Illuminate\Support\Carbon::parse($tanggal)->translatedFormat('d M Y');
+            $daftarStr = implode(', ', $produkNames);
             return redirect()
                 ->route('retain-sampel.index', ['tanggal' => $tanggal])
-                ->with('success', "Berhasil menyimpan {$savedCount} data retain sampel ({$tglIndo}, pukul {$jamLabel} WIB). Density'15 otomatis dikalkulasi sesuai ASTM Table 53.");
+                ->with('success', "Berhasil menyimpan {$savedCount} produk retain sampel ({$daftarStr}) untuk {$tglIndo} pukul {$jamLabel} WIB. Density'15 otomatis dihitung sesuai ASTM Table 53B.");
         }
 
         // Single entry fallback
