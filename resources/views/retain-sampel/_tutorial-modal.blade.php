@@ -15,7 +15,7 @@
     <!-- Backdrop Blur -->
     <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity" 
          @click="closeModal()"
-         x-show="open"
+         x-show="open" 
          x-transition:enter="ease-out duration-250"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
@@ -116,7 +116,7 @@
                             Langkah 1: Akses Menu &amp; Tanggal
                         </span>
                         <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
-                            Buka Menu Retain Sampel &amp; Pilih Tanggal Operasional
+                            Buka Menu Retain Sampel MT di Bawah Dashboard
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                             Cara memulai pencatatan dan pengecekan retain sampel harian:
@@ -128,40 +128,40 @@
                     <div class="rounded-2xl border border-blue-200 bg-white p-4 shadow-sm space-y-2">
                         <div class="flex items-center gap-2">
                             <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#0f3861] text-white font-bold text-xs">A</span>
-                            <h4 class="text-xs font-black text-slate-900">Klik Menu Retain Sampel MT</h4>
+                            <h4 class="text-xs font-black text-slate-900">Menu Checklist Lapangan</h4>
                         </div>
                         <p class="text-[11.5px] text-slate-600 leading-relaxed">
-                            Pada sidebar navigasi sebelah kiri, klik menu <b>Retain Sampel MT</b>. Halaman akan menampilkan ringkasan pengamatan retain hari ini.
+                            Pada sidebar navigasi tepat di bawah Dashboard, klik menu <b>Retain Sampel MT</b>. Halaman akan menampilkan laporan visual retain harian.
                         </p>
                     </div>
 
                     <div class="rounded-2xl border border-emerald-200 bg-white p-4 shadow-sm space-y-2">
                         <div class="flex items-center gap-2">
                             <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-600 text-white font-bold text-xs">B</span>
-                            <h4 class="text-xs font-black text-slate-900">Pilih Tanggal &amp; Filter</h4>
+                            <h4 class="text-xs font-black text-slate-900">Pilih Tanggal &amp; Tambah Data</h4>
                         </div>
                         <p class="text-[11.5px] text-slate-600 leading-relaxed">
-                            Gunakan kolom <b>Filter Tanggal</b> di bagian atas untuk melihat arsip retain hari sebelumnya atau klik tombol <span class="text-brand-blue font-bold">Input Data Retain Baru</span>.
+                            Gunakan pemilih tanggal untuk melihat arsip atau klik tombol merah <b>+ Tambah Data</b> untuk membuka formulir multi-produk sekaligus.
                         </p>
                     </div>
                 </div>
             </div>
 
             <!-- ============================================================ -->
-            <!-- SLIDE 2: LANGKAH 2 - INPUT 3 PILAR PAGI (06.00 WIB)          -->
+            <!-- SLIDE 2: LANGKAH 2 - INPUT MULTI-PRODUK (1 TOMBOL SIMPAN)     -->
             <!-- ============================================================ -->
             <div x-show="step === 1" x-transition.opacity class="space-y-4">
                 <div class="flex items-start gap-3.5">
                     <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-brand-blue font-black text-base border border-blue-200">2</span>
                     <div>
                         <span class="rounded bg-indigo-50 px-2 py-0.5 text-[11px] font-bold text-indigo-700 border border-indigo-200">
-                            Langkah 2: Sesi 06.00 Pagi (Baseline)
+                            Langkah 2: Form Multi-Produk Praktis
                         </span>
                         <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
-                            Input Data &amp; Unggah 3 Pilar Foto Sesi Pagi
+                            Input Semua Produk Sekaligus (1 Tombol Simpan di Bawah)
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                            Saat mengklik <b>Input Retain Sampel</b> dan memilih Sesi 06.00 WIB:
+                            Tidak perlu lagi menyimpan satu per satu per produk:
                         </p>
                     </div>
                 </div>
@@ -170,9 +170,9 @@
                     <div class="flex items-start gap-3 rounded-xl bg-blue-50/60 p-3 border border-blue-100">
                         <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#0f3861] text-white font-black text-xs">A</span>
                         <div>
-                            <p class="font-extrabold text-slate-900 text-xs">Unggah Foto Botol Retain 06.00 WIB</p>
+                            <p class="font-extrabold text-slate-900 text-xs">6 Produk Standar Terdaftar</p>
                             <p class="text-[11.5px] text-slate-600 mt-0.5 leading-relaxed">
-                                Klik tombol <b>Pilih Foto Botol</b> untuk mengunggah foto jajaran botol bening sampel produk awal (Pertalite, Pertamax, Biosolar).
+                                Form langsung menyediakan baris untuk: <b>Pertalite, Pertamax, Pertamax Turbo, Biosolar B50, Dexlite, dan Pertadex</b>.
                             </p>
                         </div>
                     </div>
@@ -180,9 +180,9 @@
                     <div class="flex items-start gap-3 rounded-xl bg-amber-50/60 p-3 border border-amber-100">
                         <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#e86a17] text-white font-black text-xs">B</span>
                         <div>
-                            <p class="font-extrabold text-slate-900 text-xs">Unggah Visual 3 Mobil Tangki (MT) Pertama</p>
+                            <p class="font-extrabold text-slate-900 text-xs">Ketik Nopol, Tangki, Density &amp; Suhu</p>
                             <p class="text-[11.5px] text-slate-600 mt-0.5 leading-relaxed">
-                                Masukkan nomor polisi armada pertama dan unggah foto kompartemen 3 MT awal penerima produk di filling shed.
+                                Isi produk yang disalurkan pada sesi tersebut. Produk yang tidak disalurkan cukup dibiarkan kosong (otomatis dilewati).
                             </p>
                         </div>
                     </div>
@@ -190,9 +190,9 @@
                     <div class="flex items-start gap-3 rounded-xl bg-emerald-50/60 p-3 border border-emerald-100">
                         <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-700 text-white font-black text-xs">C</span>
                         <div>
-                            <p class="font-extrabold text-slate-900 text-xs">Unggah Visual Tangki Timbun Aktif</p>
+                            <p class="font-extrabold text-slate-900 text-xs">Satu Tombol Simpan di Bawah</p>
                             <p class="text-[11.5px] text-slate-600 mt-0.5 leading-relaxed">
-                                Pilih kode tangki timbun (misal T.09 Pertamax / T.04 Biosolar) dan unggah foto fisik tangki timbun penyaluran.
+                                Cukup tekan tombol <b>"Simpan Semua Data Sampel"</b> di bagian paling bawah — semua data produk langsung tersimpan sekaligus!
                             </p>
                         </div>
                     </div>
@@ -200,65 +200,65 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- SLIDE 3: LANGKAH 3 - INPUT 12.00 & 18.00 (PEMBANDING)        -->
+            <!-- SLIDE 3: LANGKAH 3 - FORMAT SLIDE RESMI (06.00, 12.00, 18.00)-->
             <!-- ============================================================ -->
             <div x-show="step === 2" x-transition.opacity class="space-y-4">
                 <div class="flex items-start gap-3.5">
                     <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-brand-blue font-black text-base border border-blue-200">3</span>
                     <div>
                         <span class="rounded bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-800 border border-amber-200">
-                            Langkah 3: Sesi Siang &amp; Sore (Side-by-Side)
+                            Langkah 3: Format Laporan Sesuai SOP FT MAOS
                         </span>
                         <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
-                            Input Sesi 12.00 &amp; 18.00 untuk Pembanding Otomatis
+                            Sesi Pagi 06.00 Tetap (Stay) &amp; Update Retain 12.00 / 18.00
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                            Sistem secara otomatis menghubungkan data sesi siang dan sore dengan acuan pagi:
+                            Struktur tampilan slide otomatis tersusun sejajar:
                         </p>
                     </div>
                 </div>
 
                 <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm space-y-3">
                     <div class="grid grid-cols-2 gap-3 text-center">
-                        <div class="rounded-2xl border-2 border-blue-300 bg-blue-50/50 p-4">
+                        <div class="rounded-2xl border-2 border-blue-300 bg-blue-50/50 p-3.5 text-left">
                             <span class="inline-block rounded-full bg-brand-blue px-2.5 py-0.5 text-[10px] font-black text-white uppercase tracking-wider">
-                                Kotak Kiri (Otomatis Terisi)
+                                Kotak Kiri (Stay / Tetap)
                             </span>
-                            <h4 class="text-xs font-black text-slate-900 mt-1.5">Baseline 06.00 WIB Pagi</h4>
-                            <p class="text-[11px] text-slate-600 mt-1">Foto botol &amp; hasil uji jam 6 pagi otomatis muncul sebagai pembanding patokan.</p>
+                            <h4 class="text-xs font-black text-slate-900 mt-1.5">Sampel Retain 06.00 WIB</h4>
+                            <p class="text-[11px] text-slate-600 mt-1">Foto botol retain pagi &amp; tabel density tetap tampil dari pagi hingga selesai penyaluran sore.</p>
                         </div>
 
-                        <div class="rounded-2xl border-2 border-amber-400 bg-amber-50/50 p-4">
+                        <div class="rounded-2xl border-2 border-amber-400 bg-amber-50/50 p-3.5 text-left">
                             <span class="inline-block rounded-full bg-[#e86a17] px-2.5 py-0.5 text-[10px] font-black text-white uppercase tracking-wider">
-                                Kotak Kanan (Input Petugas)
+                                Kotak Kanan (Dinamis)
                             </span>
-                            <h4 class="text-xs font-black text-slate-900 mt-1.5">Retain 12.00 / 18.00 WIB</h4>
-                            <p class="text-[11px] text-slate-600 mt-1">Unggah foto botol siang/sore &amp; masukkan hasil uji terkini.</p>
+                            <h4 class="text-xs font-black text-slate-900 mt-1.5">Visual 3 MT (06.00) / Retain (12 &amp; 18)</h4>
+                            <p class="text-[11px] text-slate-600 mt-1">Jam 06.00 menampilkan Visual Sales 3 MT &amp; Tangki. Jam 12.00 &amp; 18.00 menampilkan foto retain &amp; tabel pergantian produk.</p>
                         </div>
                     </div>
 
-                    <div class="rounded-xl bg-slate-100 p-3 text-[11.5px] text-slate-600 flex items-center gap-2.5 border border-slate-200/80">
-                        <i data-lucide="info" class="h-4 w-4 text-brand-blue shrink-0"></i>
-                        <span>Petugas tidak perlu mengunggah ulang data jam 6 pagi saat input jam 12 atau 18, web langsung menggabungkannya secara berdampingan.</span>
+                    <div class="rounded-xl bg-slate-100 p-2.5 text-[11.5px] text-slate-600 flex items-center gap-2 border border-slate-200/80">
+                        <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600 shrink-0"></i>
+                        <span>Analis cukup screenshot gambar slide yang sudah tergabung rapi untuk laporan broadcast WhatsApp.</span>
                     </div>
                 </div>
             </div>
 
             <!-- ============================================================ -->
-            <!-- SLIDE 4: LANGKAH 4 - ASTM DENSITY 15 OTOMATIS                -->
+            <!-- SLIDE 4: LANGKAH 4 - ASTM DENSITY 15 OTOMATIS & EDIT CEPAT   -->
             <!-- ============================================================ -->
             <div x-show="step === 3" x-transition.opacity class="space-y-4">
                 <div class="flex items-start gap-3.5">
                     <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-brand-blue font-black text-base border border-blue-200">4</span>
                     <div>
                         <span class="rounded bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-800 border border-emerald-200">
-                            Langkah 4: Hitung Otomatis Density'15
+                            Langkah 4: Hitung ASTM 53B &amp; Edit Cepat
                         </span>
                         <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
-                            Ketik Density Observed &amp; Suhu (°C)
+                            Density'15 Otomatis &amp; Tabel Input Langsung di Halaman
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                            Cukup ketik nilai mentah pengujian hidrometer di laboratorium lapangan:
+                            Perhitungan instan dan kemudahan edit data:
                         </p>
                     </div>
                 </div>
@@ -266,41 +266,41 @@
                 <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                         <div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">1. Yang Diinput Petugas:</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">1. Realtime ASTM Tabel 53B:</span>
                             <ul class="mt-2 space-y-1.5 text-slate-700 font-semibold">
-                                <li class="flex items-center gap-1.5"><i data-lucide="edit-3" class="h-3.5 w-3.5 text-brand-blue"></i> <b>Density Observed</b>: Ketik misal <code>0.7380</code></li>
-                                <li class="flex items-center gap-1.5"><i data-lucide="thermometer" class="h-3.5 w-3.5 text-brand-blue"></i> <b>Suhu Uji</b>: Ketik misal <code>29.5</code> °C</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="calculator" class="h-3.5 w-3.5 text-brand-blue"></i> Cukup ketik <b>Density Obs &amp; Suhu</b></li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-600"></i> <b>Density'15</b> langsung terhitung otomatis presisi 4 desimal</li>
                             </ul>
                         </div>
-                        <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3.5">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">2. Hasil Instan Otomatis:</span>
-                            <ul class="mt-2 space-y-1.5 text-emerald-900 font-semibold">
-                                <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="h-3.5 w-3.5 text-emerald-600"></i> <b>Density'15</b>: <code>0.7482</code> (4 desimal)</li>
-                                <li class="flex items-center gap-1.5"><i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-600"></i> Terverifikasi formula ASTM Table 53B</li>
+                        <div class="rounded-xl bg-blue-50 border border-blue-200 p-3.5">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-blue">2. Edit Cepat di Bawah Laporan:</span>
+                            <ul class="mt-2 space-y-1.5 text-slate-800 font-semibold">
+                                <li class="flex items-center gap-1.5"><i data-lucide="edit-3" class="h-3.5 w-3.5 text-brand-blue"></i> Tabel edit per sesi tersedia di bawah slide</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="save" class="h-3.5 w-3.5 text-brand-red"></i> 1x klik <b>Simpan Semua Data</b> per sesi</li>
                             </ul>
                         </div>
                     </div>
                     <p class="text-[11px] text-slate-500 italic">
-                        *Lalu klik tombol simpan <span class="font-bold text-brand-blue">"Simpan Data Retain"</span> untuk memperbarui laporan slide.
+                        *Tidak ada lagi konfirmasi simpan berulang-ulang per produk.
                     </p>
                 </div>
             </div>
 
             <!-- ============================================================ -->
-            <!-- SLIDE 5: LANGKAH 5 - PREVIEW SLIDE, VIDEO DEMO & UNDUH BANNER -->
+            <!-- SLIDE 5: LANGKAH 5 - SIMULASI & UNDUH BANNER HD              -->
             <!-- ============================================================ -->
             <div x-show="step === 4" x-transition.opacity class="space-y-4">
                 <div class="flex items-start gap-3.5">
                     <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-brand-blue font-black text-base border border-blue-200">5</span>
                     <div>
                         <span class="rounded bg-rose-50 px-2 py-0.5 text-[11px] font-bold text-brand-red border border-rose-200">
-                            Langkah 5: Simulasi Video Berjalan &amp; Unduh Banner
+                            Langkah 5: Unduh Banner PNG HD &amp; Ekspor
                         </span>
                         <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
-                            Klik Tab Slide Laporan &amp; Download Banner PNG HD
+                            Pilih Tab Sesi &amp; Unduh Gambar Laporan Kualitas Tinggi
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                            Simulasi alur klik tombol web saat digunakan secara langsung:
+                            Simulasi alur tab laporan harian:
                         </p>
                     </div>
                 </div>
@@ -410,49 +410,51 @@
             currentAudio: null,
             steps: [
                 { 
-                    navTitle: 'Akses & Filter',
+                    navTitle: 'Akses & Tanggal',
                     chunks: [
-                        'Langkah pertama: Buka menu Retain Sampel MT di navigasi sebelah kiri.',
-                        'Pilih tanggal operasional untuk melihat arsip, atau klik tombol Input Retain Baru untuk memasukkan data hari ini.'
+                        'Langkah pertama: Buka menu Retain Sampel MT pada navigasi sebelah kiri di bawah Dashboard.',
+                        'Pilih tanggal operasional untuk melihat arsip, atau klik tombol Tambah Data untuk memasukkan data hari ini.'
                     ]
                 },
                 { 
-                    navTitle: 'Input 06.00 Pagi',
+                    navTitle: 'Form Multi-Produk',
                     chunks: [
-                        'Langkah kedua: Pada sesi jam enam pagi, masukkan data awal dan unggah tiga foto pilar mutu:',
-                        'Yaitu Foto Botol Retain, visual kompartemen tiga mobil tangki pertama, dan visual tangki timbun aktif.'
+                        'Langkah kedua: Formulir telah diperbarui menjadi format tabel multi produk sekaligus.',
+                        'Tersedia enam produk resmi Pertamina: Pertalite, Pertamax, Pertamax Turbo, Biosolar B50, Dexlite, dan Pertadex.',
+                        'Ketik nilai produk yang disalurkan, lalu cukup tekan satu tombol Simpan Semua Data di paling bawah.'
                     ]
                 },
                 { 
-                    navTitle: 'Input Sesi 12 & 18',
+                    navTitle: 'Format Laporan SOP',
                     chunks: [
-                        'Langkah ketiga: Untuk sesi jam dua belas siang dan delapan belas sore, unggah foto sampel dan hasil uji terkini.',
-                        'Sistem secara otomatis menampilkan kotak acuan jam enam pagi di sebelah kiri sebagai pembanding.'
+                        'Langkah ketiga: Laporan otomatis tersusun berdampingan.',
+                        'Data jam enam pagi tetap bertahan di sisi kiri dari pagi sampai sore sebagai acuan baseline.',
+                        'Sisi kanan menampilkan visual tiga mobil tangki pada jam enam pagi, serta update retain pada jam dua belas dan delapan belas sore.'
                     ]
                 },
                 { 
-                    navTitle: 'Hitung ASTM 53B',
+                    navTitle: 'ASTM 53B & Edit Cepat',
                     chunks: [
                         'Langkah keempat: Masukkan nilai density observed dan suhu pengujian.',
-                        'Sistem secara otomatis menghitung nilai density lima belas derajat celcius sesuai tabel lima puluh tiga B ASTM secara presisi empat angka desimal.'
+                        'Sistem otomatis mengkalkulasi density lima belas derajat celcius sesuai tabel lima puluh tiga B ASTM secara instan.',
+                        'Anda juga bisa langsung mengedit data pada tabel di bawah slide dan menekan tombol simpan sesi.'
                     ]
                 },
                 { 
                     navTitle: 'Simulasi & Unduh',
                     chunks: [
                         'Langkah kelima: Klik tab sesi yang ingin dilihat, lalu klik tombol Unduh Banner PNG HD.',
-                        'Banner laporan resmi resolusi tinggi siap langsung dikirimkan ke grup koordinasi regional Pertamina.'
+                        'Gambar laporan resolusi tinggi siap langsung dikirimkan ke grup koordinasi WhatsApp.'
                     ]
                 },
             ],
             demoSteps: [
-                { tabName: 'Tab 06.00', action: 'Klik Tab Sesi 06.00 WIB', desc: 'Menampilkan Slide Pagi 3 Pilar: Botol Retain + 3 MT Pertama + Tangki Timbun', badge: '1. Baseline 06.00' },
-                { tabName: 'Tab 12.00', action: 'Klik Tab Sesi 12.00 WIB', desc: 'Menampilkan Perbandingan Berdampingan: Acuan 06.00 (Kiri) vs Retain 12.00 (Kanan)', badge: '2. Komparasi 12.00' },
-                { tabName: 'Tab 18.00', action: 'Klik Tab Sesi 18.00 WIB', desc: 'Menampilkan Evaluasi Sore Berdampingan: Acuan 06.00 (Kiri) vs Retain 18.00 (Kanan)', badge: '3. Komparasi 18.00' },
+                { tabName: 'Tab 06.00', action: 'Klik Tab Sesi 06.00 WIB', desc: 'Menampilkan Slide Pagi: Retain 06.00 (Kiri) + Visual 3 MT & Tangki Timbun (Kanan)', badge: '1. Baseline 06.00' },
+                { tabName: 'Tab 12.00', action: 'Klik Tab Sesi 12.00 WIB', desc: 'Menampilkan Komparasi: Acuan 06.00 Stay (Kiri) vs Retain Siang 12.00 (Kanan)', badge: '2. Komparasi 12.00' },
+                { tabName: 'Tab 18.00', action: 'Klik Tab Sesi 18.00 WIB', desc: 'Menampilkan Komparasi: Acuan 06.00 Stay (Kiri) vs Retain Sore 18.00 (Kanan)', badge: '3. Komparasi 18.00' },
                 { tabName: 'Unduh Banner', action: 'Klik Tombol Unduh Banner PNG', desc: 'Menghasilkan gambar resolusi tinggi (PNG HD) siap kirim WhatsApp Regional', badge: '4. Ekspor HD Selesai' },
             ],
             init() {
-                // Pre-fetch browser speech synthesis voices if available
                 if (this.speechSynth && this.speechSynth.onvoiceschanged !== undefined) {
                     this.speechSynth.onvoiceschanged = () => {
                         this.speechSynth.getVoices();
@@ -515,16 +517,15 @@
                 if (!this.soundEnabled) return;
                 this.ensureAudioContext();
 
-                // Progresi Melodi Lofi & Acoustic Bells Tutorial Korporat
                 const melodyPattern = [
-                    { note: 523.25, dur: 0.6, bass: 130.81 }, // C5 + C3
-                    { note: 659.25, dur: 0.5, bass: null },   // E5
-                    { note: 783.99, dur: 0.7, bass: 196.00 }, // G5 + G3
-                    { note: 587.33, dur: 0.5, bass: null },   // D5
-                    { note: 440.00, dur: 0.6, bass: 110.00 }, // A4 + A2
-                    { note: 523.25, dur: 0.5, bass: null },   // C5
-                    { note: 659.25, dur: 0.7, bass: 174.61 }, // E5 + F3
-                    { note: 587.33, dur: 0.5, bass: null },   // D5
+                    { note: 523.25, dur: 0.6, bass: 130.81 },
+                    { note: 659.25, dur: 0.5, bass: null },
+                    { note: 783.99, dur: 0.7, bass: 196.00 },
+                    { note: 587.33, dur: 0.5, bass: null },
+                    { note: 440.00, dur: 0.6, bass: 110.00 },
+                    { note: 523.25, dur: 0.5, bass: null },
+                    { note: 659.25, dur: 0.7, bass: 174.61 },
+                    { note: 587.33, dur: 0.5, bass: null },
                 ];
 
                 this.noteIndex = 0;
@@ -533,7 +534,6 @@
                     const p = melodyPattern[this.noteIndex % melodyPattern.length];
                     this.noteIndex++;
 
-                    // Mainkan melodi pengiring lembut saat suara narator aktif
                     const trebleVol = this.voicePlaying ? 0.025 : 0.08;
                     const bassVol = this.voicePlaying ? 0.02 : 0.06;
 
@@ -585,7 +585,7 @@
                 }
             },
             stopSpeech() {
-                this.speechPlayId++; // Membatalkan antrian suara sebelumnya
+                this.speechPlayId++;
                 if (this.currentAudio) {
                     try {
                         this.currentAudio.pause();
@@ -605,7 +605,6 @@
                 const voices = this.speechSynth.getVoices() || [];
                 if (!voices.length) return null;
 
-                // 1. Cari suara resmi Bahasa Indonesia (id-ID)
                 let idVoice = voices.find(v => {
                     const lang = (v.lang || '').toLowerCase().replace('_', '-');
                     const name = (v.name || '').toLowerCase();
@@ -613,7 +612,6 @@
                            (name.includes('indonesia') || name.includes('damayanti') || name.includes('andika') || name.includes('gadis') || name.includes('natural') || name.includes('google'));
                 });
 
-                // 2. Jika tidak ada nama spesifik, cari kode bahasa id-ID
                 if (!idVoice) {
                     idVoice = voices.find(v => {
                         const lang = (v.lang || '').toLowerCase().replace('_', '-');
@@ -621,7 +619,6 @@
                     });
                 }
 
-                // 3. Cari dari nama yang mengandung 'indonesia'
                 if (!idVoice) {
                     idVoice = voices.find(v => (v.name || '').toLowerCase().includes('indonesia'));
                 }
@@ -638,8 +635,6 @@
                 const currentPlayId = ++this.speechPlayId;
                 this.voicePlaying = true;
 
-                // TIER 1: Gunakan stream audio suara Bahasa Indonesia asli (Native Indonesian Voice)
-                // Memastikan di semua merk HP (Samsung, Xiaomi, iPhone, Oppo, Realme) & Laptop bersuara Bahasa Indonesia murni tanpa aksen Inggris
                 let chunkIdx = 0;
                 const playNextChunk = () => {
                     if (!this.soundEnabled || !this.voicePlaying || this.speechPlayId !== currentPlayId) {
@@ -665,14 +660,12 @@
                     };
 
                     audio.onerror = () => {
-                        // Fallback ke Web Speech API jika offline
                         if (this.speechPlayId === currentPlayId) {
                             this.speakWebSpeechFallback(curStep.chunks.join(' '), currentPlayId);
                         }
                     };
 
                     audio.play().catch(e => {
-                        // Fallback ke Web Speech API jika browser memblokir stream
                         if (this.speechPlayId === currentPlayId) {
                             this.speakWebSpeechFallback(curStep.chunks.join(' '), currentPlayId);
                         }
