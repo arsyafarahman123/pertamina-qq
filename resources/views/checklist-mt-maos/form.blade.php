@@ -93,6 +93,35 @@
         <!-- ===== Masa Sertifikat Tera & Pengukuran Kompartemen ===== -->
         <p class="mb-2 mt-6 px-1 text-xs font-extrabold uppercase tracking-wider text-brand-blueDark">1–2 · Pengukuran Kompartemen Tangki &amp; Masa Tera</p>
         <div class="mb-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {{-- Datalists untuk Dropdown / Pilihan Cepat (Bisa Pilih atau Ketik Manual) --}}
+            <datalist id="dudukan-list">
+                <option value="Baik / Sesuai"></option>
+                <option value="Baik"></option>
+                <option value="Sesuai"></option>
+                <option value="Kurang Baik"></option>
+                <option value="Perlu Perbaikan"></option>
+                <option value="Tidak Sesuai"></option>
+            </datalist>
+
+            <datalist id="volume-list">
+                <option value="4.000 L"></option>
+                <option value="5.000 L"></option>
+                <option value="8.000 L"></option>
+                <option value="16.000 L"></option>
+                <option value="24.000 L"></option>
+                <option value="32.000 L"></option>
+                <option value="4000"></option>
+                <option value="5000"></option>
+                <option value="8000"></option>
+            </datalist>
+
+            <datalist id="ijk-list">
+                <option value="Tersegel Baik"></option>
+                <option value="Sesuai"></option>
+                <option value="Segel Utuh"></option>
+                <option value="Perlu Segel Ulang"></option>
+            </datalist>
+
             @foreach($checklist->tera as $i => $t)
             <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-card transition hover:border-slate-300">
                 <div class="mb-3 flex items-center justify-between">
@@ -107,32 +136,35 @@
                 <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
                     <div>
                         <label class="mb-1 block text-[10px] font-extrabold uppercase text-slate-500">a. Tinggi T2 Tera</label>
-                        <input name="tera[{{ $i }}][tinggiTera]" value="{{ $t['tinggiTera'] ?: ($t['a'] ?? '') }}" placeholder="cth. 1200 mm"
+                        <input id="tera-{{ $i }}-tinggiTera" oninput="hitungSelisihTera({{ $i }})" name="tera[{{ $i }}][tinggiTera]" value="{{ $t['tinggiTera'] ?: ($t['a'] ?? '') }}" placeholder="cth. 1200"
                                class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-xs font-semibold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
                     </div>
                     <div>
                         <label class="mb-1 block text-[10px] font-extrabold uppercase text-slate-500">b. Tinggi T2 Act</label>
-                        <input name="tera[{{ $i }}][tinggiAct]" value="{{ $t['tinggiAct'] ?: ($t['b'] ?? '') }}" placeholder="cth. 1201 mm"
+                        <input id="tera-{{ $i }}-tinggiAct" oninput="hitungSelisihTera({{ $i }})" name="tera[{{ $i }}][tinggiAct]" value="{{ $t['tinggiAct'] ?: ($t['b'] ?? '') }}" placeholder="cth. 1201"
                                class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-xs font-semibold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
                     </div>
                     <div>
-                        <label class="mb-1 block text-[10px] font-extrabold uppercase text-slate-500">c. Selisih T2</label>
-                        <input name="tera[{{ $i }}][selisih]" value="{{ $t['selisih'] ?: ($t['c'] ?? '') }}" placeholder="cth. +1 mm"
-                               class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-xs font-semibold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
+                        <label class="mb-1 block text-[10px] font-extrabold uppercase text-brand-blue flex items-center justify-between">
+                            <span>c. Selisih T2</span>
+                            <span class="text-[9px] font-normal text-slate-400">Auto / Manual</span>
+                        </label>
+                        <input id="tera-{{ $i }}-selisih" name="tera[{{ $i }}][selisih]" value="{{ $t['selisih'] ?: ($t['c'] ?? '') }}" placeholder="cth. +1 mm"
+                               class="w-full rounded-xl border border-blue-200 bg-blue-50/40 px-3 py-2 text-xs font-bold text-brand-blue transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
                     </div>
                     <div>
                         <label class="mb-1 block text-[10px] font-extrabold uppercase text-slate-500">d. Dudukan Tangki</label>
-                        <input name="tera[{{ $i }}][duduk]" value="{{ $t['duduk'] ?: ($t['d'] ?? '') }}" placeholder="cth. Baik / Sesuai"
+                        <input list="dudukan-list" name="tera[{{ $i }}][duduk]" value="{{ $t['duduk'] ?: ($t['d'] ?? '') }}" placeholder="Pilih / ketik manual"
                                class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-xs font-semibold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
                     </div>
                     <div>
                         <label class="mb-1 block text-[10px] font-extrabold uppercase text-slate-500">e. Volume Tangki</label>
-                        <input name="tera[{{ $i }}][volume]" value="{{ $t['volume'] ?: ($t['e'] ?? '') }}" placeholder="cth. 8.000 L"
+                        <input list="volume-list" name="tera[{{ $i }}][volume]" value="{{ $t['volume'] ?: ($t['e'] ?? '') }}" placeholder="cth. 8.000 L / ketik"
                                class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-xs font-semibold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
                     </div>
                     <div>
                         <label class="mb-1 block text-[10px] font-extrabold uppercase text-slate-500">f. Ijk Baut &amp; Segel</label>
-                        <input name="tera[{{ $i }}][ijkBaut]" value="{{ $t['ijkBaut'] ?: ($t['f'] ?? '') }}" placeholder="cth. Tersegel Baik"
+                        <input list="ijk-list" name="tera[{{ $i }}][ijkBaut]" value="{{ $t['ijkBaut'] ?: ($t['f'] ?? '') }}" placeholder="Pilih / ketik manual"
                                class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-xs font-semibold text-slate-800 transition focus:border-brand-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-blue/10">
                     </div>
                 </div>
@@ -282,6 +314,28 @@ function tandaiSemuaDiperbaiki() {
     });
     saveDraft();
     alert('Seluruh item temuan telah diubah menjadi status "Diperbaiki". Silakan klik "Simpan Checklist" untuk memperbarui status menjadi HIJAU di riwayat.');
+}
+
+// Hitung Otomatis Selisih T2 Kompartemen (bisa juga diedit manual)
+function hitungSelisihTera(i) {
+    const teraEl = document.getElementById(`tera-${i}-tinggiTera`);
+    const actEl = document.getElementById(`tera-${i}-tinggiAct`);
+    const selisihEl = document.getElementById(`tera-${i}-selisih`);
+    if (!teraEl || !actEl || !selisihEl) return;
+
+    const rawTera = teraEl.value.replace(/[^0-9.-]/g, '');
+    const rawAct = actEl.value.replace(/[^0-9.-]/g, '');
+
+    if (rawTera !== '' && rawAct !== '') {
+        const vTera = parseFloat(rawTera);
+        const vAct = parseFloat(rawAct);
+        if (!isNaN(vTera) && !isNaN(vAct)) {
+            const diff = vAct - vTera;
+            const sign = diff > 0 ? '+' : '';
+            selisihEl.value = `${sign}${diff} mm`;
+            saveDraft();
+        }
+    }
 }
 
 document.querySelectorAll('[data-toggle-group]').forEach(group => {
