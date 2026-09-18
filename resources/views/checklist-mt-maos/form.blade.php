@@ -173,7 +173,14 @@
         </div>
 
         <!-- ===== Item 3-17 ===== -->
-        <p class="mb-2 mt-6 px-1 text-xs font-extrabold uppercase tracking-wider text-brand-blueDark">3–17 · Kondisi Fisik &amp; Perlengkapan</p>
+        <div class="mb-3 mt-6 flex flex-wrap items-center justify-between gap-2 px-1">
+            <p class="text-xs font-extrabold uppercase tracking-wider text-brand-blueDark">3–17 · Kondisi Fisik &amp; Perlengkapan</p>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="tandaiSemuaSesuai()" class="inline-flex items-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-1.5 text-xs font-extrabold text-emerald-800 shadow-xs transition">
+                    <i data-lucide="check-check" class="h-4 w-4 text-emerald-600"></i> Tandai Semua Sesuai
+                </button>
+            </div>
+        </div>
 
         @foreach($items as $sec)
             @if(!empty($sec['group']))
@@ -282,6 +289,69 @@
     </div>
 </div>
 
+<style>
+/* Tombol Status Checklist MT */
+.tbtn {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sesuai (HIJAU SOLID MENYALA) */
+.tbtn.tbtn-ok-active,
+.tbtn-ok-active {
+    background-color: #10b981 !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px);
+}
+.tbtn.tbtn-ok-active svg,
+.tbtn-ok-active svg,
+.tbtn.tbtn-ok-active i,
+.tbtn-ok-active i {
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Temuan (MERAH SOLID MENYALA) */
+.tbtn.tbtn-bad-active,
+.tbtn-bad-active {
+    background-color: #ef4444 !important;
+    border-color: #dc2626 !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
+    transform: translateY(-1px);
+}
+.tbtn.tbtn-bad-active svg,
+.tbtn-bad-active svg,
+.tbtn.tbtn-bad-active i,
+.tbtn-bad-active i {
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Diperbaiki (TEAL SOLID MENYALA) */
+.tbtn.tbtn-repaired-active,
+.tbtn-repaired-active {
+    background-color: #0d9488 !important;
+    border-color: #0f766e !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    box-shadow: 0 4px 14px rgba(13, 148, 136, 0.4) !important;
+    transform: translateY(-1px);
+}
+.tbtn.tbtn-repaired-active svg,
+.tbtn-repaired-active svg,
+.tbtn.tbtn-repaired-active i,
+.tbtn-repaired-active i {
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+}
+</style>
+
 <script>
 function checklistForm() { return {}; }
 
@@ -289,32 +359,53 @@ const isEditMode = @json($isEdit);
 const checklistId = @json($checklist->id ?? 0);
 const DRAFT_KEY = isEditMode ? ('draft_checklist_mt_maos_edit_' + checklistId) : 'draft_checklist_mt_maos_create';
 
-// Toggle Sesuai/Temuan/Diperbaiki: tiap grup tombol berbagi satu hidden input results[key]
-function applyToggleState(group, val) {
-    const hidden = group.querySelector('input[type=hidden]');
-    hidden.value = val || '';
-    group.querySelectorAll('.tbtn').forEach(b => {
-        b.classList.remove('bg-emerald-500', 'border-emerald-500', 'text-white', 'bg-brand-red', 'border-brand-red', 'bg-teal-600', 'border-teal-600');
-        b.classList.add('text-slate-400', 'border-slate-200');
+// Toggle Sesuai/Temuan/Diperbaiki: mengupdate input hidden dan warna tombol
+function applyToggleState(target, val) {
+    if (!target) return;
+    const row = target.classList && target.classList.contains('item-check-row') 
+        ? target 
+        : (target.closest ? target.closest('.item-check-row') : null);
+    if (!row) return;
+
+    const hidden = row.querySelector('.row-result-input') || row.querySelector('input[type=hidden]');
+    if (hidden) {
+        hidden.value = val || '';
+    }
+
+    const allButtons = row.querySelectorAll('.tbtn');
+    allButtons.forEach(btn => {
+        btn.classList.remove(
+            'tbtn-ok-active', 'tbtn-bad-active', 'tbtn-repaired-active',
+            'bg-emerald-500', 'border-emerald-500', 'bg-emerald-600', 'border-emerald-600',
+            'bg-brand-red', 'border-brand-red', 'bg-red-500', 'border-red-500',
+            'bg-teal-600', 'border-teal-600', 'text-white'
+        );
+        
+        const bVal = btn.dataset.val;
+        if (bVal === 'repaired') {
+            btn.classList.add('border-teal-200', 'text-teal-700', 'bg-teal-50');
+            btn.classList.remove('border-slate-200', 'text-slate-600', 'bg-white');
+        } else {
+            btn.classList.add('border-slate-200', 'text-slate-600', 'bg-white');
+            btn.classList.remove('border-teal-200', 'text-teal-700', 'bg-teal-50');
+        }
     });
+
     if (val === 'ok') {
-        const btnOk = group.querySelector('.tbtn[data-val="ok"]');
-        if (btnOk) {
-            btnOk.classList.remove('text-slate-400', 'border-slate-200');
-            btnOk.classList.add('bg-emerald-500', 'border-emerald-500', 'text-white');
-        }
+        row.querySelectorAll('.tbtn[data-val="ok"]').forEach(btn => {
+            btn.classList.remove('border-slate-200', 'text-slate-600', 'bg-white');
+            btn.classList.add('tbtn-ok-active');
+        });
     } else if (val === 'bad') {
-        const btnBad = group.querySelector('.tbtn[data-val="bad"]');
-        if (btnBad) {
-            btnBad.classList.remove('text-slate-400', 'border-slate-200');
-            btnBad.classList.add('bg-brand-red', 'border-brand-red', 'text-white');
-        }
+        row.querySelectorAll('.tbtn[data-val="bad"]').forEach(btn => {
+            btn.classList.remove('border-slate-200', 'text-slate-600', 'bg-white');
+            btn.classList.add('tbtn-bad-active');
+        });
     } else if (val === 'repaired') {
-        const btnRep = group.querySelector('.tbtn[data-val="repaired"]');
-        if (btnRep) {
-            btnRep.classList.remove('text-slate-400', 'border-slate-200');
-            btnRep.classList.add('bg-teal-600', 'border-teal-600', 'text-white');
-        }
+        row.querySelectorAll('.tbtn[data-val="repaired"]').forEach(btn => {
+            btn.classList.remove('border-teal-200', 'text-teal-700', 'bg-teal-50');
+            btn.classList.add('tbtn-repaired-active');
+        });
     }
 }
 
@@ -330,31 +421,36 @@ function isiCatatanPerbaikan(noteId, text, btn) {
     }
     
     // Otomatis ubah tombol status baris ini menjadi "Diperbaiki" (repaired) jika sebelumnya Temuan/kosong
-    const row = textarea.closest('.flex-col');
+    const row = textarea.closest('.item-check-row') || textarea.closest('.flex-col');
     if (row) {
-        const group = row.querySelector('[data-toggle-group]');
-        if (group) {
-            applyToggleState(group, 'repaired');
-        }
+        applyToggleState(row, 'repaired');
     }
+    saveDraft();
+    updateProgressChecklist();
+}
+
+// Tindakan cepat: tandai semua item sebagai Sesuai
+function tandaiSemuaSesuai() {
+    document.querySelectorAll('.item-check-row').forEach(row => {
+        applyToggleState(row, 'ok');
+    });
+    updateProgressChecklist();
     saveDraft();
 }
 
 // Tindakan cepat: tandai semua temuan sebagai selesai diperbaiki
 function tandaiSemuaDiperbaiki() {
-    document.querySelectorAll('[data-toggle-group]').forEach(group => {
-        const hidden = group.querySelector('input[type=hidden]');
-        if (hidden && hidden.value === 'bad') {
-            applyToggleState(group, 'repaired');
-            const row = group.closest('.flex-col');
-            if (row) {
-                const txt = row.querySelector('textarea');
-                if (txt && txt.value.trim() === '') {
-                    txt.value = 'Telah diperbaiki & normal saat pemeriksaan ulang.';
-                }
+    document.querySelectorAll('.item-check-row').forEach(row => {
+        const hidden = row.querySelector('.row-result-input') || row.querySelector('input[type=hidden]');
+        if (hidden && (hidden.value === 'bad' || hidden.value === '')) {
+            applyToggleState(row, 'repaired');
+            const txt = row.querySelector('textarea');
+            if (txt && txt.value.trim() === '') {
+                txt.value = 'Telah diperbaiki & normal saat pemeriksaan ulang.';
             }
         }
     });
+    updateProgressChecklist();
     saveDraft();
     alert('Seluruh item temuan telah diubah menjadi status "Diperbaiki". Silakan klik "Simpan Checklist" untuk memperbarui status menjadi HIJAU di riwayat.');
 }
@@ -390,7 +486,7 @@ function updateProgressChecklist() {
     let filled = 0;
 
     rows.forEach(r => {
-        const hidden = r.querySelector('input[type=hidden]');
+        const hidden = r.querySelector('.row-result-input') || r.querySelector('input[type=hidden]');
         if (hidden && (hidden.value === 'ok' || hidden.value === 'bad' || hidden.value === 'repaired')) {
             filled++;
             r.classList.remove('ring-2', 'ring-amber-400', 'bg-amber-50/50', 'rounded-2xl', 'p-2');
@@ -414,7 +510,7 @@ function updateProgressChecklist() {
 function getUnfilledItems() {
     const unfilled = [];
     document.querySelectorAll('.item-check-row').forEach(row => {
-        const hidden = row.querySelector('input[type=hidden]');
+        const hidden = row.querySelector('.row-result-input') || row.querySelector('input[type=hidden]');
         if (!hidden || !hidden.value || (hidden.value !== 'ok' && hidden.value !== 'bad' && hidden.value !== 'repaired')) {
             const idx = row.dataset.itemIdx || '';
             const label = row.dataset.itemLabel || '';
@@ -491,19 +587,6 @@ function submitPaksa() {
     if (form) form.submit();
 }
 
-document.querySelectorAll('[data-toggle-group]').forEach(group => {
-    const hidden = group.querySelector('input[type=hidden]');
-    group.querySelectorAll('.tbtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const val = btn.dataset.val;
-            const isSame = hidden.value === val;
-            applyToggleState(group, isSame ? '' : val);
-            updateProgressChecklist();
-            saveDraft();
-        });
-    });
-});
-
 // Auto-save form draft to localStorage with Debounce
 let autoSaveTimeout = null;
 
@@ -561,10 +644,10 @@ function restoreDraft() {
                 if (el) {
                     hasRestoredValues = true;
                     el.value = val;
-                    // Jika hidden input toggle group, update tampilan tombol
-                    const group = el.closest('[data-toggle-group]');
-                    if (group) {
-                        applyToggleState(group, val);
+                    // Jika hidden input hasil row pemeriksaan, update tampilan tombol
+                    const row = el.closest('.item-check-row');
+                    if (row) {
+                        applyToggleState(row, val);
                     }
                 }
             }
@@ -596,6 +679,30 @@ function resetDraftForm() {
 
 // Event listeners for real-time auto save & submission validation
 document.addEventListener('DOMContentLoaded', () => {
+    // Pasang click handler ke seluruh baris pemeriksaan
+    document.querySelectorAll('.item-check-row').forEach(row => {
+        const hidden = row.querySelector('.row-result-input') || row.querySelector('input[type=hidden]');
+        
+        // Sync tampilan awal saat page load (dari data existing/database)
+        if (hidden && hidden.value) {
+            applyToggleState(row, hidden.value);
+        }
+
+        row.querySelectorAll('.tbtn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const val = btn.dataset.val;
+                const curVal = hidden ? hidden.value : '';
+                const isSame = (curVal === val);
+                const newVal = isSame ? '' : val;
+                applyToggleState(row, newVal);
+                updateProgressChecklist();
+                saveDraft();
+            });
+        });
+    });
+
     restoreDraft();
     updateProgressChecklist();
 
