@@ -54,7 +54,7 @@
         @endif
 
         <!-- Banner Peringatan Kelengkapan Isian Real-Time -->
-        <div id="incomplete-banner" class="mb-5 flex items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50/95 px-5 py-3.5 text-amber-900 shadow-sm transition-all">
+        <div id="incomplete-banner" class="mb-5 hidden items-center justify-between gap-3 rounded-2xl border border-amber-300 bg-amber-50/95 px-5 py-3.5 text-amber-900 shadow-sm transition-all">
             <div class="flex items-center gap-3">
                 <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white shadow-sm">
                     <i data-lucide="alert-triangle" class="h-5 w-5"></i>

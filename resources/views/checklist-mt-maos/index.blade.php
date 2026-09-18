@@ -211,14 +211,6 @@
                             </div>
                         </td>
                         <td class="px-4 py-4">
-                            @if ($c->isIncomplete())
-                                <div class="mb-1.5">
-                                    <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 text-[10.5px] font-black text-amber-800 shadow-xs" title="{{ implode(', ', $c->summaryIncomplete()) }}">
-                                        <i data-lucide="alert-triangle" class="h-3 w-3 text-amber-600"></i> Belum Selesai Diisi ({{ $c->incompleteCount() }} Item)
-                                    </span>
-                                </div>
-                            @endif
-
                             @if ($c->isFlagged())
                                 <div class="space-y-1">
                                     <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-brand-red ring-1 ring-inset ring-red-200">
@@ -323,13 +315,7 @@
                         </span>
                     </div>
 
-                    <div class="flex flex-col items-end gap-1">
-                        @if ($c->isIncomplete())
-                            <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[10px] font-black text-amber-800">
-                                <i data-lucide="alert-triangle" class="h-2.5 w-2.5 text-amber-600"></i> Belum Selesai ({{ $c->incompleteCount() }})
-                            </span>
-                        @endif
-
+                    <div>
                         @if ($c->isFlagged())
                             <span class="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wide text-brand-red ring-1 ring-inset ring-rose-200">
                                 <i data-lucide="triangle-alert" class="h-3 w-3"></i> {{ $c->flagCount() }} Temuan
