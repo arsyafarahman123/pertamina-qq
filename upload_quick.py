@@ -33,6 +33,8 @@ files_to_upload = [
     'resources/views/retain-sampel/export-excel-all.blade.php',
     'resources/views/retain-sampel/cetak.blade.php',
     'resources/views/dashboard/index.blade.php',
+    'resources/views/uji-bbm/index.blade.php',
+    'resources/views/riwayat/index.blade.php',
     'resources/views/auth/login.blade.php',
     'config/session.php',
     'bootstrap/app.php',

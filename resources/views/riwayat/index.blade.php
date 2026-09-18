@@ -238,7 +238,7 @@
                             <a href="{{ route('ujibbm.index') }}"
                                class="mt-5 inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-blue/25 transition hover:bg-brand-blueDark">
                                 <i data-lucide="plus" class="h-3.5 w-3.5"></i>
-                                Mulai Uji Spesifikasi BBM
+                                Mulai Uji Mutu BBM
                             </a>
                         </td>
                     </tr>

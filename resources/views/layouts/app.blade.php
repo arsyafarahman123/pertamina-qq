@@ -150,7 +150,7 @@
                     <a href="{{ route('ujibbm.index') }}"
                        class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition {{ str_starts_with((string) $route, 'ujibbm.') ? 'bg-brand-red text-white shadow-lg shadow-black/40' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
                         <i data-lucide="clipboard-check" class="h-5 w-5 shrink-0"></i>
-                        Uji Spesifikasi BBM
+                        Uji Mutu BBM
                     </a>
 
                     <a href="{{ route('uji.index') }}"

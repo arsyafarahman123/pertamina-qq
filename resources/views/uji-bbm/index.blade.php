@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Uji Spesifikasi BBM')
+@section('title', 'Uji Mutu BBM')
 
 @section('content')
 <div x-data="ujiBbmApp()" class="relative">
@@ -25,7 +25,7 @@
                     <span class="rounded-full bg-brand-red/80 px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white">Pertamina Patra Niaga</span>
                     <span class="rounded-full bg-white/10 px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white/60">Fuel Quality Control</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Uji Spesifikasi &amp; Mutu BBM</h1>
+                <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Uji Mutu BBM</h1>
                 <p class="mt-1 text-sm text-white/50">Langkah interaktif memastikan produk sesuai batas toleransi spesifikasi Dirjen Migas.</p>
             </div>
             <!-- Step Indicator inside hero -->

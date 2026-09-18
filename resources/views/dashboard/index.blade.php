@@ -30,7 +30,7 @@
         <div class="flex flex-wrap gap-2">
             <a href="{{ route('ujibbm.index') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-brand-red shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl">
                 <i data-lucide="clipboard-check" class="h-4 w-4"></i>
-                Uji Spesifikasi BBM
+                Uji Mutu BBM
             </a>
             <a href="{{ route('uji.index') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2.5 text-sm font-bold text-white ring-1 ring-inset ring-white/40 backdrop-blur transition hover:bg-white/25">
                 <i data-lucide="book-open-check" class="h-4 w-4"></i>
@@ -98,10 +98,10 @@
             </div>
         </a>
 
-        {{-- Uji Spesifikasi BBM — ringkas, arahkan ke KPI di bawah --}}
+        {{-- Uji Mutu BBM — ringkas, arahkan ke KPI di bawah --}}
         <a href="{{ route('ujibbm.index') }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-lift">
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-3">
-                <p class="text-sm font-bold text-white">Uji Spesifikasi BBM</p>
+                <p class="text-sm font-bold text-white">Uji Mutu BBM</p>
             </div>
             <div class="p-5">
                 <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">On-Spec Bulan Ini</p>
@@ -212,7 +212,7 @@
                 <i data-lucide="clipboard-check" class="h-5 w-5"></i>
             </div>
             <div>
-                <h2 class="text-base font-bold text-slate-900">Uji Spesifikasi BBM</h2>
+                <h2 class="text-base font-bold text-slate-900">Uji Mutu BBM</h2>
                 <p class="text-xs text-slate-400">Kesesuaian mutu tiap produk terhadap batas spesifikasi Dirjen Migas — {{ now()->translatedFormat('F Y') }}</p>
             </div>
         </div>
